@@ -1,14 +1,23 @@
 import React, {useEffect, useState} from 'react';
 
 const top = 0;
-const parent = (i) => ((i + 1) >>> 1) - 1;
-const leftChild = (i) => (i << 1) + 1;
-const rightChild = (i) => (i + 1) << 1;
 
 class PriorityQueue {
     constructor(comparator = (a, b) => a > b) {
         this._heap = [];
         this._comparator = comparator;
+    }
+
+    parent(i) {
+        return ((i + 1) >>> 1) - 1;
+    }
+
+    leftChild(i) {
+        return ((i << 1)) + 1;
+    }
+
+    rightChild(i) {
+        return ((i + 1) << 1);
     }
 
     size() {
@@ -59,23 +68,23 @@ class PriorityQueue {
 
     _siftUp() {
         let node = this.size() - 1;
-        while (node > top && this._greater(node, parent(node))) {
-            this._swap(node, parent(node));
-            node = parent(node);
+        while (node > top && this._greater(node, this.parent(node))) {
+            this._swap(node, this.parent(node));
+            node = this.parent(node);
         }
     }
 
     _siftDown() {
         let node = top;
         while (
-            (leftChild(node) < this.size() && this._greater(leftChild(node), node)) ||
-            (rightChild(node) < this.size() && this._greater(rightChild(node), node))
+            (this.leftChild(node) < this.size() && this._greater(this.leftChild(node), node)) ||
+            (this.rightChild(node) < this.size() && this._greater(this.rightChild(node), node))
             ) {
             let maxChild =
-                rightChild(node) < this.size() &&
-                this._greater(rightChild(node), leftChild(node))
-                    ? rightChild(node)
-                    : leftChild(node);
+                this.rightChild(node) < this.size() &&
+                this._greater(this.rightChild(node), this.leftChild(node))
+                    ? this.rightChild(node)
+                    : this.leftChild(node);
 
             this._swap(node, maxChild);
             node = maxChild;
@@ -85,25 +94,28 @@ class PriorityQueue {
 
 
 const Heap = (arr) => {
-    const data = []
+    console.log("printing in the useHeap");
+    console.log(arr);
 
+    const data = []
     const fun = () => {
         console.log("in function")
         const pairwiseQueue = new PriorityQueue((a, b) => a[1] > b[1]);
 
         // {patient number, priority}
         for (let i = 0; i < arr.length; i++) {
-            pairwiseQueue.push([arr[i][0], -1 * arr[i][1]]);
+            pairwiseQueue.push([arr[i].name, -1 * arr[i].rank, arr[i].penalty]);
         }
         // pairwiseQueue.push(["P1", 0], ["P2", 5], ["P3", 10]);
         // console.log("\nContents:");
 
         while (!pairwiseQueue.isEmpty()) {
-            data.push(pairwiseQueue.pop()[0]);
+            const poppedElement = pairwiseQueue.pop();
+            data.push({name: poppedElement[0], rank: -1 * poppedElement[1], penalty: poppedElement[2]});
         }
+        return data;
     }
-    fun()
-
+    fun();
     return data;
 };
 
