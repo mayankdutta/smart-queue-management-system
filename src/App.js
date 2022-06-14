@@ -2,6 +2,7 @@ import useHeap from "./Hooks/useHeap";
 import { useEffect, useState } from "react";
 import Form from "./components/Form";
 import PrintQueue from "./components/printQueue";
+import './App.css'
 
 function App() {
   const [appointments, setAppointments] = useState([
@@ -58,17 +59,17 @@ function App() {
   };
 
   return (
-    <>
+    <div className = "App">
       {/*Initially Appointing the patients*/}
       <h1>Queue</h1>
       <PrintQueue data={data} i={currentPatient} />
 
       {data.length ? (
-        <h5>
+        <div className="App-body">
           Turn of patient : {data[currentPatient].name + "     "}
-          <button onClick={handlePresent}>Present</button>
-          <button onClick={handleAbsent}>Absent</button>
-        </h5>
+          <button className = "button-green" onClick={handlePresent}>Present</button>
+          <button className = "button-red" onClick={handleAbsent}>Absent</button>
+        </div>
       ) : (
         <h5>Empty Clinic.</h5>
       )}
@@ -77,7 +78,7 @@ function App() {
         setPatientName={setPatientName}
         submitForm={submitForm}
       />
-    </>
+    </div>
   );
 }
 
