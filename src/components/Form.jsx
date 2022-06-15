@@ -2,16 +2,14 @@ import React from 'react';
 
 const Form = ({patientName, setPatientName, submitForm}) => {
     return (
-        <form onSubmit={submitForm}>
-            <label>Patients</label>
+        <form onSubmit={submitForm} className = "App-body">
+            {/* <label>Patients</label> */}
             <input type={"text"}
-                   placeholder={"patient Name"}
+                   placeholder={"Enter patient Name"}
                    value={patientName}
                    onChange={e => setPatientName(e.target.value)}
             />
-            <br/>
-
-            <button>Submit</button>
+            <button className='button-green'>Submit</button>
         </form>
     );
 };
