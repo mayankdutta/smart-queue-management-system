@@ -72,7 +72,7 @@ class PriorityQueue {
     }
 
     _siftDown() {
-        let node = this.top;
+        let node = this.top
         while (
             (this.leftChild(node) < this.size()  && this._greater(this.leftChild(node), node)) ||
             (this.rightChild(node) < this.size() && this._greater(this.rightChild(node), node))
