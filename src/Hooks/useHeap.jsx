@@ -2,12 +2,13 @@ import React, {useEffect, useState} from 'react';
 import PriorityQueue from "../Algorithm/Heap";
 
 const Heap = (arr) => {
-    console.log("printing in the useHeap");
+    console.log("in the custom hook");
     console.log(arr);
 
     const data = []
+
     const fun = () => {
-        console.log("in function")
+        console.log("fun inside the custom Hook")
         const pairwiseQueue = new PriorityQueue((a, b) => a[1] > b[1]);
 
         // {patient number, priority}
