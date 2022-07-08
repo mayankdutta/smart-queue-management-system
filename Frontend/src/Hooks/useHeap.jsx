@@ -1,4 +1,3 @@
-import React, {useEffect, useState} from 'react';
 import PriorityQueue from "../Algorithm/Heap";
 
 const Heap = (arr) => {

@@ -29,7 +29,7 @@ export default function LogIn() {
 			password: password
 		})
 			.then(response => {
-				response.status == 'success' ? setAuthentic(true) : setAuthentic(false)
+				response.status === 'success' ? setAuthentic(true) : setAuthentic(false)
 			})
 			.catch(error => console.log("Error : ", error))
 	};
