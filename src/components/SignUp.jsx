@@ -27,7 +27,7 @@ export default function SignUp() {
     let email =  data.get('email')
     let password =  data.get('password')
 
-    axios.post('http://localhost:4000/signup', {
+    axios.post('http://localhost:5000/signup', {
       firstName : firstName,
       secondName : secondName,
       email : email,
