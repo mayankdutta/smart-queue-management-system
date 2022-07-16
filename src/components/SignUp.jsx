@@ -1,6 +1,6 @@
 import * as React from 'react';
 import axios from 'axios'
-import {Navigate} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -13,37 +13,53 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import {createTheme, ThemeProvider} from '@mui/material/styles';
 import {Backend} from "../backendData";
+import {useEffect} from "react";
 
 const theme = createTheme();
 const link = Backend.link;
 
 export default function SignUp() {
+    const navigate = useNavigate();
 
-    const [userSigned, setUserSigned] = React.useState(false)
+    useEffect(() => {
+        const accessToken = localStorage.getItem("access-token");
+        if (accessToken) {
+            navigate('/');
+        }
+    },[ ])
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
         let firstName = data.get('firstName')
-        let secondName = data.get('secondName')
+        let lastName = data.get('lastName')
         let email = data.get('email')
         let password = data.get('password')
+        let name = firstName + " " + lastName;
 
+        console.log(data);
+        console.log(name);
+        console.log(firstName);
+        console.log(lastName);
+        console.log(email);
+        console.log(password);
 
-        axios.post(`${link}/signup`, {
-            name: firstName,
-            email: email,
-            password: password
-        })
-            .then(response => {
-                response.status === 400 ? setUserSigned(true) : setUserSigned(false)
+        try {
+            const response = await axios.post(`${link}/signup`, {
+                name: name,
+                email: email,
+                password: password
             })
-            .catch(error => {
-                console.log("Error : ", error)
-            })
+            console.warn(response);
+            localStorage.setItem("access-token", response.data.accessToken);
+            localStorage.setItem("name", name.toString());
+            navigate('/');
+        } catch (err) {
+            console.warn(err.message);
+        }
     };
 
-    return !userSigned ? (
+    return (
         <ThemeProvider theme={theme}>
             <Container component="main" maxWidth="xs">
                 <CssBaseline/>
@@ -61,6 +77,7 @@ export default function SignUp() {
                     <Typography component="h1" variant="h5">
                         Sign up
                     </Typography>
+
                     <Box component="form" noValidate onSubmit={handleSubmit} sx={{mt: 3}}>
                         <Grid container spacing={2}>
                             <Grid item xs={12} sm={6}>
@@ -125,5 +142,5 @@ export default function SignUp() {
                 </Box>
             </Container>
         </ThemeProvider>
-    ) : <Navigate to='/login'/>
+    )
 }

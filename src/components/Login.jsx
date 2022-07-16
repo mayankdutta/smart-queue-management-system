@@ -1,6 +1,6 @@
 import * as React from 'react';
 import axios from 'axios'
-import {Navigate} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -13,13 +13,21 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import {createTheme, ThemeProvider} from '@mui/material/styles';
 import {Backend} from "../backendData";
+import {useEffect} from "react";
 
 const theme = createTheme();
 const link = Backend.link;
 
 export default function LogIn() {
 
-    const [authentic, setAuthentic] = React.useState(false)
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const accessToken = localStorage.getItem("access-token");
+        if (accessToken) {
+            navigate('/');
+        }
+    },[ ])
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -27,18 +35,21 @@ export default function LogIn() {
         let email = data.get('email')
         let password = data.get('password')
 
-        console.log(`${link}/login`)
-        axios.post(`${link}/login`, {
-            email: email,
-            password: password
-        })
-            .then(response => {
-                response.status === 400 ? setAuthentic(true) : setAuthentic(false)
+        try {
+            const response = await axios.post(`${link}/login`, {
+                email: email,
+                password: password
             })
-            .catch(error => console.log("Error : ", error.message))
+            console.warn(response);
+            localStorage.setItem("access-token", response.data.accessToken);
+            localStorage.setItem("name", response.data.name);
+            navigate('/');
+        } catch (err) {
+            console.warn(err.message);
+        }
     };
 
-    return !authentic ? (
+    return (
         <ThemeProvider theme={theme}>
             <Container component="main" maxWidth="xs">
                 <CssBaseline/>
@@ -101,5 +112,5 @@ export default function LogIn() {
                 </Box>
             </Container>
         </ThemeProvider>
-    ) : <Navigate to="#"/>
+    )
 }

@@ -2,17 +2,31 @@ import React from 'react';
 import {Link} from "react-router-dom";
 
 function Navbar() {
+    const name = localStorage.getItem("name");
+    const logout = () => {
+        localStorage.clear();
+    }
+
     return (
-        <div style={{display: "flex" , gap: "2rem"}}>
-            <Link to={""}>
-                <h4 style={{backgroundColor: "yellow"}}>Option 1</h4>
-            </Link>
-            <Link to={"/login"}>
-                <h4 style={{backgroundColor: "yellow"}}>Login</h4>
-            </Link>
-            <Link to={"/signup"}>
-                <h4 style={{backgroundColor: "yellow"}}>Signup</h4>
-            </Link>
+        <div style={{display: "flex", gap: "2rem", backgroundColor: "yellow", margin: "8px 2px 2px 8px"}}>
+            {
+                !name ?
+                    <>
+                        <Link to={"/signup"}>
+                            <h3>signup</h3>
+                        </Link>
+                        <Link to={"/login"}>
+                            <h3>Login</h3>
+                        </Link>
+                    </>
+                    :
+                    <>
+                        <h3> {name}</h3>
+                        <button onClick={logout}>
+                            <h3>Logout</h3>
+                        </button>
+                    </>
+            }
         </div>
     );
 }
