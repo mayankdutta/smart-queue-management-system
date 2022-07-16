@@ -70,8 +70,10 @@ function Status() {
             {data.length ? (
                 <div className="App-body">
                     Turn of patient : {data[currentPatient].name + "     "}
-                    <button className="button-green" onClick={handlePresent}>Present</button>
-                    <button className="button-red" onClick={handleAbsent}>Absent</button>
+                    <div className={"buttons"}>
+                        <button className="button-green" onClick={handlePresent}>Present</button>
+                        <button className="button-red" onClick={handleAbsent}>Absent</button>
+                    </div>
                 </div>
             ) : (
                 <h5>Empty Clinic.</h5>

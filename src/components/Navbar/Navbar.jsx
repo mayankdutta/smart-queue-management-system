@@ -1,10 +1,13 @@
 import React from 'react';
 import {Link} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
 function Navbar() {
     const name = localStorage.getItem("name");
+    const navigate = useNavigate();
     const logout = () => {
         localStorage.clear();
+        navigate("/");
     }
 
     return (

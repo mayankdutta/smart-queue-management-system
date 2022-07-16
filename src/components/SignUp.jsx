@@ -18,15 +18,16 @@ import {useEffect} from "react";
 const theme = createTheme();
 const link = Backend.link;
 
-export default function SignUp() {
+export default function SignUp({setRefresh}) {
     const navigate = useNavigate();
 
     useEffect(() => {
         const accessToken = localStorage.getItem("access-token");
         if (accessToken) {
+            setRefresh(true);
             navigate('/');
         }
-    },[ ])
+    }, [])
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -37,13 +38,6 @@ export default function SignUp() {
         let password = data.get('password')
         let name = firstName + " " + lastName;
 
-        console.log(data);
-        console.log(name);
-        console.log(firstName);
-        console.log(lastName);
-        console.log(email);
-        console.log(password);
-
         try {
             const response = await axios.post(`${link}/signup`, {
                 name: name,
@@ -53,6 +47,7 @@ export default function SignUp() {
             console.warn(response);
             localStorage.setItem("access-token", response.data.accessToken);
             localStorage.setItem("name", name.toString());
+            setRefresh(true);
             navigate('/');
         } catch (err) {
             console.warn(err.message);

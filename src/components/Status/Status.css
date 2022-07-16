@@ -1,5 +1,5 @@
 .App {
-    min-height: 100vh;
+    max-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -7,49 +7,39 @@
     font-size: calc(10px + 2vmin);
 }
 
-.App-body{
+.App-body {
+    margin: 8px 0 8px 0;
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    flex-direction: row;
+    justify-content: center;
     align-items: center;
     font-size: calc(10px + 2vmin);
-    margin: 1.5%;
-    font-weight: bold;
+    column-gap: 8px;
 }
 
-.button-red{
+button {
+    color: white;
+    border: none;
+    border-radius: 7%;
+    padding: 8px;
+    font-size: calc(3px + 2vmin);
+    cursor: pointer;
+}
+
+.button-red {
     background-color: rgb(231, 80, 80);
-    color : white;
-    border: none;
-    border-radius: 7%;
-    margin: 5%;
-    padding: 2%;
-    padding-right: 15%;
-    font-size: calc(3px + 2vmin);
-    cursor: pointer;
 }
 
-.button-green{
+.button-green {
     background-color: rgb(15, 152, 15);
-    color : white;
-    border: none;
-    border-radius: 7%;
-    margin: 5%;
-    padding: 2%;
-    padding-right: 15%;
-    font-size: calc(3px + 2vmin);
-    cursor: pointer;
 }
 
-input{
-    color : #0a2a8b;
+input {
+    color: #0a2a8b;
     display: flex;
     flex-direction: column;
     border-radius: 3%;
-    margin: 5%;
-    margin-bottom : 3%;
     font-size: calc(5px + 2vmin);
-    padding: 4%;
 }
 
 /* .App-logo {

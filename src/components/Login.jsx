@@ -18,13 +18,14 @@ import {useEffect} from "react";
 const theme = createTheme();
 const link = Backend.link;
 
-export default function LogIn() {
+export default function LogIn({setRefresh}) {
 
     const navigate = useNavigate();
 
     useEffect(() => {
         const accessToken = localStorage.getItem("access-token");
         if (accessToken) {
+            setRefresh(true);
             navigate('/');
         }
     },[ ])
@@ -43,6 +44,7 @@ export default function LogIn() {
             console.warn(response);
             localStorage.setItem("access-token", response.data.accessToken);
             localStorage.setItem("name", response.data.name);
+            setRefresh(true);
             navigate('/');
         } catch (err) {
             console.warn(err.message);
