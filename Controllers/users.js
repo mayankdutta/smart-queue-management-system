@@ -1,35 +1,33 @@
 const Users = require("../Models/Users");
 const bcrypt = require("bcrypt");
+const jwt = require('jsonwebtoken')
 require("dotenv").config()
 
 const SALT = 10;
 
 async function hashPassword(plaintextPassword) {
-    // Store hash in the database
     return await bcrypt.hash(plaintextPassword, SALT);
 }
 
-// compare password
 async function comparePassword(plaintextPassword, hash) {
     return await bcrypt.compare(plaintextPassword, hash);
 }
 
-const userLogin = async (req, res) => {
-    try {
-        const user = await Users.findOne({
-            email: req.body.email
-        });
+async function generateAccessToken(username) {
+    return await jwt.sign(username, process.env.TOKEN_SECRET, {}, {expiresIn: '2h'});
+}
 
-        const userDoesExist = comparePassword(req.body.password, user.password);
-        if (userDoesExist) {
-            return res.status(400).send({message: "user found"});
-        } else {
-            return res.status(200).send({message: "user NOT found"});
-        }
-
-    } catch (err) {
-        return res.status(200).send({message: "something went wrong while logging in", error: err});
+const verifyAccessToken = (req, res, next) => {
+    const userToken = req.headers["access-token"];
+    if (!userToken) {
+        return res.status(200).json({messsage: "token is required !!"});
     }
+    try {
+        const decodeUserToken = jwt.verify(userToken, process.env.TOKEN_SECRET, {}, {});
+    } catch (err) {
+        return res.status(200).json({message: "invalid user"});
+    }
+    next();
 }
 
 const userSignUp = async (req, res) => {
@@ -41,16 +39,21 @@ const userSignUp = async (req, res) => {
         }
 
         try {
-            const newPassword = await hashPassword(req.body.password);
+            const encryptedPassword = await hashPassword(req.body.password);
             const user = new Users({
                 name: req.body.name,
                 email: req.body.email,
-                password: newPassword
+                password: encryptedPassword
             });
 
+            const accessToken = await generateAccessToken(req.body.email);
             const result = await user.save();
 
-            return res.status(400).send({message: "user created successfully", result: result});
+            return res.send({
+                message: "user created successfully",
+                accessToken: accessToken
+            });
+
         } catch (err) {
             return res.status(200).send({message: err.message});
         }
@@ -59,5 +62,28 @@ const userSignUp = async (req, res) => {
         return res.status(200).send({message: "Error while creating user", result: err});
     }
 }
+
+const userLogin = async (req, res) => {
+    try {
+        const user = await Users.findOne({
+            email: req.body.email
+        });
+
+        const userPassword = req.body.password;
+        const encryptedPassword = user.password;
+
+        const userDoesExist = comparePassword(userPassword, encryptedPassword);
+        if (userDoesExist) {
+            const accessToken = await generateAccessToken(req.body.email);
+            return res.send({message: "user found", accessToken: accessToken, name: user.name});
+        } else {
+            return res.status(200).send({message: "user NOT found"});
+        }
+
+    } catch (err) {
+        return res.status(200).send({message: "something went wrong while logging in", error: err});
+    }
+}
+
 
 module.exports = {userSignUp, userLogin};
