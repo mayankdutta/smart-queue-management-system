@@ -2,7 +2,7 @@ const Users = require("../Models/Users");
 const bcrypt = require("bcrypt");
 require("dotenv").config()
 
-const SALT = process.env.SALT;
+const SALT = 10;
 
 async function hashPassword(plaintextPassword) {
     // Store hash in the database
@@ -15,9 +15,22 @@ async function comparePassword(plaintextPassword, hash) {
 }
 
 const userLogin = async (req, res) => {
+    try {
+        const user = await Users.findOne({
+            email: req.body.email
+        });
 
+        const userDoesExist = comparePassword(req.body.password, user.password);
+        if (userDoesExist) {
+            return res.status(400).send({message: "user found"});
+        } else {
+            return res.status(200).send({message: "user NOT found"});
+        }
+
+    } catch (err) {
+        return res.status(200).send({message: "something went wrong while logging in", error: err});
+    }
 }
-
 
 const userSignUp = async (req, res) => {
     try {
@@ -27,20 +40,24 @@ const userSignUp = async (req, res) => {
             return res.status(200).send({message: "already exist"});
         }
 
-        const newPassword = await hashPassword(req.body.password);
+        try {
+            const newPassword = await hashPassword(req.body.password);
+            const user = new Users({
+                name: req.body.name,
+                email: req.body.email,
+                password: newPassword
+            });
 
-        const user = new Users({
-            name: req.body.name,
-            email: req.body.email,
-            password: newPassword
-        });
+            const result = await user.save();
 
-        const result = await user.save();
+            return res.status(400).send({message: "user created successfully", result: result});
+        } catch (err) {
+            return res.status(200).send({message: err.message});
+        }
 
-        return res.status(400).send({message: "user created successfully", result: result});
     } catch (err) {
         return res.status(200).send({message: "Error while creating user", result: err});
     }
 }
 
-module.exports = {userSignUp};
+module.exports = {userSignUp, userLogin};
