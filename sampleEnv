@@ -1,4 +1,5 @@
 MONGO_URI="mongodb+srv://root:<password>@cluster0.p3bweb9.mongodb.net/?retryWrites=true&w=majority"
-API_PORT=
+PORT=
+HOST=""
 SALT=1
 TOKEN_SECRET=""
