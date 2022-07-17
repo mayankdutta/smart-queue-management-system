@@ -72,7 +72,7 @@ const userLogin = async (req, res) => {
         const userPassword = req.body.password;
         const encryptedPassword = user.password;
 
-        const userDoesExist = comparePassword(userPassword, encryptedPassword);
+        const userDoesExist = await comparePassword(userPassword, encryptedPassword);
         if (userDoesExist) {
             const accessToken = await generateAccessToken(req.body.email);
             return res.status(200).send({message: "user found", accessToken: accessToken, name: user.name});
