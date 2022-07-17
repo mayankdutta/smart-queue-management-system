@@ -20,12 +20,12 @@ async function generateAccessToken(username) {
 const verifyAccessToken = (req, res, next) => {
     const userToken = req.headers["access-token"];
     if (!userToken) {
-        return res.status(200).json({messsage: "token is required !!"});
+        return res.status(400).json({messsage: "token is required !!"});
     }
     try {
         const decodeUserToken = jwt.verify(userToken, process.env.TOKEN_SECRET, {}, {});
     } catch (err) {
-        return res.status(200).json({message: "invalid user"});
+        return res.status(400).json({message: "invalid user"});
     }
     next();
 }
@@ -35,7 +35,7 @@ const userSignUp = async (req, res) => {
         let userDoesExist = await Users.findOne({email: req.body.email});
 
         if (userDoesExist) {
-            return res.status(200).send({message: "already exist"});
+            return res.status(400).send({message: "already exist"});
         }
 
         try {
@@ -49,17 +49,17 @@ const userSignUp = async (req, res) => {
             const accessToken = await generateAccessToken(req.body.email);
             const result = await user.save();
 
-            return res.send({
+            return res.status(200).send({
                 message: "user created successfully",
                 accessToken: accessToken
             });
 
         } catch (err) {
-            return res.status(200).send({message: err.message});
+            return res.status(400).send({message: err.message});
         }
 
     } catch (err) {
-        return res.status(200).send({message: "Error while creating user", result: err});
+        return res.status(500).send({message: "Error while creating user", result: err});
     }
 }
 
@@ -75,13 +75,13 @@ const userLogin = async (req, res) => {
         const userDoesExist = comparePassword(userPassword, encryptedPassword);
         if (userDoesExist) {
             const accessToken = await generateAccessToken(req.body.email);
-            return res.send({message: "user found", accessToken: accessToken, name: user.name});
+            return res.status(200).send({message: "user found", accessToken: accessToken, name: user.name});
         } else {
-            return res.status(200).send({message: "user NOT found"});
+            return res.status(400).send({message: "user NOT found"});
         }
 
     } catch (err) {
-        return res.status(200).send({message: "something went wrong while logging in", error: err});
+        return res.status(500).send({message: "something went wrong while logging in", error: err});
     }
 }
 
