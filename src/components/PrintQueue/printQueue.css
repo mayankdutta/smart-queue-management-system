@@ -1,0 +1,33 @@
+main {
+}
+
+
+.card {
+    margin: 0 32px 0 32px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: start;
+    row-gap: 8px;
+    column-gap: 8px;
+    flex-shrink: 1;
+}
+
+
+.card .body {
+    padding: 2px 2px 2px 2px;
+}
+
+.doctor {
+    background-color: #A0D995;
+    padding: 2px 2px 2px 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.name {
+}
+
+.rank {
+    background-color: #A10035;
+}
