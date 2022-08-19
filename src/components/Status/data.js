@@ -1,13 +1,13 @@
 export const Data = [
-    {name: "P0", rank: 1, penalty: 1},
-    {name: "P1", rank: 2, penalty: 1},
-    {name: "P2", rank: 3, penalty: 1},
-    {name: "P3", rank: 4, penalty: 1},
-    {name: "P4", rank: 5, penalty: 1},
-    {name: "P5", rank: 6, penalty: 1},
-    {name: "P6", rank: 7, penalty: 1},
-    {name: "P7", rank: 8, penalty: 1},
-    {name: "P8", rank: 9, penalty: 1},
+    {name: "P9999999", rank: 1, penalty: 1, initialOrder: 1},
+    {name: "P7", rank: 2, penalty: 1, initialOrder: 2},
+    {name: "P6", rank: 3, penalty: 1, initialOrder: 3},
+    {name: "P5", rank: 4, penalty: 1, initialOrder: 4},
+    {name: "P4", rank: 5, penalty: 1, initialOrder: 5},
+    {name: "P3", rank: 6, penalty: 1, initialOrder: 6},
+    {name: "P2", rank: 7, penalty: 1, initialOrder: 7},
+    {name: "P1", rank: 8, penalty: 1, initialOrder: 8},
+    {name: "P0", rank: 9, penalty: 1, initialOrder: 9},
 ];
 
 export const moreData = [

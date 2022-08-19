@@ -1,18 +1,16 @@
-h3 {
-    margin-left: 8px;
-    margin-right: 8px;
-}
-
 .authenticate {
     display: flex;
     flex-direction: row;
     flex-grow: 1;
-    row-gap: 4px;
+    column-gap: 8px;
     justify-content: flex-end;
 }
 
 .nav {
-    background-color: yellow;
+    display: flex;
+    border: 1px solid black;
+    gap: 2rem;
+    margin: 8px 2px 2px 8px;
 }
 
 button {

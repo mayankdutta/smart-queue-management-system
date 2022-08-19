@@ -55,25 +55,34 @@ function Status() {
     return (
         <div className={"App"}>
             {/*Initially Appointing the patients*/}
-            <h1>Queue</h1>
-            {data.length ? (
-                <div className="App-body">
-                    Turn of patient : {data[currentPatient].name + "     "}
-                    <div className={"buttons"}>
-                        <button className="button-green" onClick={handlePresent}>Present</button>
-                        <button className="button-red" onClick={handleAbsent}>Absent</button>
-                    </div>
-                </div>
-            ) : (
-                <h5>Empty Clinic.</h5>
-            )}
-            <PrintQueue data={data.slice(1, 31)}/>
 
-            <Form
-                patientName={patientName}
-                setPatientName={setPatientName}
-                submitForm={submitForm}
-            />
+            <div className={"container"}>
+                <div className={"container-left"}>
+                    {data.length ? (
+                        <div className="App-body">
+                            Turn of patient : {data[currentPatient].name + "     "}
+                            <br/>
+                            <div className={"buttons"}>
+                                <button className="button-green" onClick={handlePresent}>Present</button>
+                                <button className="button-red" onClick={handleAbsent}>Absent</button>
+                            </div>
+                        </div>
+                    ) : (
+                        <h5>Empty Clinic.</h5>
+                    )}
+                    <Form
+                        patientName={patientName}
+                        setPatientName={setPatientName}
+                        submitForm={submitForm}
+                    />
+                </div>
+
+                <div className={"container-right"}>
+                    {/* <PrintQueue data={data.slice(1, 31)}/> */}
+                    <PrintQueue data={data}/>
+
+                </div>
+            </div>
         </div>
     );
 }

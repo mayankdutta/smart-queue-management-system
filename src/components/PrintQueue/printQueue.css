@@ -2,23 +2,33 @@ main {
 }
 
 
-.card {
-    margin: 0 32px 0 32px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: start;
-    row-gap: 8px;
-    column-gap: 8px;
-    flex-shrink: 1;
+table {
+    border-spacing: 0.5rem;
+    border-collapse: collapse;
+    position: sticky;
+    top: 0;
+    width: 100%;
 }
 
+thead {
+}
 
-.card .body {
-    padding: 2px 2px 2px 2px;
+tbody {
+}
+
+td,
+th {
+    border: 1px solid #999;
+    padding: 0.5rem;
+}
+
+.table-container {
+    height: calc(100vh - 200px);
+    overflow: scroll;
 }
 
 .doctor {
-    background-color: #A0D995;
+    background-color: #a0d995;
     padding: 2px 2px 2px 2px;
     display: flex;
     align-items: center;
@@ -29,5 +39,5 @@ main {
 }
 
 .rank {
-    background-color: #A10035;
+    background-color: #a10035;
 }

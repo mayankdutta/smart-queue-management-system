@@ -1,20 +1,7 @@
-.App {
-    max-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: calc(10px + 2vmin);
-}
-
-.App-body {
-    margin: 8px 0 8px 0;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    font-size: calc(10px + 2vmin);
-    column-gap: 8px;
+input {
+    color: dodgerblue;
+    border-radius: 4%;
+    font-size: calc(5px + 2vmin);
 }
 
 button {
@@ -24,22 +11,55 @@ button {
     padding: 8px;
     font-size: calc(3px + 2vmin);
     cursor: pointer;
+
+    box-shadow: 3px 5px #000000;
 }
 
+
+.App {
+    margin: 0 18px 0 18px;
+    font-size: calc(10px + 2vmin);
+}
+
+.App-body {
+    margin: 8px 0 8px 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    row-gap: 8px;
+
+    align-items: center;
+    /*font-size: calc(10px + 2vmin);*/
+    column-gap: 8px;
+}
+
+.buttons {
+    display: flex;
+    column-gap: 8px;
+}
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    flex-grow: 1;
+}
+
+.container-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.container-right {
+}
 .button-red {
     background-color: rgb(231, 80, 80);
 }
 
 .button-green {
     background-color: rgb(15, 152, 15);
-}
-
-input {
-    color: #0a2a8b;
-    display: flex;
-    flex-direction: column;
-    border-radius: 3%;
-    font-size: calc(5px + 2vmin);
 }
 
 /* .App-logo {

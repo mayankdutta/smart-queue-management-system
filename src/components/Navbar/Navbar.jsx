@@ -13,12 +13,12 @@ function Navbar() {
     }
 
     return (
-        <div className={"nav"} style={{display: "flex", gap: "2rem", margin: "8px 2px 2px 8px"}}>
+        <div className={"nav"}>
             {
                 !name ?
                     <div className={"authenticate"}>
                         <Link to={"/signup"}>
-                            <h3>signup</h3>
+                            <h3>Signup</h3>
                         </Link>
                         <Link to={"/login"}>
                             <h3>Login</h3>
