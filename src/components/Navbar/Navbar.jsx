@@ -21,7 +21,7 @@ function Navbar() {
                 !name ?
                     <div className={"authenticate"}>
                         <Link to={"/signup"}>
-                            <h3 className={"signup"}> Resgister</h3>
+                            <h3 className={"signup"}> Register</h3>
                         </Link>
                         <Link to={"/login"}>
                             <h3 className={"login"}>Login</h3>

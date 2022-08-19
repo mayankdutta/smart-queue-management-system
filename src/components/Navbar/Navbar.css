@@ -8,8 +8,8 @@
 .nav {
     display: flex;
     gap: 2rem;
-    border: 1px solid black;
-    margin: 8px 0px;
+    margin: 8px 0;
+    padding: 0 8px;
 }
 
 .username {
@@ -27,11 +27,12 @@
     cursor: pointer;
     border: 0;
     border-radius: 4px;
-    font-weight: 600;
-    margin: 0 4px;
     width: auto;
+    font-weight: bold;
+    margin: 0 4px;
     padding: 10px 8px;
-
+    font-size: large;
+    letter-spacing: 2px;
 }
 
 .signup, .login, .logout{
@@ -64,12 +65,8 @@
     background-color: rgba(104, 85, 224, 1);
 }
 
-.home {
-    width: auto;
-    font-weight: bold;
-}
 
 .home:hover {
-    width: auto;
     color: rgba(104, 85, 224, 1);
+    border-bottom: 4px solid #6855e0;
 }

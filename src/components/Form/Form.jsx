@@ -1,15 +1,15 @@
 import React from 'react';
+import "./Form.css"
 
 const Form = ({patientName, setPatientName, submitForm}) => {
     return (
-        <form onSubmit={submitForm} className = "App-body">
-            {/* <label>Patients</label> */}
+        <form onSubmit={submitForm} className="App-body">
             <input type={"text"}
                    placeholder={"Enter patient Name"}
                    value={patientName}
                    onChange={e => setPatientName(e.target.value)}
             />
-            <button className='button-green'>Submit</button>
+            <button> Submit</button>
         </form>
     );
 };

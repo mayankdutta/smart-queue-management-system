@@ -1,5 +1,5 @@
 class PriorityQueue {
-    constructor(comparator = (a, b) => a > b) {
+    constructor(comparator) {
         this.top = 0;
         this._heap = [];
         this._comparator = comparator;

@@ -26,6 +26,7 @@ button {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    flex-wrap: wrap;
 
     row-gap: 8px;
 
@@ -49,16 +50,17 @@ button {
 .container-left {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-around;
 }
 
 .container-right {
 }
-.button-red {
+
+.buttons .button-red {
     background-color: rgb(231, 80, 80);
 }
 
-.button-green {
+.buttons .button-green {
     background-color: rgb(15, 152, 15);
 }
 
