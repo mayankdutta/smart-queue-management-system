@@ -14,22 +14,25 @@ function Navbar() {
 
     return (
         <div className={"nav"}>
+            <Link to={"/"}>
+                <div className={"home"}> home</div>
+            </Link>
             {
                 !name ?
                     <div className={"authenticate"}>
                         <Link to={"/signup"}>
-                            <h3>Signup</h3>
+                            <h3 className={"signup"}> Resgister</h3>
                         </Link>
                         <Link to={"/login"}>
-                            <h3>Login</h3>
+                            <h3 className={"login"}>Login</h3>
                         </Link>
                     </div>
                     :
                     <div className={"authenticate"}>
-                        <h3> {name}</h3>
-                        <button onClick={logout}>
+                        <h3 className={"username"}> {name}</h3>
+                        <h3 className={"logout"} style={{cursor: 'pointer'}} onClick={logout}>
                             Logout
-                        </button>
+                        </h3>
                     </div>
             }
         </div>
