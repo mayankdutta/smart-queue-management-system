@@ -30,7 +30,7 @@ const Heap = (arr) => {
 
         while (!pairwiseQueue.isEmpty()) {
             const poppedElement = pairwiseQueue.pop();
-            data.push({name: poppedElement[0], rank: -1 * poppedElement[1], penalty: poppedElement[2]});
+            data.push({name: poppedElement[0], rank: -1 * poppedElement[1], penalty: poppedElement[2], initialOrder: poppedElement[3]});
         }
     }
     console.warn(data);
