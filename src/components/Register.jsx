@@ -60,6 +60,7 @@ export default function Register() {
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextField
+                  autoFocus
                   required
                   fullWidth
                   id="name"
@@ -74,7 +75,6 @@ export default function Register() {
                   fullWidth
                   id="contact"
                   label="Contact"
-                  autoFocus
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -120,7 +120,6 @@ export default function Register() {
                   fullWidth
                   id="token-number"
                   label="Token Number"
-                  autoFocus
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
