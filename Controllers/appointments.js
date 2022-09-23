@@ -12,7 +12,7 @@ const registerPatient = async (req, res, next) => {
             Address: req.body.address,
             doctor: req.body.doctor,
             registeredBy: req.body.registeredBy,
-            tokenNumber: req.body.tokenNumber,
+            tokenNumber: Patient.count() + 1,
             currentPenalty: req.body.currentPenalty,
         });
         const result = await patient.save();
