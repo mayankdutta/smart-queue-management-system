@@ -6,6 +6,7 @@ import Form from "../Form/Form";
 import "./Status.css"
 import {Data, moreData} from "./data"
 import CountDown from "../Countdown/Countdown"
+import {Link} from "react-router-dom";
 
 
 function Status() {
@@ -71,11 +72,6 @@ function Status() {
                         <button className="button-red" onClick={handleAbsent}>Absent</button>
                     </div>
                 </div>) : (<h5>Empty Clinic.</h5>)}
-                <Form
-                    patientName={patientName}
-                    setPatientName={setPatientName}
-                    submitForm={submitForm}
-                />
                 {/*<h1>Counter: {counter}</h1>*/}
 
             </div>

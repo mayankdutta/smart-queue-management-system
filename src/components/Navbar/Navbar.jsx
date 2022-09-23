@@ -19,6 +19,13 @@ function Navbar() {
             </Link>
             {
                 !name ?
+                    <Link className={"home"} to={"/login"}>Register Patient</Link>
+                    :
+
+                    <Link className={"home"} to={"/register_patient"}>Register Patient</Link>
+            }
+            {
+                !name ?
                     <div className={"authenticate"}>
                         <Link to={"/signup"}>
                             <h3 className={"signup"}> Register</h3>
