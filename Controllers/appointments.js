@@ -60,15 +60,20 @@ const getAllPatient = async (req, res) => {
 }
 
 const getPatient = async (req, res, next) => {
-    console.log(req.body);
+    const registeredBy = req.headers['access-token'];
     try {
-        const patient = await Patient.find({registeredBy: req.body.registeredBy});
+        const patient = await Patient.find({registeredBy: registeredBy});
         res.status(200).send(patient);
     } catch (err) {
         res.status(401).send({
             result: "No such record"
         })
     }
+}
+
+const getSpecificPatient = async(req, res, next) => {
+    const registeredBy = req.headers['access-token'];
+
 }
 
 const putUpdatePatient = async (req, res) => {
@@ -97,4 +102,4 @@ const getUpdatePatient = async (req, res) => {
     }
 }
 
-module.exports = {registerPatient, deletePatient, getPatient, getUpdatePatient, putUpdatePatient, getAllPatient}
+module.exports = {registerPatient, deletePatient, getPatient, getUpdatePatient, putUpdatePatient, getAllPatient, getSpecificPatient}
