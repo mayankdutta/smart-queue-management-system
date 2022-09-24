@@ -17,14 +17,15 @@ const AppointmentsSchema = new mongoose.Schema({
     doctor: String,
     registeredBy: String, // logged in register who registered him.
     tokenNumber: String,
-
+    currentPenalty: String,
+    bodyTemperature: String,
     age: String,
     weight: String,  // can be measured @clinic, if known then filled.
-    bloodPressure: String,  // can be measured @clinic as well as self.
     bloodType: String,
-    oxygenLevel: String, // can be measured @clinic as well as self.
+    bloodPressure: String,  // can be measured @clinic as well as self.
     motive: String,
-    ellaborateCaes: String, // to be filled by compounder, adhoc Case, sucide, chakku, banduuk, ladai, accident., ilaaj se phele FIR., NIL Allowed
+    oxygenLevel: String, // can be measured @clinic as well as self.
+    explainCase: String, // to be filled by compounder, adhoc Case, sucide, chakku, banduuk, ladai, accident., ilaaj se phele FIR., NIL Allowed
     typeOfCase: String,
     /*
     1. Consult

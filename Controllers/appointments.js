@@ -12,8 +12,18 @@ const registerPatient = async (req, res, next) => {
             Address: req.body.address,
             doctor: req.body.doctor,
             registeredBy: req.body.registeredBy,
-            tokenNumber: Patient.count() + 1,
+            tokenNumber: req.body.tokenNumber, //Patient.count() + 1,
             currentPenalty: req.body.currentPenalty,
+            bodyTemperature: req.body.bodyTemperature,
+            age: req.body.age,
+            weight: req.body.weight,
+            bloodType: req.body.bloodType,
+            bloodPressure: req.body.bloodPressure,
+            motive: req.body.motive,
+            oxygenLevel: req.body.oxygenLevel,
+            explainCase: req.body.explainCase,
+            typeOfCase: req.body.typeOfCase,
+
         });
         const result = await patient.save();
         return res.status(200).send({
@@ -50,9 +60,10 @@ const getAllPatient = async (req, res) => {
 }
 
 const getPatient = async (req, res, next) => {
+    console.log(req.body);
     try {
         const patient = await Patient.find({registeredBy: req.body.registeredBy});
-        res.send(patient);
+        res.status(200).send(patient);
     } catch (err) {
         res.status(401).send({
             result: "No such record"
