@@ -8,6 +8,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import {createTheme, ThemeProvider} from '@mui/material/styles'
 import {Backend} from "../backendData";
+
 const link = Backend.link;
 
 const theme = createTheme();
@@ -15,8 +16,9 @@ const theme = createTheme();
 export default function Register() {
 
     const [register, setRegister] = React.useState(false);
+    const authenticationTokenNumber = localStorage.getItem("access-token");
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
         let name = data.get('name')
@@ -24,26 +26,50 @@ export default function Register() {
         let contactNumberFamilyMember = data.get('family-contact')
         let Address = data.get('address')
         let doctor = data.get('doctor')
-        let registeredBy = data.get('register-by')
         let tokenNumber = data.get('token-number')
-        let currentPenalty = data.get('curr-panelty')
 
-        axios.post(`${link}/register_patient`, {
-            name: name,
-            contactNumber: contactNumber,
-            contactNumberFamilyMember: contactNumberFamilyMember,
-            Address: Address,
-            doctor: doctor,
-            registeredBy: registeredBy,
-            tokenNumber: tokenNumber, // to be decided in backend.
-            currentPenalty: 1,
-        })
-            .then(response => {
-                response.status === 'success' ? setRegister(true) : setRegister(false)
-            })
-            .catch(error => {
-                console.log("Error : ", error)
-            })
+        let bodyTemperature = data.get('body-temperature')
+        let age = data.get('age');
+        let weight = data.get('weight');
+        let bloodPressure = data.get('blood-pressure')
+        let bloodType = data.get('blood-type')
+        let motive = data.get('motive');
+        let oxygenLevel = data.get('oxygen-level');
+        let ellaborateCase = data.get('ellaborate-case');
+        let typeOfCase = data.get('type-of-case')
+
+        const headers = {
+            'Content-type': "application/json",
+            'access-token': (authenticationTokenNumber)
+        };
+
+        try {
+            const response = await axios.post(`${link}/register_patient`, {
+                name: name,
+                contactNumber: contactNumber,
+                contactNumberFamilyMember: contactNumberFamilyMember,
+                Address: Address,
+                doctor: doctor,
+                registeredBy:authenticationTokenNumber,
+                tokenNumber: tokenNumber, // to be decided in backend.
+                currentPenalty: 1,
+
+                bodyTemperature: bodyTemperature,
+                age: age,
+                weight: weight,
+                bloodType: bloodType,
+                bloodPressure: bloodPressure,
+                motive: motive,
+                oxygenLevel: oxygenLevel,
+                explainCase: ellaborateCase,
+                typeOfCase: typeOfCase,
+            }, {headers: headers}
+            );
+            console.log(response);
+            // response.status === 200 ? setRegister(true) : setRegister(false)
+        } catch (error) {
+            console.warn(error)
+        }
     };
 
     return (
@@ -72,16 +98,16 @@ export default function Register() {
                                     name="name"
                                 />
                             </Grid>
-                            <Grid item xs={12} sm={6}>
+                            <Grid item xs={12}>
                                 <TextField
-                                    name="contact"
+                                    name="Patient contact number"
                                     required
                                     fullWidth
                                     id="contact"
-                                    label="Contact"
+                                    label="Patient contact number"
                                 />
                             </Grid>
-                            <Grid item xs={12} sm={6}>
+                            <Grid item xs={12}>
                                 <TextField
                                     required
                                     fullWidth
@@ -119,6 +145,14 @@ export default function Register() {
                             </Grid>
                             <Grid item xs={12} sm={6}>
                                 <TextField
+                                    name="body-temperature"
+                                    fullWidth
+                                    id="body-temperature"
+                                    label="body-temperature"
+                                />
+                            </Grid>
+                            <Grid item xs={12} sm={6}>
+                                <TextField
                                     name="token-number"
                                     required
                                     fullWidth
@@ -129,17 +163,17 @@ export default function Register() {
                             <Grid item xs={12} sm={6}>
                                 <TextField
                                     fullWidth
-                                    id="ellaborateCase"
-                                    label="ellaborateCase"
-                                    name="ellaborateCase"
+                                    id="ellaborate-case"
+                                    label="Ellaborate Case"
+                                    name="ellaborate-case"
                                 />
                             </Grid>
                             <Grid item xs={12} sm={6}>
                                 <TextField
                                     fullWidth
-                                    id="type of case"
+                                    id="type-of-case"
                                     label="type of case"
-                                    name="type of case"
+                                    name="type-of-case"
                                 />
                             </Grid>
                             <Grid item xs={12} sm={6}>
@@ -147,7 +181,7 @@ export default function Register() {
                                     fullWidth
                                     id="oxygen-level"
                                     label="Oxygen Level"
-                                    name="Oxygen Level"
+                                    name="oxygen-level"
                                 />
                             </Grid>
                             <Grid item xs={12} sm={6}>
@@ -155,7 +189,7 @@ export default function Register() {
                                     fullWidth
                                     id="blood-pressure"
                                     label="Blood Pressure"
-                                    name="Blood Pressure"
+                                    name="blood-pressure"
                                 />
                             </Grid>
                             <Grid item xs={12} sm={6}>
@@ -173,16 +207,16 @@ export default function Register() {
                                     fullWidth
                                     id="age"
                                     label="Age"
-                                    name="Age"
+                                    name="age"
                                 />
                             </Grid>
                             <Grid item xs={12} sm={6}>
                                 <TextField
                                     required
                                     fullWidth
-                                    id="curr-panelty"
-                                    label="Current Panelty"
-                                    name="curr-panelty"
+                                    id="curr-penalty"
+                                    label="Current Penalty"
+                                    name="curr-penalty"
                                 />
                             </Grid>
                         </Grid>

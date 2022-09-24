@@ -50,6 +50,7 @@ export default function LogIn({ setRefresh }) {
       setRefresh(true);
       setStatus("success");
       navigate("/");
+
     } catch (err) {
       setStatus("failure");
       console.warn(err.message);
