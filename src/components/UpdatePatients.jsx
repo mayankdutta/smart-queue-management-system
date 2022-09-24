@@ -14,7 +14,7 @@ const link = Backend.link;
 
 const theme = createTheme();
 
-export default function Register() {
+export default function Update() {
 
     const [register, setRegister] = React.useState(false);
     const authenticationTokenNumber = localStorage.getItem("access-token");
@@ -47,25 +47,25 @@ export default function Register() {
 
         try {
             const response = await axios.post(`${link}/register_patient`, {
-                name: name,
-                contactNumber: contactNumber,
-                contactNumberFamilyMember: contactNumberFamilyMember,
-                Address: Address,
-                doctor: doctor,
-                registeredBy:authenticationTokenNumber,
-                tokenNumber: tokenNumber, // to be decided in backend.
-                currentPenalty: 1,
+                    name: name,
+                    contactNumber: contactNumber,
+                    contactNumberFamilyMember: contactNumberFamilyMember,
+                    Address: Address,
+                    doctor: doctor,
+                    registeredBy:authenticationTokenNumber,
+                    tokenNumber: tokenNumber, // to be decided in backend.
+                    currentPenalty: 1,
 
-                bodyTemperature: bodyTemperature,
-                age: age,
-                weight: weight,
-                bloodType: bloodType,
-                bloodPressure: bloodPressure,
-                motive: motive,
-                oxygenLevel: oxygenLevel,
-                explainCase: ellaborateCase,
-                typeOfCase: typeOfCase,
-            }, {headers: headers}
+                    bodyTemperature: bodyTemperature,
+                    age: age,
+                    weight: weight,
+                    bloodType: bloodType,
+                    bloodPressure: bloodPressure,
+                    motive: motive,
+                    oxygenLevel: oxygenLevel,
+                    explainCase: ellaborateCase,
+                    typeOfCase: typeOfCase,
+                }, {headers: headers}
             );
             console.log(response);
             navigate('/');

@@ -39,7 +39,7 @@ const PrintQueue = ({data, edit, deleteUserPatient}) => {
                                     <td>{value.rank}</td>
                                 }
                                 {edit &&
-                                    <td>✏️</td>
+                                    <td >✏️</td>
                                 }
                                 {edit &&
                                     <td onClick={() => deleteUserPatient(value._id)}> ⌫ </td>

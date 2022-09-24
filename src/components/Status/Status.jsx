@@ -49,7 +49,7 @@ function Status(url, config) {
 
     const fetchUserPatients = async () => {
         try {
-            const data = await axios.get(`${link}/get_patient/${authenticationTokenNumber}`,
+            const data = await axios.get(`${link}/get_patient`,
                 {headers: headers}
             );
             console.log(data.data);
@@ -62,7 +62,6 @@ function Status(url, config) {
 
 
     const deleteUserPatient = async (patientId) => {
-        console.warn(patientId);
         try {
             let response = await axios.delete(`${link}/delete_patient/${patientId}`, {headers: headers});
             console.log(response);
