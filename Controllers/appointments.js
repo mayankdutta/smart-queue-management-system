@@ -12,7 +12,7 @@ const registerPatient = async (req, res, next) => {
             Address: req.body.address,
             doctor: req.body.doctor,
             registeredBy: req.body.registeredBy,
-            tokenNumber: req.body.tokenNumber, //Patient.count() + 1,
+            tokenNumber: Patient.count() + 1,
             currentPenalty: req.body.currentPenalty,
             bodyTemperature: req.body.bodyTemperature,
             age: req.body.age,
@@ -71,9 +71,20 @@ const getPatient = async (req, res, next) => {
     }
 }
 
-const getSpecificPatient = async(req, res, next) => {
+const getUpdatePatient = async (req, res) => {
     const registeredBy = req.headers['access-token'];
-
+    try {
+        let patient = await Patient.find({
+            registeredBy: registeredBy,
+            _id: req.params.id
+        })
+        res.status(200).send(patient)
+    } catch (err) {
+        res.status(404).send({
+            message: err,
+            result: "No record found"
+        });
+    }
 }
 
 const putUpdatePatient = async (req, res) => {
@@ -89,17 +100,5 @@ const putUpdatePatient = async (req, res) => {
     }
 }
 
-const getUpdatePatient = async (req, res) => {
-    try {
-        let patient = await Patient.findOne({_id: req.params.id})
-        res.send(patient)
-    } catch (err) {
-        res.status(404).send({
-            message: err,
-            result: "No record found"
 
-        });
-    }
-}
-
-module.exports = {registerPatient, deletePatient, getPatient, getUpdatePatient, putUpdatePatient, getAllPatient, getSpecificPatient}
+module.exports = {registerPatient, deletePatient, getPatient, getUpdatePatient, putUpdatePatient, getAllPatient}

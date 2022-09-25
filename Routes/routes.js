@@ -10,7 +10,6 @@ const {
     getUpdatePatient,
     putUpdatePatient,
     getAllPatient,
-    getSpecificPatient
 } = require('../Controllers/appointments')
 
 router.get("/", (req, res, next) => {
@@ -23,7 +22,6 @@ router.post("/signup", userSignUp);
 router.post("/register_patient/", checkAuth, registerPatient);
 router.delete("/delete_patient/:id", checkAuth, deletePatient);
 router.get("/get_patient", checkAuth, getPatient);
-router.get("/specific_patient/:id", checkAuth, getSpecificPatient);
 
 router.put("/update_patient/:id", checkAuth, putUpdatePatient)
     .get("/update_patient/:id", checkAuth, getUpdatePatient);
