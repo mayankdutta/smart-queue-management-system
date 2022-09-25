@@ -8,7 +8,8 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import {createTheme, ThemeProvider} from '@mui/material/styles'
 import {Backend} from "../backendData";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
+import {useEffect} from "react";
 
 const link = Backend.link;
 
@@ -19,6 +20,26 @@ export default function Update() {
     const [register, setRegister] = React.useState(false);
     const authenticationTokenNumber = localStorage.getItem("access-token");
     const navigate = useNavigate();
+    const params = useParams();
+
+    const headers = {
+        'Content-type': "application/json",
+        'access-token': (authenticationTokenNumber)
+    };
+
+    useEffect(() => {
+        const fetchPatientDetails = async () => {
+            try {
+                const response = await axios.get(`${link}/update_patient/${params.id}`, {headers: headers});
+                console.warn(response);
+                // patient data.
+            } catch (err) {
+                console.warn(err);
+            }
+        }
+        console.log("fetching patient data")
+        fetchPatientDetails();
+    }, [])
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -46,7 +67,7 @@ export default function Update() {
         };
 
         try {
-            const response = await axios.post(`${link}/register_patient`, {
+            const response = await axios.post(`${link}/update_patient/${params}`, {
                     name: name,
                     contactNumber: contactNumber,
                     contactNumberFamilyMember: contactNumberFamilyMember,

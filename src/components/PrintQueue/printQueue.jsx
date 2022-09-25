@@ -1,5 +1,10 @@
 import React from "react";
 import "./printQueue.css";
+import UpdatePatients from "../UpdatePatients"
+import {Link} from "react-router-dom"
+import {Backend} from "../../backendData";
+
+const link = Backend.link;
 
 const PrintQueue = ({data, edit, deleteUserPatient}) => {
     console.warn(data);
@@ -39,7 +44,9 @@ const PrintQueue = ({data, edit, deleteUserPatient}) => {
                                     <td>{value.rank}</td>
                                 }
                                 {edit &&
-                                    <td >✏️</td>
+                                    <Link to={"/update_patient/" + value._id}>
+                                        <td>✏️</td>
+                                    </Link>
                                 }
                                 {edit &&
                                     <td onClick={() => deleteUserPatient(value._id)}> ⌫ </td>

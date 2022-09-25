@@ -35,6 +35,7 @@ function Status(url, config) {
 
     useEffect(() => {
         try {
+            fetchAllPatients();
             fetchUserPatients();
         } catch (err) {
             console.warn(err);
@@ -46,6 +47,16 @@ function Status(url, config) {
         //
         // return () => clearInterval(interval);
     }, []);
+
+    const fetchAllPatients = async () => {
+        console.log("fetching all the patients");
+        try {
+            const data = await axios.get(`${link}/patients`);
+            console.log(data.data);
+        } catch (err) {
+            console.log(err);
+        }
+    }
 
     const fetchUserPatients = async () => {
         try {

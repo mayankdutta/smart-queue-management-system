@@ -4,6 +4,7 @@ import RegisterPatient from "./components/RegisterPatients";
 import {BrowserRouter, Routes, Route} from "react-router-dom";
 import LogIn from "./components/Login";
 import SignUp from "./components/SignUp";
+import UpdatePatient from "./components/UpdatePatients"
 import React, {useState} from "react";
 import "./App.css"
 
@@ -19,12 +20,12 @@ function App() {
                         <Route path='/login' element={<LogIn setRefresh={setRefresh}/>}/>
                         <Route path='/signup' element={<SignUp setRefresh={setRefresh}/>}/>
                         <Route path='/register_patient' element={<RegisterPatient/>}/>
+                        <Route path='/update_patient/:id' element={<UpdatePatient/>}/>
                         {
                             /*
                         <Route path='/patients' element={<SIGNUP setRefresh={setRefresh}/>}/>
                         <Route path='/delete_patient' element={<SIGNUP setRefresh={setRefresh}/>}/>
                         <Route path='/get_patient' element={<SIGNUP setRefresh={setRefresh}/>}/>
-                        <Route path='/update_patient/:id' element={<SIGNUP setRefresh={setRefresh}/>}/>
                         <Route path='/register_patient' element={<SIGNUP setRefresh={setRefresh}/>}/>
                              */
                         }
