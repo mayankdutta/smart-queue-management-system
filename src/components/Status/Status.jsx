@@ -1,86 +1,146 @@
 import React from 'react';
 import {useEffect, useState} from "react";
 import useHeap from "../../Hooks/useHeap";
-import PrintQueue from "../printQueue";
-import Form from "../Form";
+import PrintQueue from "../PrintQueue/printQueue";
+import Form from "../Form/Form";
 import "./Status.css"
+import {Data, moreData} from "./data"
+import CountDown from "../Countdown/Countdown"
+import {Link, useNavigate} from "react-router-dom";
+import axios from "axios";
+import {Backend} from "../../backendData";
 
-function Status() {
-    const [appointments, setAppointments] = useState([
-        {name: "P0", rank: 1, penalty: 1},
-        {name: "P1", rank: 2, penalty: 1},
-        {name: "P2", rank: 3, penalty: 1},
-        {name: "P3", rank: 4, penalty: 1},
-        {name: "P4", rank: 5, penalty: 1},
-        {name: "P5", rank: 6, penalty: 1},
-        {name: "P6", rank: 7, penalty: 1},
-        {name: "P7", rank: 8, penalty: 1},
-        {name: "P8", rank: 9, penalty: 1},
-    ]);
 
+const link = Backend.link;
+
+function Status(url, config) {
+    const [appointments, setAppointments] = useState(Data);
     const [patientName, setPatientName] = useState("");
+    const [usersPatients, setUsersPatients] = useState([]);
     const [currentPatient, setCurrentPatient] = useState(0);
+    const [trigger, setTrigger] = useState(0);
+    const navigate = useNavigate();
 
     const data = useHeap(appointments);
 
+
+    const [counter, setCounter] = useState(0);
+
+    const authenticationTokenNumber = localStorage.getItem("access-token");
+    const headers = {
+        'Content-type': "application/json",
+        'access-token': (authenticationTokenNumber)
+    };
+
+
     useEffect(() => {
-    }, [appointments]);
+        try {
+            fetchAllPatients();
+            fetchUserPatients();
+        } catch (err) {
+            console.warn(err);
+        }
+
+        // const interval = setInterval(() => {
+        //     setCounter((prevCounter) => (prevCounter % 5 + 1));
+        // }, 1000);
+        //
+        // return () => clearInterval(interval);
+    }, []);
+
+    const fetchAllPatients = async () => {
+        console.log("fetching all the patients");
+        try {
+            const data = await axios.get(`${link}/patients`);
+            console.log(data.data);
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    const fetchUserPatients = async () => {
+        try {
+            const data = await axios.get(`${link}/get_patient`,
+                {headers: headers}
+            );
+            console.log(data.data);
+            setUsersPatients(data.data);
+        } catch (err) {
+            console.log("couldn't fetch data from backend via get info");
+            console.log(err);
+        }
+    }
+
+
+    const deleteUserPatient = async (patientId) => {
+        try {
+            let response = await axios.delete(`${link}/delete_patient/${patientId}`, {headers: headers});
+            console.log(response);
+            response ? await fetchUserPatients() : alert("couldn't delete data")
+        } catch (err) {
+            console.log(err);
+        }
+    }
 
     const submitForm = (event) => {
         event.preventDefault();
         let lastElement = parseInt(appointments[appointments.length - 1].rank);
-        setAppointments((prevState) => [
-            ...prevState,
-            {name: patientName, rank: lastElement + 1, penalty: 1},
-        ]);
+        setAppointments((prevState) => [...prevState, {name: patientName, rank: lastElement + 1, penalty: 1},]);
     };
     const handlePresent = () => {
         setAppointments((prevState) => data);
         // setAppointments((prevState) => [...prevState, data]);
-        setAppointments((prevState) =>
-            prevState.filter((value, index) => {
-                return index !== currentPatient;
-            })
-        );
+        setAppointments((prevState) => prevState.filter((value, index) => {
+            return index !== currentPatient;
+        }));
+        console.warn("present")
+
+        console.log(appointments)
     };
 
     const handleAbsent = () => {
         setAppointments((prevState) => data);
         // setAppointments((prevState) => [...prevState, data]);
-        setAppointments((prevState) =>
-            prevState.map((value, index) => {
-                return index === currentPatient
-                    ? {
-                        ...value,
-                        rank: value.rank + value.penalty,
-                        penalty: value.penalty + 1,
-                    }
-                    : value;
-            })
-        );
+        setAppointments((prevState) => prevState.map((value, index) => {
+            return index === currentPatient ? {
+                ...value, rank: value.rank + value.penalty, penalty: value.penalty + 1,
+            } : value;
+        }));
         // setAppointments(prevState => prevState.filter(value => value.rank !== null));
         console.log(appointments);
+        console.warn("absent")
+        setTrigger(prev => prev + 1);
     };
+
+
     return (
         <div className={"App"}>
             {/*Initially Appointing the patients*/}
-            <h1>Queue</h1>
-            <PrintQueue data={data} i={currentPatient}/>
 
-            {data.length ? (
-                <div className="App-body">
-                    Turn of patient : {data[currentPatient].name + "     "}
-                    <button className="button-green" onClick={handlePresent}>Present</button>
-                    <button className="button-red" onClick={handleAbsent}>Absent</button>
+            <div className={"container"}>
+                <div className={"container-left"}>
+                    {data.length ? (<div className="App-body">
+                        Turn of patient :
+                        <span>{data[currentPatient].name}</span>
+                        <div className={"buttons"}>
+                            <button className="button-green" onClick={handlePresent}>Present</button>
+                            <button className="button-red" onClick={handleAbsent}>Absent</button>
+                        </div>
+                    </div>) : (<h5>Empty Clinic.</h5>)}
+                    {/*<h1>Counter: {counter}</h1>*/}
+
+                    {
+                        authenticationTokenNumber &&
+                        <PrintQueue data={usersPatients} edit={true} deleteUserPatient={deleteUserPatient}/>
+                    }
+
                 </div>
-            ) : (
-                <h5>Empty Clinic.</h5>
-            )}
-            <Form
-                patientName={patientName}
-                setPatientName={setPatientName}
-                submitForm={submitForm}
-            />
+                <div className={"container-right"}>
+                    {/* <PrintQueue data={data.slice(1, 31)}/> */}
+                    <PrintQueue data={data}/>
+                </div>
+            </div>
+
         </div>
     );
 }

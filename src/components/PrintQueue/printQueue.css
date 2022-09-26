@@ -1,0 +1,44 @@
+main {
+}
+
+
+table {
+    border-spacing: 0.5rem;
+    border-collapse: collapse;
+    position: sticky;
+    top: 0;
+    width: 100%;
+}
+
+thead {
+}
+
+tbody {
+}
+
+td,
+th {
+    border: 1px solid #999;
+    padding: 0.5rem;
+}
+
+.table-container {
+    height: calc(100vh - 200px);
+    overflow: scroll;
+}
+
+.doctor {
+    border: 4px solid #a0d995;
+    border-radius: 25px;
+    padding: 2px 2px 2px 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.name {
+}
+
+.rank {
+    background-color: #a10035;
+}

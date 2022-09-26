@@ -1,55 +1,67 @@
-.App {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: calc(10px + 2vmin);
-}
-
-.App-body{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    font-size: calc(10px + 2vmin);
-    margin: 1.5%;
-    font-weight: bold;
-}
-
-.button-red{
-    background-color: rgb(231, 80, 80);
-    color : white;
-    border: none;
-    border-radius: 7%;
-    margin: 5%;
-    padding: 2%;
-    padding-right: 15%;
-    font-size: calc(3px + 2vmin);
-    cursor: pointer;
-}
-
-.button-green{
-    background-color: rgb(15, 152, 15);
-    color : white;
-    border: none;
-    border-radius: 7%;
-    margin: 5%;
-    padding: 2%;
-    padding-right: 15%;
-    font-size: calc(3px + 2vmin);
-    cursor: pointer;
-}
-
-input{
-    color : #0a2a8b;
-    display: flex;
-    flex-direction: column;
-    border-radius: 3%;
-    margin: 5%;
-    margin-bottom : 3%;
+input {
+    color: dodgerblue;
+    border-radius: 4%;
     font-size: calc(5px + 2vmin);
-    padding: 4%;
+}
+
+button {
+    color: white;
+    border: none;
+    border-radius: 7%;
+    padding: 8px;
+    font-size: calc(3px + 2vmin);
+    cursor: pointer;
+
+    box-shadow: 3px 5px #000000;
+}
+
+
+.App {
+    margin: 0 18px 0 18px;
+    font-size: calc(10px + 2vmin);
+}
+
+.App-body {
+    margin: 8px 0 8px 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex-wrap: wrap;
+
+    row-gap: 8px;
+
+    align-items: center;
+    /*font-size: calc(10px + 2vmin);*/
+    column-gap: 8px;
+}
+
+.buttons {
+    display: flex;
+    column-gap: 8px;
+}
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    flex-grow: 1;
+}
+
+.container-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.container-right {
+}
+
+.buttons .button-red {
+    background-color: rgb(231, 80, 80);
+}
+
+.buttons .button-green {
+    background-color: rgb(15, 152, 15);
 }
 
 /* .App-logo {
