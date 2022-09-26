@@ -1,7 +1,16 @@
 const express = require('express');
 const router = express.Router();
 
+const checkAuth = require("../middleware/checkAuth")
 const {userSignUp, userLogin} = require('../Controllers/users')
+const {
+    registerPatient,
+    deletePatient,
+    getPatient,
+    getUpdatePatient,
+    putUpdatePatient,
+    getAllPatient,
+} = require('../Controllers/appointments')
 
 router.get("/", (req, res, next) => {
     res.status(200).json({message: "working"});
@@ -10,15 +19,13 @@ router.get("/", (req, res, next) => {
 router.post("/login", userLogin);
 router.post("/signup", userSignUp);
 
-// router.get("/getinfo", checkAuth, getInfo);
-// router.post("/addinfo", checkAuth, addInfo);
+router.post("/register_patient/", checkAuth, registerPatient);
+router.delete("/delete_patient/:id", checkAuth, deletePatient);
+router.get("/get_patient", checkAuth, getPatient);
 
-// router.put("/updateinfo/:id", checkAuth, putUpdateInfo).get("/updateinfo/:id", checkAuth, getUpdateInfo);
+router.put("/update_patient/:id", checkAuth, putUpdatePatient)
+    .get("/update_patient/:id", checkAuth, getUpdatePatient);
 
-// router.delete("/deleteinfo/:id", checkAuth, deleteInfo);
-
-// router.delete("/updateuser/:id", (req, res, next) => {
-
-// });
+router.get("/patients", getAllPatient);
 
 module.exports = router;
