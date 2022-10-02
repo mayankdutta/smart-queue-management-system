@@ -126,6 +126,7 @@ export default function Update() {
                             </Grid>
                             <Grid item xs={12}>
                                 <TextField
+
                                     name="Patient contact number"
                                     required
                                     fullWidth
@@ -196,21 +197,22 @@ export default function Update() {
                             <Grid item xs={12} sm={6}>
                                 <TextField
                                     fullWidth
-                                    id="ellaborate-case"
-                                    label="Ellaborate Case"
-                                    name="ellaborate-case"
-                                    value={userData.explainCase}
-                                />
-                            </Grid>
-                            <Grid item xs={12} sm={6}>
-                                <TextField
-                                    fullWidth
                                     id="type-of-case"
                                     label="type of case"
                                     name="type-of-case"
                                     value={userData.typeOfCase}
                                 />
                             </Grid>
+                            <Grid item xs={12} sm={6}>
+                                <TextField
+                                    fullWidth
+                                    id="ellaborate-case"
+                                    label="Ellaborate Case"
+                                    name="ellaborate-case"
+                                    value={userData.explainCase}
+                                />
+                            </Grid>
+
                             <Grid item xs={12} sm={6}>
                                 <TextField
                                     fullWidth

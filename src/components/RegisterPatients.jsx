@@ -99,6 +99,7 @@ export default function Register() {
                                     id="name"
                                     label="Name"
                                     name="name"
+
                                 />
                             </Grid>
                             <Grid item xs={12}>
@@ -166,19 +167,20 @@ export default function Register() {
                             <Grid item xs={12} sm={6}>
                                 <TextField
                                     fullWidth
-                                    id="ellaborate-case"
-                                    label="Ellaborate Case"
-                                    name="ellaborate-case"
-                                />
-                            </Grid>
-                            <Grid item xs={12} sm={6}>
-                                <TextField
-                                    fullWidth
                                     id="type-of-case"
                                     label="type of case"
                                     name="type-of-case"
                                 />
                             </Grid>
+                            <Grid item xs={12} sm={6}>
+                                <TextField
+                                    fullWidth
+                                    id="ellaborate-case"
+                                    label="Ellaborate Case"
+                                    name="ellaborate-case"
+                                />
+                            </Grid>
+
                             <Grid item xs={12} sm={6}>
                                 <TextField
                                     fullWidth
