@@ -17,7 +17,7 @@ app.use(function (req, res, next) {
   next();
 });
 
-// app.use(cors());
+app.use(cors());
 
 app.use(express.json());
 
