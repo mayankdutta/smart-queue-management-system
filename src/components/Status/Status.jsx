@@ -13,15 +13,15 @@ import PriorityQueue from "../../Algorithm/Heap.jsx";
 
 const LINK = Backend.link;
 const DEFAULT_COUNTER = Backend.counter;
+const tribonacci = [1, 2, 4, 7, 13, 24, 44, 81, 149, 274, 504, 927];
 
 function Status(url, config) {
   const [appointments, setAppointments] = useState(Data);
   const [patientName, setPatientName] = useState("");
   const [usersPatients, setUsersPatients] = useState([]);
   const [currentPatient, setCurrentPatient] = useState(0);
-  const [trigger, setTrigger] = useState(0);
+  const [occupied, setOccupied] = useState(false);
   const navigate = useNavigate();
-
   const [time, setTime] = useState(1);
 
   const authenticationTokenNumber = localStorage.getItem("access-token");
@@ -39,19 +39,21 @@ function Status(url, config) {
 
   useEffect(() => {
     const countTime = setInterval(() => {
-      setTime((prev) => (prev % DEFAULT_COUNTER) + 1);
+      setTime((prev) => (occupied ? 1 : prev % DEFAULT_COUNTER) + 1);
     }, 1000);
     return () => clearTimeout(countTime);
-  }, [time]);
+  }, [time, occupied]);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      handleAbsent();
+      if (!occupied) {
+        handleAbsent();
+      }
       setTime(1);
     }, DEFAULT_COUNTER * 1000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [occupied]);
 
   const fetchAllPatients = async () => {
     console.log("fetching all the patients");
@@ -114,8 +116,8 @@ function Status(url, config) {
         if (index === currentPatient) {
           return {
             ...value,
-            rank: value.rank + value.penalty,
-            penalty: value.penalty + 1,
+            rank: Math.min(value.rank + tribonacci[value.penalty], 40),
+            penalty: Math.min(value.penalty + 1, tribonacci.length - 1),
           };
         } else {
           return value;
@@ -131,7 +133,6 @@ function Status(url, config) {
     }
 
     setAppointments((prev) => prev.sort(compare));
-    setTrigger((prev) => prev + 1);
   };
 
   return (
@@ -143,22 +144,49 @@ function Status(url, config) {
           {appointments.length ? (
             <div className="App-body">
               Turn of patient :<span>{appointments[currentPatient].name}</span>
+              <div>
+                {occupied ? (
+                  <h2 style={{ color: "green" }}>Clinic occupied</h2>
+                ) : (
+                  <h2 style={{ color: "red" }}>Empty</h2>
+                )}
+              </div>
               <div className={"buttons"}>
-                <button className="button-green" onClick={handlePresent}>
-                  Present
-                </button>
-                <button className="button-red" onClick={handleAbsent}>
-                  Absent
-                </button>
+            { !occupied && <button
+                  className="button-red"
+                  onClick={() => {
+                    handlePresent();
+                    setOccupied(!occupied);
+                  }}
+                >
+              send patient inside
+                </button> }
+            { occupied && <button
+                  className="button-green"
+                  onClick={() => {
+                    setTime(1);
+                    setOccupied(!occupied);
+                  }}
+                >
+                patient done.
+                </button> }
               </div>
             </div>
           ) : (
-            <h5>Empty Clinic.</h5>
+            <h5> No appointments for today.</h5>
           )}
-          <div style= {{display: "flex", justifyContent: "center", alignItems: "center"}}>
-            <h3>Counter: </h3>
-            <h1>{time}</h1>
-          </div>
+          {!occupied && (
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <h3>Counter: </h3>
+              <h1>{time}</h1>
+            </div>
+          )}
 
           {authenticationTokenNumber && (
             <PrintQueue
