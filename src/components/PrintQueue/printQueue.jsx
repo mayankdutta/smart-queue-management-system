@@ -7,7 +7,7 @@ import {Backend} from "../../backendData";
 const link = Backend.link;
 
 const PrintQueue = ({data, edit, deleteUserPatient}) => {
-    console.warn(data);
+    // console.warn(data);
     return (
         <main>
             <div className={"doctor"}>Doctor</div>
