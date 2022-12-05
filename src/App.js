@@ -3,6 +3,7 @@ import Status from "./components/Status/Status";
 import RegisterPatient from "./components/RegisterPatients";
 import {BrowserRouter, Routes, Route} from "react-router-dom";
 import LogIn from "./components/Login";
+import Details from './components/detailsPage'
 import SignUp from "./components/SignUp";
 import UpdatePatient from "./components/UpdatePatients"
 import React, {useState} from "react";
@@ -21,6 +22,7 @@ function App() {
                         <Route path='/signup' element={<SignUp setRefresh={setRefresh}/>}/>
                         <Route path='/register_patient' element={<RegisterPatient/>}/>
                         <Route path='/update_patient/:id' element={<UpdatePatient/>}/>
+                        <Route path='/details' element={<Details/>}/>
                         {
                             /*
                         <Route path='/patients' element={<SIGNUP setRefresh={setRefresh}/>}/>
