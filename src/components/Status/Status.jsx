@@ -13,7 +13,7 @@ import PriorityQueue from "../../Algorithm/Heap.jsx";
 
 const LINK = Backend.link;
 const DEFAULT_COUNTER = Backend.counter;
-const tribonacci = [1, 2, 4, 7, 13, 24, 44, 81, 149, 274, 504, 927];
+const tribonacci = [1, 3, 5, 9, 17, 31, 55, 81, 149, 274, 504, 927];
 
 function Status(url, config) {
     const [appointments, setAppointments] = useState(Data);

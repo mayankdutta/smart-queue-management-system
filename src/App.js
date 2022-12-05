@@ -23,6 +23,7 @@ function App() {
                         <Route path='/register_patient' element={<RegisterPatient/>}/>
                         <Route path='/update_patient/:id' element={<UpdatePatient/>}/>
                         <Route path='/details' element={<Details/>}/>
+
                         {
                             /*
                         <Route path='/patients' element={<SIGNUP setRefresh={setRefresh}/>}/>

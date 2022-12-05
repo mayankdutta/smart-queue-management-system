@@ -26,7 +26,7 @@ const PrintQueue = ({data, edit, deleteUserPatient}) => {
                         return (
                             <tr key={index}>
                                 <td>{index + 1}</td>
-                                <td className={"name"}>{value.name} </td>
+                                <td className={"name"}><Link to={"/details"}>{value.name}</Link> </td>
                                 {!edit &&
                                     <td
                                         className={"rank"}
