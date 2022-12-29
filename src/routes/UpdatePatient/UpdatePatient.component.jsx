@@ -28,8 +28,6 @@ export default function Update() {
         });
         setFormFields({
           ...response.data[0],
-          description: response.data[0].explainCase,
-          address: response.data[0].Address,
         });
       } catch (err) {
         console.warn(err);
@@ -57,8 +55,6 @@ export default function Update() {
         `${LINK}/update_patient/${params.id}`,
         {
           ...formFields,
-          motive: "no motive as of now",
-          explainCase: formFields.description,
           registeredBy: authenticationTokenNumber,
         },
         { headers: headers }

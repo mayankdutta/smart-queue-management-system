@@ -30,9 +30,6 @@ export default function Register() {
         `${LINK}/register_patient`,
         {
           ...formFields,
-          motive: "",
-          Address: formFields.address,
-          explainCase: formFields.description,
           registeredBy: authenticationTokenNumber,
           currentPenalty: 1,
         },
