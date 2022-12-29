@@ -10,6 +10,7 @@ const {
     getUpdatePatient,
     putUpdatePatient,
     getAllPatient,
+    getUsers
 } = require('../Controllers/appointments')
 
 router.get("/", (req, res, next) => {
@@ -27,5 +28,6 @@ router.put("/update_patient/:id", checkAuth, putUpdatePatient)
     .get("/update_patient/:id", checkAuth, getUpdatePatient);
 
 router.get("/patients", getAllPatient);
+router.get("/users", getUsers);
 
 module.exports = router;

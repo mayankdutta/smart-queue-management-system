@@ -1,4 +1,6 @@
 const Patient = require("../Models/Appointments");
+const Users = require("../Models/Users");
+
 require("dotenv").config()
 
 const registerPatient = async (req, res, next) => {
@@ -100,5 +102,16 @@ const putUpdatePatient = async (req, res) => {
     }
 }
 
+const getUsers = async (req, res) => {
+    try {
+        const data = await Users.find();
+        res.status(200).send(data);
+    } catch (err) {
+        res.status(404).send({
+            result: "User not found",
+            message: err
+        })
+    }
+}
 
-module.exports = {registerPatient, deletePatient, getPatient, getUpdatePatient, putUpdatePatient, getAllPatient}
+module.exports = {registerPatient, deletePatient, getPatient, getUpdatePatient, putUpdatePatient, getAllPatient, getUsers}
