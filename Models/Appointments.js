@@ -13,7 +13,7 @@ const AppointmentsSchema = new mongoose.Schema({
     name: String,
     contactNumber: String,
     contactNumberFamilyMember: String,
-    Address: String,
+    address: String,
     doctor: String,
     registeredBy: String, // logged in register who registered him.
     tokenNumber: String,
@@ -23,10 +23,10 @@ const AppointmentsSchema = new mongoose.Schema({
     weight: String,  // can be measured @clinic, if known then filled.
     bloodType: String,
     bloodPressure: String,  // can be measured @clinic as well as self.
-    motive: String,
+    // motive: String,
     oxygenLevel: String, // can be measured @clinic as well as self.
-    explainCase: String, // to be filled by compounder, adhoc Case, sucide, chakku, banduuk, ladai, accident., ilaaj se phele FIR., NIL Allowed
-    typeOfCase: String,
+    description: String, // to be filled by compounder, adhoc Case, sucide, chakku, banduuk, ladai, accident., ilaaj se phele FIR., NIL Allowed
+    // typeOfCase: String,
     /*
     1. Consult
     2. adhocCase,
@@ -42,3 +42,14 @@ const AppointmentsSchema = new mongoose.Schema({
 
 const Appointments = mongoose.model('Appointments', AppointmentsSchema)
 module.exports = Appointments;
+
+
+
+
+
+
+
+
+
+
+
