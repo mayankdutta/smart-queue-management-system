@@ -41,14 +41,11 @@ export default function Register() {
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    console.log("printing name: ", name, [name]);
-    console.log("printing value: ", value);
     setFormFields({ ...formFields, [name]: value });
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
 
     const headers = {
       "Content-type": "application/json",
@@ -61,15 +58,14 @@ export default function Register() {
         {
           ...formFields,
           motive: "",
+          Address: formFields.address,
           explainCase: formFields.description,
           registeredBy: authenticationTokenNumber,
-          currentPenalty: 1
+          currentPenalty: 1,
         },
         { headers: headers }
       );
-      console.log(response);
       navigate("/");
-      // response.status === 200 ? setRegister(true) : setRegister(false)
     } catch (error) {
       console.warn(error);
     }
@@ -103,20 +99,24 @@ export default function Register() {
             sx={{ mt: 3 }}
           >
             <Grid container spacing={2}>
-              {Object.keys(defaultFormFields).map((defaultFormField) => 
-                  <Grid item xs={12} sm = {defaultFormField.length < 6 ? 6 : 12} key={defaultFormField}>
-                    <TextField
-                      fullWidth
-                      required
-                      id={defaultFormField}
-                      label={titleCase(defaultFormField)}
-                      name={defaultFormField}
-                      value={formFields.key}
-                      onChange={handleChange}
-                    />
-                  </Grid>
-
-              )}
+              {Object.keys(defaultFormFields).map((defaultFormField) => (
+                <Grid
+                  item
+                  xs={12}
+                  sm={defaultFormField.length < 6 ? 6 : 12}
+                  key={defaultFormField}
+                >
+                  <TextField
+                    fullWidth
+                    required
+                    id={defaultFormField}
+                    label={titleCase(defaultFormField)}
+                    name={defaultFormField}
+                    value={formFields[defaultFormField]}
+                    onChange={handleChange}
+                  />
+                </Grid>
+              ))}
 
               <Grid item xs={12} sm={12}>
                 <Button
