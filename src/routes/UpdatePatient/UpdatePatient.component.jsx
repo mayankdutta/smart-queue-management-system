@@ -1,17 +1,19 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import axios from "axios";
 
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
 import PatientForm from "../../components/PatientForm/PatientForm.component";
 
-import {SERVER_URI, DEFAULT_FORM_FIELDS } from "../../backendData";
+import { SERVER_URI, DEFAULT_FORM_FIELDS } from "../../backendData";
+import { PatientContext } from "../../contexts/patient.context";
 
 export default function Update() {
   const [formFields, setFormFields] = useState(DEFAULT_FORM_FIELDS);
   const authenticationTokenNumber = localStorage.getItem("access-token");
   const navigate = useNavigate();
   const params = useParams();
+  const { appointments, updatePatient } = useContext(PatientContext);
 
   const headers = {
     "Content-type": "application/json",
@@ -21,9 +23,12 @@ export default function Update() {
   useEffect(() => {
     const fetchPatientDetails = async () => {
       try {
-        let response = await axios.get(`${SERVER_URI}/update_patient/${params.id}`, {
-          headers: headers,
-        });
+        let response = await axios.get(
+          `${SERVER_URI}/update_patient/${params.id}`,
+          {
+            headers: headers,
+          }
+        );
         setFormFields({
           ...response.data[0],
         });
@@ -43,25 +48,14 @@ export default function Update() {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const headers = {
-      "Content-type": "application/json",
-      "access-token": authenticationTokenNumber,
-    };
-
-    try {
-      const response = await axios.put(
-        `${SERVER_URI}/update_patient/${params.id}`,
-        {
-          ...formFields,
-          registeredBy: authenticationTokenNumber,
-        },
-        { headers: headers }
-      );
-      console.log(response);
-      navigate("/");
-    } catch (error) {
-      console.warn(error);
-    }
+    updatePatient(
+      {
+        ...formFields,
+        currentPenalty: appointments[appointments.length - 1].rank,
+      },
+      params.id
+    );
+    navigate("/");
   };
 
   return (

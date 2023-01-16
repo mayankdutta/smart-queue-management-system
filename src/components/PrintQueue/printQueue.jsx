@@ -1,8 +1,12 @@
 import React from "react";
 import "./printQueue.css";
 import { Link } from "react-router-dom";
+import { PatientContext } from "../../contexts/patient.context";
+import {useContext} from 'react';
 
-const PrintQueue = ({ data, edit, deleteUserPatient }) => {
+const PrintQueue = ({ data, edit }) => {
+  const { deleteUserPatient } =useContext(PatientContext);
+
   return (
     <main>
       <h2>{edit ? <> Your Patients </> : <> All Patients </>}</h2>
@@ -14,8 +18,8 @@ const PrintQueue = ({ data, edit, deleteUserPatient }) => {
               <th>S. no</th>
               <th>Name</th>
               <th>Rank</th>
-              {deleteUserPatient && <th>Edit</th>}
-              {deleteUserPatient && <th>Delete</th>}
+              {edit && <th>Edit</th>}
+              {edit && <th>Delete</th>}
             </tr>
           </thead>
 

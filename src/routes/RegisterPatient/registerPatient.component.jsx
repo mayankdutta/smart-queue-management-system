@@ -1,14 +1,16 @@
-import { useState } from "react";
-import axios from "axios";
-
+import { useContext, useState } from "react";
+import { PatientContext } from "../../contexts/patient.context";
 import PatientForm from "../../components/PatientForm/PatientForm.component";
-import { SERVER_URI, DEFAULT_FORM_FIELDS } from "../../backendData";
+import { DEFAULT_FORM_FIELDS } from "../../backendData";
 import { useNavigate } from "react-router-dom";
 
 export default function Register() {
   const [formFields, setFormFields] = useState(DEFAULT_FORM_FIELDS);
   const authenticationTokenNumber = localStorage.getItem("access-token");
   const navigate = useNavigate();
+  const { appointments, addNewPatient } = useContext(PatientContext);
+
+  // console.log(appointments.length, appointments[appointments.length - 1].rank);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -23,21 +25,15 @@ export default function Register() {
       "access-token": authenticationTokenNumber,
     };
 
-    try {
-      await axios.post(
-        `${SERVER_URI}/register_patient`,
-        {
-          ...formFields,
-          registeredBy: authenticationTokenNumber,
-          currentPenalty: 1,
-        },
-        { headers: headers }
-      );
-      navigate("/");
-    } catch (error) {
-      console.warn(error);
-    }
+    addNewPatient({
+      ...formFields,
+      registeredBy: authenticationTokenNumber,
+      currentPenalty: appointments[appointments.length - 1].rank,
+    });
+
+    navigate("/");
   };
+
   return (
     <PatientForm
       handleChange={handleChange}

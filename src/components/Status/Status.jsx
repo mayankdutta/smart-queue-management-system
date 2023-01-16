@@ -1,40 +1,23 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useEffect, useState } from "react";
-import useHeap from "../../Hooks/useHeap";
 import PrintQueue from "../PrintQueue/printQueue";
-import Form from "../Form/Form";
 import "./Status.css";
-import { Data, moreData } from "./data";
-import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
-import { SERVER_URI, DEFAULT_COUNTER } from "../../backendData";
-import PriorityQueue from "../../Algorithm/Heap.jsx";
+import { DEFAULT_COUNTER } from "../../backendData";
 import Button from "../Button/button.component";
 import Counter from "../Counter/counter.component";
+import { PatientContext } from "../../contexts/patient.context";
 
 const tribonacci = [1, 3, 5, 9, 17, 31, 55, 81, 149, 274, 504, 927];
+const currentPatient = 0;
 
 function Status() {
-  const [appointments, setAppointments] = useState(Data);
-  const [patientName, setPatientName] = useState("");
-  const [usersPatients, setUsersPatients] = useState([]);
-  const [currentPatient, setCurrentPatient] = useState(0);
   const [occupied, setOccupied] = useState(false);
-  const navigate = useNavigate();
   const [time, setTime] = useState(1);
 
-  const authenticationTokenNumber = localStorage.getItem("access-token");
-  const headers = {
-    "Content-type": "application/json",
-    "access-token": authenticationTokenNumber,
-  };
+  const { appointments, setAppointments, usersPatients } =
+    useContext(PatientContext);
 
-  useEffect(() => {
-    try {
-      fetchAllPatients();
-      fetchUserPatients();
-    } catch (err) {}
-  }, []);
+  const authenticationTokenNumber = localStorage.getItem("access-token");
 
   useEffect(() => {
     const countTime = setInterval(() => {
@@ -54,71 +37,6 @@ function Status() {
     return () => clearInterval(interval);
   }, [occupied]);
 
-  const fetchAllPatients = async () => {
-    console.log("fetching all the patients");
-    try {
-      const data = await axios.get(`${SERVER_URI}/patients`);
-
-      let newData = [];
-      for (let i = 0; i < Data.length; i++) {
-        newData.push(Data[i]);
-      }
-      data.data.map((d) => {
-        newData.push({
-          name: d.name,
-          rank: Data.length + newData.length + 1,
-          penalty: 1,
-          initialOrder: Data.length + newData.length + 1,
-        });
-      });
-
-      setAppointments(newData);
-    } catch (err) {
-      console.log(err);
-      handleAbsent();
-    }
-  };
-
-  const fetchUserPatients = async () => {
-    console.log("fetching user patient");
-    try {
-      const data = await axios.get(`${SERVER_URI}/get_patient`, {
-        headers: headers,
-      });
-      setUsersPatients(data.data);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  const deleteUserPatient = async (patientId) => {
-    try {
-      let response = await axios.delete(
-        `${SERVER_URI}/delete_patient/${patientId}`,
-        {
-          headers: headers,
-        }
-      );
-      if (response) {
-        await fetchAllPatients();
-        await fetchUserPatients();
-      } else {
-        alert("couldn't delete contact to administrator");
-      }
-      // response ? await fetchUserPatients() : alert("couldn't delete data");
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  const submitForm = (event) => {
-    event.preventDefault();
-    let lastElement = parseInt(appointments[appointments.length - 1].rank);
-    setAppointments((prevState) => [
-      ...prevState,
-      { name: patientName, rank: lastElement + 1, penalty: 1 },
-    ]);
-  };
   const handlePresent = () => {
     setAppointments((prevState) =>
       prevState.filter((value, index) => {
@@ -173,11 +91,7 @@ function Status() {
           {!occupied && <Counter time={time} />}
 
           {authenticationTokenNumber && (
-            <PrintQueue
-              data={usersPatients}
-              edit={true}
-              deleteUserPatient={deleteUserPatient}
-            />
+            <PrintQueue data={usersPatients} edit={true} />
           )}
         </div>
         <div className={"container-right"}>
