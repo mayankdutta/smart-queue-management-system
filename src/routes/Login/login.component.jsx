@@ -14,8 +14,7 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { SERVER_URI } from "../../backendData";
 import { useEffect } from "react";
-import Alert from "@mui/material/Alert";
-import Stack from "@mui/material/Stack";
+import Toast from "../../components/toast/toast.components";
 
 const theme = createTheme();
 
@@ -36,6 +35,7 @@ export default function LogIn({ setRefresh }) {
     const data = new FormData(event.currentTarget);
     let email = data.get("email");
     let password = data.get("password");
+
     setStatus((prev) => (prev = "loading"));
 
     try {
@@ -100,6 +100,7 @@ export default function LogIn({ setRefresh }) {
                 id="password"
                 autoComplete="current-password"
               />
+
               <Button
                 type="submit"
                 fullWidth
@@ -108,6 +109,7 @@ export default function LogIn({ setRefresh }) {
               >
                 Log In
               </Button>
+
               <Grid container>
                 <Grid item xs>
                   {/* <Link href="#" variant="body2">
@@ -124,27 +126,7 @@ export default function LogIn({ setRefresh }) {
           </Box>
         </Container>
       </ThemeProvider>
-
-      <Stack
-        spacing={2}
-        sx={{ width: "15%", marginLeft: "8px", cursor: "pointer" }}
-        onClick={() => setStatus("")}
-      >
-        {status === "loading" && (
-          <Alert severity="info">Loading Please Wait</Alert>
-        )}
-        {status === "failure" && (
-          <Alert severity="error">Wrong credentials</Alert>
-        )}
-        {status === "warning" && (
-          <Alert severity="warning">
-            This is an info alert — check it out!
-          </Alert>
-        )}
-        {status === "success" && (
-          <Alert severity="success">Successfully Logged in</Alert>
-        )}
-      </Stack>
+      <Toast status={status} setStatus={setStatus} />
     </>
   );
 }

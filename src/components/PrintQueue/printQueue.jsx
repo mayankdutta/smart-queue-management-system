@@ -2,10 +2,11 @@ import React from "react";
 import "./printQueue.css";
 import { Link } from "react-router-dom";
 import { PatientContext } from "../../contexts/patient.context";
-import {useContext} from 'react';
+import { useContext } from "react";
 
 const PrintQueue = ({ data, edit }) => {
-  const { deleteUserPatient } =useContext(PatientContext);
+  console.log("data: ", data);
+  const { deleteUserPatient } = useContext(PatientContext);
 
   return (
     <main>
@@ -29,7 +30,7 @@ const PrintQueue = ({ data, edit }) => {
                 <tr key={index}>
                   <td>{index + 1}</td>
                   <td className={"name"}>
-                    <Link to={"/details"}>{value.name}</Link>{" "}
+                    <Link to={"/details"}>{value.name}</Link>
                   </td>
                   <td>{value.rank}</td>
                   {edit && (

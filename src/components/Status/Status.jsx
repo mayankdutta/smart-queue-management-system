@@ -7,17 +7,16 @@ import Button from "../Button/button.component";
 import Counter from "../Counter/counter.component";
 import { PatientContext } from "../../contexts/patient.context";
 
-const tribonacci = [1, 3, 5, 9, 17, 31, 55, 81, 149, 274, 504, 927];
 const currentPatient = 0;
 
 function Status() {
   const [occupied, setOccupied] = useState(false);
   const [time, setTime] = useState(1);
 
-  const { appointments, setAppointments, usersPatients } =
-    useContext(PatientContext);
-
   const authenticationTokenNumber = localStorage.getItem("access-token");
+
+  const { appointments, handleAbsent, usersPatients } =
+    useContext(PatientContext);
 
   useEffect(() => {
     const countTime = setInterval(() => {
@@ -29,44 +28,13 @@ function Status() {
   useEffect(() => {
     const interval = setInterval(() => {
       if (!occupied) {
-        handleAbsent();
+        handleAbsent(currentPatient);
       }
       setTime(1);
     }, DEFAULT_COUNTER * 1000);
 
     return () => clearInterval(interval);
   }, [occupied]);
-
-  const handlePresent = () => {
-    setAppointments((prevState) =>
-      prevState.filter((value, index) => {
-        return index !== currentPatient;
-      })
-    );
-    console.warn("present");
-  };
-
-  const handleAbsent = () => {
-    setAppointments((prevState) =>
-      prevState.map((value, index) => {
-        if (index === currentPatient) {
-          return {
-            ...value,
-            rank: Math.min(value.rank + tribonacci[value.penalty], 40),
-            penalty: Math.min(value.penalty + 1, tribonacci.length - 1),
-          };
-        } else {
-          return value;
-        }
-      })
-    );
-
-    setAppointments((prev) =>
-      prev.sort((a, b) =>
-        a.rank === b.rank ? a.initialOrder - b.initialOrder : a.rank - b.rank
-      )
-    );
-  };
 
   return (
     <div className={"App"}>
@@ -81,7 +49,6 @@ function Status() {
               <Button
                 occupied={occupied}
                 setOccupied={setOccupied}
-                handlePresent={handlePresent}
                 setTime={setTime}
               />
             </div>
@@ -94,6 +61,7 @@ function Status() {
             <PrintQueue data={usersPatients} edit={true} />
           )}
         </div>
+
         <div className={"container-right"}>
           <PrintQueue data={appointments} />
         </div>

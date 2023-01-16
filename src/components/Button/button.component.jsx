@@ -1,6 +1,10 @@
-import "./button.styles.css"
+import "./button.styles.css";
+import { PatientContext } from "../../contexts/patient.context.jsx";
+import { useContext } from "react";
 
-const Button = ({ occupied, setOccupied, handlePresent, setTime }) => {
+const Button = ({ occupied, setOccupied, setTime }) => {
+  const { handlePresent } = useContext(PatientContext);
+
   return (
     <div className={"buttons"}>
       {!occupied && (
