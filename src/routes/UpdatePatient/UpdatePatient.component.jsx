@@ -5,9 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
 import PatientForm from "../../components/PatientForm/PatientForm.component";
 
-import { Backend, DEFAULT_FORM_FIELDS } from "../../backendData";
-
-const LINK = Backend.link;
+import {SERVER_URI, DEFAULT_FORM_FIELDS } from "../../backendData";
 
 export default function Update() {
   const [formFields, setFormFields] = useState(DEFAULT_FORM_FIELDS);
@@ -23,7 +21,7 @@ export default function Update() {
   useEffect(() => {
     const fetchPatientDetails = async () => {
       try {
-        let response = await axios.get(`${LINK}/update_patient/${params.id}`, {
+        let response = await axios.get(`${SERVER_URI}/update_patient/${params.id}`, {
           headers: headers,
         });
         setFormFields({
@@ -52,7 +50,7 @@ export default function Update() {
 
     try {
       const response = await axios.put(
-        `${LINK}/update_patient/${params.id}`,
+        `${SERVER_URI}/update_patient/${params.id}`,
         {
           ...formFields,
           registeredBy: authenticationTokenNumber,

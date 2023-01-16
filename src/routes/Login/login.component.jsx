@@ -12,13 +12,12 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { Backend } from "../../backendData";
+import { SERVER_URI } from "../../backendData";
 import { useEffect } from "react";
 import Alert from "@mui/material/Alert";
 import Stack from "@mui/material/Stack";
 
 const theme = createTheme();
-const link = Backend.link;
 
 export default function LogIn({ setRefresh }) {
   const navigate = useNavigate();
@@ -40,7 +39,7 @@ export default function LogIn({ setRefresh }) {
     setStatus((prev) => (prev = "loading"));
 
     try {
-      const response = await axios.post(`${link}/login`, {
+      const response = await axios.post(`${SERVER_URI}/login`, {
         email: email,
         password: password,
       });
@@ -50,7 +49,6 @@ export default function LogIn({ setRefresh }) {
       setRefresh(true);
       setStatus("success");
       navigate("/");
-
     } catch (err) {
       setStatus("failure");
       console.warn(err.message);

@@ -2,10 +2,8 @@ import { useState } from "react";
 import axios from "axios";
 
 import PatientForm from "../../components/PatientForm/PatientForm.component";
-import { Backend, DEFAULT_FORM_FIELDS } from "../../backendData";
+import { SERVER_URI, DEFAULT_FORM_FIELDS } from "../../backendData";
 import { useNavigate } from "react-router-dom";
-
-const LINK = Backend.link;
 
 export default function Register() {
   const [formFields, setFormFields] = useState(DEFAULT_FORM_FIELDS);
@@ -27,7 +25,7 @@ export default function Register() {
 
     try {
       await axios.post(
-        `${LINK}/register_patient`,
+        `${SERVER_URI}/register_patient`,
         {
           ...formFields,
           registeredBy: authenticationTokenNumber,

@@ -1,8 +1,6 @@
-export const Backend = {
-  link: "https://repulsive-cod-miniskirt.cyclic.app",
-  // link : "http://localhost:5000",
-  counter: 15,
-};
+export const DEFAULT_COUNTER = 15;
+export const SERVER_URI = "https://repulsive-cod-miniskirt.cyclic.app";
+// export const LINK = "http://localhost:5000";
 
 export const DEFAULT_FORM_FIELDS = {
   name: "",
@@ -20,5 +18,4 @@ export const DEFAULT_FORM_FIELDS = {
   description: "",
   typeOfCase: "",
   currentPenalty: "",
-  registeredBy: "",
-}
+};

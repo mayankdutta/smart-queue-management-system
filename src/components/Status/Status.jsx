@@ -5,17 +5,16 @@ import PrintQueue from "../PrintQueue/printQueue";
 import Form from "../Form/Form";
 import "./Status.css";
 import { Data, moreData } from "./data";
-import CountDown from "../Countdown/Countdown";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { Backend } from "../../backendData";
+import { SERVER_URI, DEFAULT_COUNTER } from "../../backendData";
 import PriorityQueue from "../../Algorithm/Heap.jsx";
+import Button from "../Button/button.component";
+import Counter from "../Counter/counter.component";
 
-const LINK = Backend.link;
-const DEFAULT_COUNTER = Backend.counter;
 const tribonacci = [1, 3, 5, 9, 17, 31, 55, 81, 149, 274, 504, 927];
 
-function Status(url, config) {
+function Status() {
   const [appointments, setAppointments] = useState(Data);
   const [patientName, setPatientName] = useState("");
   const [usersPatients, setUsersPatients] = useState([]);
@@ -58,8 +57,7 @@ function Status(url, config) {
   const fetchAllPatients = async () => {
     console.log("fetching all the patients");
     try {
-      const data = await axios.get(`${LINK}/patients`);
-      console.log(data.data);
+      const data = await axios.get(`${SERVER_URI}/patients`);
 
       let newData = [];
       for (let i = 0; i < Data.length; i++) {
@@ -76,37 +74,40 @@ function Status(url, config) {
 
       setAppointments(newData);
     } catch (err) {
-      // console.log(err);
+      console.log(err);
       handleAbsent();
     }
   };
 
   const fetchUserPatients = async () => {
+    console.log("fetching user patient");
     try {
-      const data = await axios.get(`${LINK}/get_patient`, { headers: headers });
-      // console.log(data.data);
+      const data = await axios.get(`${SERVER_URI}/get_patient`, {
+        headers: headers,
+      });
       setUsersPatients(data.data);
     } catch (err) {
-      console.log("couldn't fetch data from backend via get info");
-      // console.log(err);
+      console.log(err);
     }
   };
 
   const deleteUserPatient = async (patientId) => {
     try {
-      let response = await axios.delete(`${LINK}/delete_patient/${patientId}`, {
-        headers: headers,
-      });
-      // console.log(response);
+      let response = await axios.delete(
+        `${SERVER_URI}/delete_patient/${patientId}`,
+        {
+          headers: headers,
+        }
+      );
       if (response) {
         await fetchAllPatients();
         await fetchUserPatients();
       } else {
-        alert("contact to administrator");
+        alert("couldn't delete contact to administrator");
       }
       // response ? await fetchUserPatients() : alert("couldn't delete data");
     } catch (err) {
-      // console.log(err);
+      console.log(err);
     }
   };
 
@@ -125,13 +126,9 @@ function Status(url, config) {
       })
     );
     console.warn("present");
-
-    // console.log(appointments);
   };
 
   const handleAbsent = () => {
-    // console.log(appointments);
-
     setAppointments((prevState) =>
       prevState.map((value, index) => {
         if (index === currentPatient) {
@@ -146,72 +143,34 @@ function Status(url, config) {
       })
     );
 
-    function compare(a, b) {
-      if (a.rank === b.rank) {
-        return a.initialOrder - b.initialOrder;
-      }
-      return a.rank - b.rank;
-    }
-
-    setAppointments((prev) => prev.sort(compare));
+    setAppointments((prev) =>
+      prev.sort((a, b) =>
+        a.rank === b.rank ? a.initialOrder - b.initialOrder : a.rank - b.rank
+      )
+    );
   };
 
   return (
     <div className={"App"}>
-      {/*Initially Appointing the patients*/}
-
       <div className={"container"}>
         <div className={"container-left"}>
           {appointments.length ? (
             <div className="App-body">
               Turn of patient :<span>{appointments[currentPatient].name}</span>
-              <div>
-                {occupied ? (
-                  <h2 style={{ color: "green" }}>Clinic occupied</h2>
-                ) : (
-                  <h2 style={{ color: "red" }}>Empty</h2>
-                )}
-              </div>
-              <div className={"buttons"}>
-                {!occupied && (
-                  <button
-                    className="button-red"
-                    onClick={() => {
-                      handlePresent();
-                      setOccupied(!occupied);
-                    }}
-                  >
-                    send patient inside
-                  </button>
-                )}
-                {occupied && (
-                  <button
-                    className="button-green"
-                    onClick={() => {
-                      setTime(1);
-                      setOccupied(!occupied);
-                    }}
-                  >
-                    patient done.
-                  </button>
-                )}
-              </div>
+              <h2 style={{ color: occupied ? "green" : "red" }}>
+                {occupied ? <> Clinic occupied </> : <> Empty </>}
+              </h2>
+              <Button
+                occupied={occupied}
+                setOccupied={setOccupied}
+                handlePresent={handlePresent}
+                setTime={setTime}
+              />
             </div>
           ) : (
             <h5> No appointments for today.</h5>
           )}
-          {!occupied && (
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <h3>Counter: </h3>
-              <h1>{time}</h1>
-            </div>
-          )}
+          {!occupied && <Counter time={time} />}
 
           {authenticationTokenNumber && (
             <PrintQueue
@@ -222,7 +181,6 @@ function Status(url, config) {
           )}
         </div>
         <div className={"container-right"}>
-          {/* <PrintQueue data={data.slice(1, 31)}/> */}
           <PrintQueue data={appointments} />
         </div>
       </div>

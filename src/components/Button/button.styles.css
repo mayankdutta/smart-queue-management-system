@@ -1,0 +1,26 @@
+
+button {
+    color: white;
+    border: none;
+    border-radius: 7%;
+    padding: 8px;
+    font-size: calc(3px + 2vmin);
+    cursor: pointer;
+
+    box-shadow: 3px 5px #000000;
+}
+
+.buttons {
+    display: flex;
+    column-gap: 8px;
+}
+
+
+.buttons .button-red {
+    background-color: rgb(231, 80, 80);
+}
+
+.buttons .button-green {
+    background-color: rgb(15, 152, 15);
+}
+

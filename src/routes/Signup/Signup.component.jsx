@@ -12,11 +12,10 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { Backend } from "../../backendData";
+import { SERVER_URI } from "../../backendData";
 import { useEffect } from "react";
 
 const theme = createTheme();
-const link = Backend.link;
 
 export default function SignUp({ setRefresh }) {
   const navigate = useNavigate();
@@ -44,7 +43,7 @@ export default function SignUp({ setRefresh }) {
     console.log(data);
 
     try {
-      const response = await axios.post(`${link}/signup`, {
+      const response = await axios.post(`${SERVER_URI}/signup`, {
         name: name,
         email: email,
         password: password,

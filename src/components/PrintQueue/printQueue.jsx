@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 const PrintQueue = ({ data, edit, deleteUserPatient }) => {
   return (
     <main>
-      <div className={"doctor"}>Doctor</div>
+      <h2>{edit ? <> Your Patients </> : <> All Patients </>}</h2>
 
       <div className={"table-container"}>
         <table>
@@ -18,6 +18,7 @@ const PrintQueue = ({ data, edit, deleteUserPatient }) => {
               {deleteUserPatient && <th>Delete</th>}
             </tr>
           </thead>
+
           <tbody>
             {data.map((value, index) => {
               return (
@@ -26,27 +27,14 @@ const PrintQueue = ({ data, edit, deleteUserPatient }) => {
                   <td className={"name"}>
                     <Link to={"/details"}>{value.name}</Link>{" "}
                   </td>
-                  {!edit && (
-                    <td
-                      className={"rank"}
-                      style={
-                        (index <= 6 && { backgroundColor: "#A0D995" }) ||
-                        (6 < index &&
-                          index <= 18 && { backgroundColor: "#FFB562" }) ||
-                        (18 < index && { backgroundColor: "#DF7861" })
-                      }
-                    >
-                      {value.rank}
-                    </td>
-                  )}
-                  {edit && <td>{value.rank}</td>}
+                  <td>{value.rank}</td>
                   {edit && (
-                    <td>
-                      <Link to={"/update_patient/" + value._id}>✏️</Link>
-                    </td>
-                  )}
-                  {edit && (
-                    <td onClick={() => deleteUserPatient(value._id)}> ⌫ </td>
+                    <>
+                      <td>
+                        <Link to={"/update_patient/" + value._id}>✏️</Link>
+                      </td>
+                      <td onClick={() => deleteUserPatient(value._id)}> ⌫ </td>
+                    </>
                   )}
                 </tr>
               );
