@@ -57,7 +57,7 @@ function Status() {
           )}
           {!occupied && <Counter time={time} />}
 
-          {userData.name.length > 0 && (
+          {userData.name && userData.name.length > 0 && (
             <PrintQueue data={usersPatients} edit={true} />
           )}
         </div>

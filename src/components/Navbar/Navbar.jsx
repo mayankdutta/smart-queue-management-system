@@ -5,14 +5,11 @@ import { UserContext } from "../../contexts/user.context";
 import "./Navbar.css";
 
 function Navbar() {
-  const { userData, setUserData } = useContext(UserContext);
+  const { userData, userLogout } = useContext(UserContext);
   const navigate = useNavigate();
 
   const logout = () => {
-    setUserData({
-      name: "",
-      accessToken: "",
-    });
+    userLogout();
     navigate("/");
   };
 
@@ -30,7 +27,7 @@ function Navbar() {
           Register Patient
         </Link>
       )}
-      {!userData.name.length ? (
+      {!userData.name ? (
         <div className={"authenticate"}>
           <Link to={"/signup"}>
             <h3 className={"signup"}> Register</h3>

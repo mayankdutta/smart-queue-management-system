@@ -22,7 +22,7 @@ const theme = createTheme();
 export default function LogIn() {
   const navigate = useNavigate();
   const [status, setStatus] = React.useState("");
-  const {setUserData} = useContext(UserContext);
+  const {userLogin} = useContext(UserContext);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -38,11 +38,14 @@ export default function LogIn() {
         password: password,
       });
       console.warn(response);
-      setUserData({
+
+      userLogin({
         name: response.data.name, accessToken: response.data.accessToken
       });
+
       setStatus("success");
       navigate("/");
+
     } catch (err) {
       setStatus("failure");
       console.warn(err.message);

@@ -66,7 +66,7 @@ export const PatientProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    if (userData.name.length) fetchUserPatients();
+    if (userData.name && userData.name.length) fetchUserPatients();
   }, [userData.name]);
 
   useEffect(() => {

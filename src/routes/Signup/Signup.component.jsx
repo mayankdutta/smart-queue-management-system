@@ -19,7 +19,7 @@ const theme = createTheme();
 
 export default function SignUp() {
   const navigate = useNavigate();
-  const {setUserData} = useContext(UserContext);
+  const {userLogin} = useContext(UserContext);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -42,7 +42,7 @@ export default function SignUp() {
         password: password,
       });
       console.warn(response);
-      setUserData({
+      userLogin({
         name: name, accessToken: response.data.accessToken
       });
       navigate("/");
