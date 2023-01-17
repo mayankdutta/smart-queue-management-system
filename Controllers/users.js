@@ -13,8 +13,8 @@ async function comparePassword(plaintextPassword, hash) {
     return await bcrypt.compare(plaintextPassword, hash);
 }
 
-async function generateAccessToken(username) {
-    return await jwt.sign(username, process.env.TOKEN_SECRET, {}, {expiresIn: '2h'});
+async function generateAccessToken(username, role) {
+    return await jwt.sign({username : username, role : role}, process.env.TOKEN_SECRET, {}, {expiresIn: '2h'});
 }
 
 const verifyAccessToken = (req, res, next) => {
@@ -41,17 +41,19 @@ const userSignUp = async (req, res) => {
         try {
             const encryptedPassword = await hashPassword(req.body.password);
             const user = new Users({
+                role: req.body.role,
                 name: req.body.name,
                 email: req.body.email,
                 password: encryptedPassword
             });
 
-            const accessToken = await generateAccessToken(req.body.email);
+            const accessToken = await generateAccessToken(user.email, user.role);
             const result = await user.save();
 
             return res.status(200).send({
                 message: "user created successfully",
-                accessToken: accessToken
+                accessToken: accessToken,
+                role: user.role ? user.role : "user"
             });
 
         } catch (err) {
@@ -74,8 +76,9 @@ const userLogin = async (req, res) => {
 
         const userDoesExist = await comparePassword(userPassword, encryptedPassword);
         if (userDoesExist) {
-            const accessToken = await generateAccessToken(req.body.email);
-            return res.status(200).send({message: "user found", accessToken: accessToken, name: user.name});
+            const accessToken = await generateAccessToken(user.email, user.role);
+            const role = user.role ? user.role : "user";
+            return res.status(200).send({message: "user found", accessToken: accessToken, name: user.name, role: role});
         } else {
             return res.status(400).send({message: "user NOT found"});
         }
