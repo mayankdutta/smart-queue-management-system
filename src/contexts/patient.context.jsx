@@ -1,15 +1,8 @@
-import { useEffect } from "react";
-import { useState } from "react";
-import { createContext } from "react";
+import { createContext, useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { SERVER_URI } from "../backendData";
 import { Data, moreData } from "../components/Status/data";
-
-const authenticationTokenNumber = localStorage.getItem("access-token");
-const headers = {
-  "Content-type": "application/json",
-  "access-token": authenticationTokenNumber,
-};
+import { UserContext } from "./user.context";
 
 export const PatientContext = createContext({
   appointments: [],
@@ -27,6 +20,12 @@ const TRIBONACCI_SERIES = [1, 3, 5, 9, 17, 31, 55, 81, 149, 274, 504, 927];
 export const PatientProvider = ({ children }) => {
   const [appointments, setAppointments] = useState(Data);
   const [usersPatients, setUsersPatients] = useState([]);
+  const { userData } = useContext(UserContext);
+
+  const headers = {
+    "Content-type": "application/json",
+    "access-token": userData.accessToken,
+  };
 
   const fetchAllPatients = async () => {
     console.log("fetching all the patients");
@@ -60,15 +59,19 @@ export const PatientProvider = ({ children }) => {
         headers: headers,
       });
       setUsersPatients(data.data);
+      console.log("user patient: ", data.data);
     } catch (err) {
       console.log(err);
     }
   };
 
   useEffect(() => {
+    if (userData.name.length) fetchUserPatients();
+  }, [userData.name]);
+
+  useEffect(() => {
     try {
       fetchAllPatients();
-      fetchUserPatients();
     } catch (err) {}
   }, []);
 
@@ -128,7 +131,6 @@ export const PatientProvider = ({ children }) => {
   };
 
   const handleAbsent = (currentPatient) => {
-
     setAppointments((prev) =>
       prev.map((value, index) => {
         if (index === currentPatient) {

@@ -10,7 +10,6 @@ export default function Register() {
   const navigate = useNavigate();
   const { appointments, addNewPatient } = useContext(PatientContext);
 
-  // console.log(appointments.length, appointments[appointments.length - 1].rank);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -19,11 +18,6 @@ export default function Register() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
-    const headers = {
-      "Content-type": "application/json",
-      "access-token": authenticationTokenNumber,
-    };
 
     addNewPatient({
       ...formFields,

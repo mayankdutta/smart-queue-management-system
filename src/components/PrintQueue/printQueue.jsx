@@ -5,7 +5,7 @@ import { PatientContext } from "../../contexts/patient.context";
 import { useContext } from "react";
 
 const PrintQueue = ({ data, edit }) => {
-  console.log("data: ", data);
+  // console.log("data: ", data);
   const { deleteUserPatient } = useContext(PatientContext);
 
   return (

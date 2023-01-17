@@ -13,22 +13,16 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { SERVER_URI } from "../../backendData";
-import { useEffect } from "react";
+import { useContext } from "react";
 import Toast from "../../components/toast/toast.components";
+import { UserContext } from "../../contexts/user.context";
 
 const theme = createTheme();
 
-export default function LogIn({ setRefresh }) {
+export default function LogIn() {
   const navigate = useNavigate();
   const [status, setStatus] = React.useState("");
-
-  useEffect(() => {
-    const accessToken = localStorage.getItem("access-token");
-    if (accessToken) {
-      setRefresh(true);
-      navigate("/");
-    }
-  }, []);
+  const {setUserData} = useContext(UserContext);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -44,9 +38,9 @@ export default function LogIn({ setRefresh }) {
         password: password,
       });
       console.warn(response);
-      localStorage.setItem("access-token", response.data.accessToken);
-      localStorage.setItem("name", response.data.name);
-      setRefresh(true);
+      setUserData({
+        name: response.data.name, accessToken: response.data.accessToken
+      });
       setStatus("success");
       navigate("/");
     } catch (err) {

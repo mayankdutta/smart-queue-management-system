@@ -1,14 +1,18 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { UserContext } from "../../contexts/user.context";
 import "./Navbar.css";
 
 function Navbar() {
-  const name = localStorage.getItem("name");
+  const { userData, setUserData } = useContext(UserContext);
   const navigate = useNavigate();
 
   const logout = () => {
-    localStorage.clear();
+    setUserData({
+      name: "",
+      accessToken: "",
+    });
     navigate("/");
   };
 
@@ -17,7 +21,7 @@ function Navbar() {
       <Link to={"/"}>
         <div className={"home"}> home</div>
       </Link>
-      {!name ? (
+      {!userData.name ? (
         <Link className={"home"} to={"/login"}>
           Register Patient
         </Link>
@@ -26,7 +30,7 @@ function Navbar() {
           Register Patient
         </Link>
       )}
-      {!name ? (
+      {!userData.name.length ? (
         <div className={"authenticate"}>
           <Link to={"/signup"}>
             <h3 className={"signup"}> Register</h3>
@@ -37,7 +41,7 @@ function Navbar() {
         </div>
       ) : (
         <div className={"authenticate"}>
-          <h3 className={"username"}> {name}</h3>
+          <h3 className={"username"}> {userData.name}</h3>
           <h3
             className={"logout"}
             style={{ cursor: "pointer" }}

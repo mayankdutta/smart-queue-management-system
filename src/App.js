@@ -7,11 +7,10 @@ import LogIn from "./routes/Login/login.component";
 import Details from "./components/detailsPage";
 import SignUp from "./routes/Signup/Signup.component";
 import UpdatePatient from "./routes/UpdatePatient/UpdatePatient.component";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import "./App.css";
 
 function App() {
-  const [refresh, setRefresh] = useState(false);
   return (
     <>
       <BrowserRouter>
@@ -19,10 +18,10 @@ function App() {
           <Navbar />
           <Routes>
             <Route path={"/"} element={<Status />} />
-            <Route path="/login" element={<LogIn setRefresh={setRefresh} />} />
+            <Route path="/login" element={<LogIn  />} />
             <Route
               path="/signup"
-              element={<SignUp setRefresh={setRefresh} />}
+              element={<SignUp  />}
             />
             <Route path="/register_patient" element={<RegisterPatient />} />
             <Route path="/update_patient/:id" element={<UpdatePatient />} />

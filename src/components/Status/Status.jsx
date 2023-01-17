@@ -6,6 +6,7 @@ import { DEFAULT_COUNTER } from "../../backendData";
 import Button from "../Button/button.component";
 import Counter from "../Counter/counter.component";
 import { PatientContext } from "../../contexts/patient.context";
+import { UserContext } from "../../contexts/user.context";
 
 const currentPatient = 0;
 
@@ -13,8 +14,7 @@ function Status() {
   const [occupied, setOccupied] = useState(false);
   const [time, setTime] = useState(1);
 
-  const authenticationTokenNumber = localStorage.getItem("access-token");
-
+  const { userData } = useContext(UserContext);
   const { appointments, handleAbsent, usersPatients } =
     useContext(PatientContext);
 
@@ -57,7 +57,7 @@ function Status() {
           )}
           {!occupied && <Counter time={time} />}
 
-          {authenticationTokenNumber && (
+          {userData.name.length > 0 && (
             <PrintQueue data={usersPatients} edit={true} />
           )}
         </div>

@@ -1,4 +1,3 @@
-import * as React from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
@@ -13,20 +12,14 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { SERVER_URI } from "../../backendData";
-import { useEffect } from "react";
+import { useEffect, useContext } from "react";
+import { UserContext } from "../../contexts/user.context";
 
 const theme = createTheme();
 
-export default function SignUp({ setRefresh }) {
+export default function SignUp() {
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const accessToken = localStorage.getItem("access-token");
-    if (accessToken) {
-      setRefresh(true);
-      navigate("/");
-    }
-  }, []);
+  const {setUserData} = useContext(UserContext);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -49,9 +42,9 @@ export default function SignUp({ setRefresh }) {
         password: password,
       });
       console.warn(response);
-      localStorage.setItem("access-token", response.data.accessToken);
-      localStorage.setItem("name", name.toString());
-      setRefresh(true);
+      setUserData({
+        name: name, accessToken: response.data.accessToken
+      });
       navigate("/");
     } catch (err) {
       console.warn(err.message);
