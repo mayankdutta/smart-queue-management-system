@@ -41,7 +41,7 @@ const userSignUp = async (req, res) => {
         try {
             const encryptedPassword = await hashPassword(req.body.password);
             const user = new Users({
-                role: req.body.role,
+                role: req.body.role ? req.body.role : "user",
                 name: req.body.name,
                 email: req.body.email,
                 password: encryptedPassword

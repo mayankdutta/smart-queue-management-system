@@ -1,5 +1,6 @@
 const Patient = require("../Models/Appointments");
 const Users = require("../Models/Users");
+const getUserObject = require('../middleware/docdeUser')
 
 require("dotenv").config()
 
@@ -8,22 +9,22 @@ const registerPatient = async (req, res, next) => {
 
     try {
         const patient = new Patient({
-          ...req.body
+            ...req.body
         });
         const result = await patient.save();
         return res.status(200).send({
             message: "patient registered successfully",
-            tempResult: {result}
+            tempResult: { result }
         });
     } catch (err) {
-        return res.status(400).send({message: err.message});
+        return res.status(400).send({ message: err.message });
     }
 
 }
 
 const deletePatient = async (req, res, next) => {
     try {
-        let patient = await Patient.deleteOne({_id: req.params.id})
+        let patient = await Patient.deleteOne({ _id: req.params.id })
         res.status(200).send(patient);
     } catch (err) {
         res.status(404).send({
@@ -33,6 +34,8 @@ const deletePatient = async (req, res, next) => {
 }
 
 const getAllPatient = async (req, res) => {
+    const token = getUserObject(req.headers['access-token']);
+    if (!token || token.role != 'admin') return res.status(401).send('Not an Admin !')
     try {
         const data = await Patient.find();
         res.status(200).send(data);
@@ -47,7 +50,7 @@ const getAllPatient = async (req, res) => {
 const getPatient = async (req, res, next) => {
     const registeredBy = req.headers['access-token'];
     try {
-        const patient = await Patient.find({registeredBy: registeredBy});
+        const patient = await Patient.find({ registeredBy: registeredBy });
         res.status(200).send(patient);
     } catch (err) {
         res.status(401).send({
@@ -73,10 +76,9 @@ const getUpdatePatient = async (req, res) => {
 }
 
 const putUpdatePatient = async (req, res) => {
-  console.log(req);
 
     try {
-        let patient = await Patient.updateOne({_id: req.params.id}, {
+        let patient = await Patient.updateOne({ _id: req.params.id }, {
             $set: req.body
         })
         res.status(200).send(patient);
@@ -88,6 +90,8 @@ const putUpdatePatient = async (req, res) => {
 }
 
 const getUsers = async (req, res) => {
+    let token = getUserObject(req.headers['access-token']);
+    if (!token || token.role != "admin") return res.status(401).send('Not an Admin !')
     try {
         const data = await Users.find();
         res.status(200).send(data);
@@ -99,5 +103,5 @@ const getUsers = async (req, res) => {
     }
 }
 
-module.exports = {registerPatient, deletePatient, getPatient, getUpdatePatient, putUpdatePatient, getAllPatient, getUsers}
+module.exports = { registerPatient, deletePatient, getPatient, getUpdatePatient, putUpdatePatient, getAllPatient, getUsers }
 
