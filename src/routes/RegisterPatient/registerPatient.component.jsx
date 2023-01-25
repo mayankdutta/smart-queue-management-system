@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function Register() {
   const [formFields, setFormFields] = useState(DEFAULT_FORM_FIELDS);
-  const authenticationTokenNumber = localStorage.getItem("access-token");
+  const authenticationTokenNumber = localStorage.getItem("accessToken");
   const navigate = useNavigate();
   const { appointments, addNewPatient } = useContext(PatientContext);
 

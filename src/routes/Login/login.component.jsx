@@ -22,7 +22,7 @@ const theme = createTheme();
 export default function LogIn() {
   const navigate = useNavigate();
   const [status, setStatus] = React.useState("");
-  const {userLogin} = useContext(UserContext);
+  const { userLogin } = useContext(UserContext);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -33,19 +33,13 @@ export default function LogIn() {
     setStatus((prev) => (prev = "loading"));
 
     try {
-      const response = await axios.post(`${SERVER_URI}/login`, {
+      userLogin({
         email: email,
         password: password,
-      });
-      console.warn(response);
-
-      userLogin({
-        name: response.data.name, accessToken: response.data.accessToken
       });
 
       setStatus("success");
       navigate("/");
-
     } catch (err) {
       setStatus("failure");
       console.warn(err.message);

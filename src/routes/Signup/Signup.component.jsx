@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
@@ -11,7 +10,6 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { SERVER_URI } from "../../backendData";
 import { useEffect, useContext } from "react";
 import { UserContext } from "../../contexts/user.context";
 
@@ -19,7 +17,7 @@ const theme = createTheme();
 
 export default function SignUp() {
   const navigate = useNavigate();
-  const {userLogin} = useContext(UserContext);
+  const { userLogin, userSignup } = useContext(UserContext);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -36,15 +34,12 @@ export default function SignUp() {
     console.log(data);
 
     try {
-      const response = await axios.post(`${SERVER_URI}/signup`, {
+      userSignup({
         name: name,
         email: email,
         password: password,
       });
-      console.warn(response);
-      userLogin({
-        name: name, accessToken: response.data.accessToken
-      });
+
       navigate("/");
     } catch (err) {
       console.warn(err.message);

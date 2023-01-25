@@ -1,6 +1,6 @@
 import { createContext, useState, useEffect, useContext } from "react";
 import axios from "axios";
-import { SERVER_URI } from "../backendData";
+import { PATIENTS } from "../backendData";
 import { Data, moreData } from "../components/Status/data";
 import { UserContext } from "./user.context";
 
@@ -30,7 +30,7 @@ export const PatientProvider = ({ children }) => {
   const fetchAllPatients = async () => {
     console.log("fetching all the patients");
     try {
-      const data = await axios.get(`${SERVER_URI}/patients`);
+      const data = await axios.get(`${PATIENTS.ALL_PATIENTS}`);
 
       let newData = [];
       for (let i = 0; i < Data.length; i++) {
@@ -55,7 +55,7 @@ export const PatientProvider = ({ children }) => {
   const fetchUserPatients = async () => {
     console.log("fetching user patient");
     try {
-      const data = await axios.get(`${SERVER_URI}/get_patient`, {
+      const data = await axios.get(`${PATIENTS.PATIENT}`, {
         headers: headers,
       });
       setUsersPatients(data.data);
@@ -77,7 +77,7 @@ export const PatientProvider = ({ children }) => {
 
   const addNewPatient = async (patient) => {
     try {
-      await axios.post(`${SERVER_URI}/register_patient`, patient, {
+      await axios.post(`${PATIENTS.REGISTER}`, patient, {
         headers: headers,
       });
 
@@ -92,7 +92,7 @@ export const PatientProvider = ({ children }) => {
     console.log(patient);
     try {
       const response = await axios.put(
-        `${SERVER_URI}/update_patient/${params_id}`,
+        `${PATIENTS.UPDATE}/${params_id}`,
         patient,
         { headers: headers }
       );
@@ -103,14 +103,18 @@ export const PatientProvider = ({ children }) => {
     }
   };
 
+  const fetchPatientDetails = async (id) => {
+    let response = await axios.get(`${PATIENTS.UPDATE}/${id}`, {
+      headers: headers,
+    });
+    return response;
+  };
+
   const deleteUserPatient = async (patientId) => {
     try {
-      let response = await axios.delete(
-        `${SERVER_URI}/delete_patient/${patientId}`,
-        {
-          headers: headers,
-        }
-      );
+      let response = await axios.delete(`${PATIENTS.DELETE}/${patientId}`, {
+        headers: headers,
+      });
       if (response) {
         await fetchAllPatients();
         await fetchUserPatients();
@@ -124,7 +128,7 @@ export const PatientProvider = ({ children }) => {
 
   const handlePresent = (currentPatient = 0) => {
     setAppointments((prev) =>
-      prev.filter((value, index) => {
+      prev.filter((_, index) => {
         return index !== currentPatient;
       })
     );
@@ -160,6 +164,7 @@ export const PatientProvider = ({ children }) => {
     addNewPatient,
     updatePatient,
     deleteUserPatient,
+    fetchPatientDetails,
   };
 
   return (

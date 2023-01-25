@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { createContext } from "react";
+import { USER } from "../backendData";
+import axios from "axios";
 
 export const UserContext = createContext({
   name: localStorage.getItem("name"),
@@ -12,10 +14,36 @@ export const UserProvider = ({ children }) => {
     accessToken: localStorage.getItem("accessToken"),
   });
 
-  const userLogin = (user) => {
-    localStorage.setItem("accessToken", user.accessToken);
-    localStorage.setItem("name", user.name);
-    setUserData(user);
+  const setLocalStorage = ({ name, accessToken }) => {
+    localStorage.setItem("accessToken", accessToken);
+    localStorage.setItem("name", name);
+  };
+
+  const userSignup = async ({ name, email, password }) => {
+    const response = await axios.post(`${USER.REGISTER}`, {
+      name: name,
+      email: email,
+      password: password,
+    });
+
+    const accessToken = response.data.accessToken;
+
+    setLocalStorage({ name: name, accessToken: accessToken });
+  };
+
+  const userLogin = async ({ email, password }) => {
+    const response = await axios.post(`${USER.LOGIN}`, {
+      email: email,
+      password: password,
+    });
+
+    console.warn(response);
+
+    const name = response.data.name;
+    const accessToken = response.data.accessToken;
+
+    setLocalStorage({ name: name, accessToken: accessToken });
+    setUserData({ name: name, accessToken: accessToken });
   };
 
   const userLogout = () => {
@@ -26,7 +54,7 @@ export const UserProvider = ({ children }) => {
     });
   };
 
-  const value = { userData, userLogin, userLogout };
+  const value = { userData, userLogin, userLogout, userSignup };
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };
 /*

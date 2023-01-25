@@ -1,34 +1,23 @@
 import { useState, useContext } from "react";
-import axios from "axios";
 
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
 import PatientForm from "../../components/PatientForm/PatientForm.component";
 
-import { SERVER_URI, DEFAULT_FORM_FIELDS } from "../../backendData";
+import { DEFAULT_FORM_FIELDS } from "../../backendData";
 import { PatientContext } from "../../contexts/patient.context";
 
 export default function Update() {
   const [formFields, setFormFields] = useState(DEFAULT_FORM_FIELDS);
-  const authenticationTokenNumber = localStorage.getItem("access-token");
   const navigate = useNavigate();
   const params = useParams();
-  const { appointments, updatePatient } = useContext(PatientContext);
-
-  const headers = {
-    "Content-type": "application/json",
-    "access-token": authenticationTokenNumber,
-  };
+  const { appointments, updatePatient, fetchPatientDetails } =
+    useContext(PatientContext);
 
   useEffect(() => {
-    const fetchPatientDetails = async () => {
+    const fetchPatient = async () => {
       try {
-        let response = await axios.get(
-          `${SERVER_URI}/update_patient/${params.id}`,
-          {
-            headers: headers,
-          }
-        );
+        let response = await fetchPatientDetails(params.id);
         setFormFields({
           ...response.data[0],
         });
@@ -37,7 +26,7 @@ export default function Update() {
       }
     };
     console.log("FETCHING PATIENT DATA");
-    fetchPatientDetails();
+    fetchPatient();
   }, []);
 
   const handleChange = (event) => {
