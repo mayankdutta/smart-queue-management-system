@@ -1,6 +1,6 @@
 export const DEFAULT_COUNTER = 15;
-// const SERVER_URI = "https://repulsive-cod-miniskirt.cyclic.app";
-const SERVER_URI = "http://localhost:5000";
+const SERVER_URI = "https://repulsive-cod-miniskirt.cyclic.app";
+// const SERVER_URI = "http://localhost:5000";
 
 export const PATIENTS = {
   ALL_PATIENTS: `${SERVER_URI}/patients`,

@@ -6,6 +6,7 @@
     "@datastructures-js/priority-queue": "^6.1.2",
     "@emotion/react": "^11.9.3",
     "@emotion/styled": "^11.9.3",
+    "@meinefinsternis/react-horizontal-date-picker": "^1.0.1",
     "@mui/icons-material": "^5.8.4",
     "@mui/material": "^5.8.7",
     "@testing-library/jest-dom": "^5.16.4",
@@ -20,6 +21,7 @@
     "react-scripts": "5.0.1",
     "react-toastify": "^9.1.1",
     "redirect": "^0.2.0",
+    "sass": "^1.58.0",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

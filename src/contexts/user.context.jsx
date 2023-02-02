@@ -57,7 +57,3 @@ export const UserProvider = ({ children }) => {
   const value = { userData, userLogin, userLogout, userSignup };
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };
-/*
- localStorage.setItem("access-token", response.data.accessToken);
- localStorage.setItem("name", name.toString()); 
-*/
