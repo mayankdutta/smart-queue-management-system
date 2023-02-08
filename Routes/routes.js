@@ -12,7 +12,7 @@ const {
     getAllPatient,
 } = require('../Controllers/appointments')
 
-router.get("/", (req, res, next) => {
+router.get("/", (_, res, _) => {
     res.status(200).json({message: "working"});
 });
 
