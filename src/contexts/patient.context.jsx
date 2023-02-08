@@ -1,7 +1,7 @@
 import { createContext, useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { PATIENTS } from "../backendData";
-import { Data, moreData } from "../components/Status/data";
+import  Data from "../utils/Data.json";
 import { UserContext } from "./user.context";
 
 export const PatientContext = createContext({
@@ -36,6 +36,7 @@ export const PatientProvider = ({ children }) => {
       for (let i = 0; i < Data.length; i++) {
         newData.push(Data[i]);
       }
+
       data.data.map((d) => {
         newData.push({
           name: d.name,
@@ -46,6 +47,7 @@ export const PatientProvider = ({ children }) => {
       });
 
       setAppointments(newData);
+      console.log(newData);
     } catch (err) {
       console.log(err);
       // handleAbsent();

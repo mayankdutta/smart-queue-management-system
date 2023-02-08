@@ -8,16 +8,20 @@
   overflow: scroll;
   background-color: white;
   padding: 4px;
-}
 
-.date {
-  border: 2px solid red;
-  background-color: green;
-  display: flex;
-  flex-wrap: nowrap;
-  flex-shrink: 0;
-  margin: 8px;
-  padding: 8px;
-  cursor: pointer;
-  color: white;
+  .date {
+    border: 2px solid red;
+    display: flex;
+    flex-wrap: nowrap;
+    flex-shrink: 0;
+    margin: 8px;
+    padding: 8px;
+    cursor: pointer;
+  }
+
+  .selectedDate {
+    background-color: green;
+    color: white;
+    transition: 300ms ease all;
+  }
 }

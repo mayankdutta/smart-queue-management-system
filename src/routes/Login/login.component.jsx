@@ -16,6 +16,9 @@ import { useContext } from "react";
 import Toast from "../../components/toast/toast.components";
 import { UserContext } from "../../contexts/user.context";
 
+import FormInput from "../../components/formInput/formInput.components"
+
+
 const theme = createTheme();
 
 export default function LogIn() {
@@ -102,9 +105,6 @@ export default function LogIn() {
 
               <Grid container>
                 <Grid item xs>
-                  {/* <Link href="#" variant="body2">
-                  Forgot password?
-                </Link> */}
                 </Grid>
                 <Grid item>
                   <Link href="/signup" variant="body2">

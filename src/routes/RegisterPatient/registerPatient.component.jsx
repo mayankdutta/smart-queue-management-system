@@ -10,9 +10,18 @@ export default function Register() {
   const navigate = useNavigate();
   const { appointments, addNewPatient } = useContext(PatientContext);
 
-
   const handleChange = (event) => {
-    const { name, value } = event.target;
+    let name = "nil",
+      value = "nil";
+
+    if (typeof event === "string") {
+      name = "date";
+      value = event;
+    } else {
+      name = event.target.name;
+      value = event.target.value;
+    }
+
     setFormFields({ ...formFields, [name]: value });
   };
 

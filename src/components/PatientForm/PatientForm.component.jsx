@@ -14,36 +14,49 @@ function titleCase(str) {
 
 const PatientForm = ({ handleChange, handleSubmit, formFields, ButtonValue }) => {
   const [displayDate, setDisplayDate] = useState(false);
+
   const handleDisplayDate = () => {
-    console.log(displayDate);
     setDisplayDate(!displayDate);
   };
 
+
   return (
     <center>
-    <form onSubmit={handleSubmit}>
-      <h1>{ButtonValue === "Update" ? "Update Patient" : "Register New Patient"}</h1>
-      {Object.keys(formFields).map((defaultFormField) => {
-        if (defaultFormField[0] === "_" || defaultFormField === "registeredBy") {
-        } else
-          return (
-            <FormInput
-              label={titleCase(defaultFormField)}
-              // required
-              name={defaultFormField}
-              value={formFields[defaultFormField]}
-              onChange={handleChange}
-            />
-          );
-      })}
+      <form onSubmit={handleSubmit}>
+        <h1>{ButtonValue === "Update" ? "Update Patient" : "Register New Patient"}</h1>
 
-      <div onClick={handleDisplayDate} className="date-selector">
-        Click here to select Date
-      {displayDate && <GetDate days={60} />}
-      </div>
+        {Object.keys(formFields).map((defaultFormField, i) => {
+          if (defaultFormField[0] === "_" || defaultFormField === "registeredBy") {
+          } else if (defaultFormField === "date") {
+            return (
+              <div onClick={handleDisplayDate} className="date-selector">
+                Click here to select Date
+                  <GetDate
+                    key={i}
+                    label={titleCase(defaultFormField)}
+                    // required
+                    name={defaultFormField}
+                    value={formFields[defaultFormField]}
+                    handleChange={handleChange}
+                    days={60}
+                  />
+              </div>
+            );
+          } else
+            return (
+              <FormInput
+                key={i}
+                label={titleCase(defaultFormField)}
+                // required
+                name={defaultFormField}
+                value={formFields[defaultFormField]}
+                onChange={handleChange}
+              />
+            );
+        })}
 
-      <button type="submit">{ButtonValue}</button>
-    </form>
+        <button type="submit">{ButtonValue}</button>
+      </form>
     </center>
   );
 };

@@ -11,8 +11,7 @@ export default function Update() {
   const [formFields, setFormFields] = useState(DEFAULT_FORM_FIELDS);
   const navigate = useNavigate();
   const params = useParams();
-  const { appointments, updatePatient, fetchPatientDetails } =
-    useContext(PatientContext);
+  const { appointments, updatePatient, fetchPatientDetails } = useContext(PatientContext);
 
   useEffect(() => {
     const fetchPatient = async () => {
@@ -30,7 +29,17 @@ export default function Update() {
   }, []);
 
   const handleChange = (event) => {
-    const { name, value } = event.target;
+    let name = "nil",
+      value = "nil";
+
+    if (typeof event === "string") {
+      name = "date";
+      value = event;
+    } else {
+      name = event.target.name;
+      value = event.target.value;
+    }
+
     setFormFields({ ...formFields, [name]: value });
   };
 
