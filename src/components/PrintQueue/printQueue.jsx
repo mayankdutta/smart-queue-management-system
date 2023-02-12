@@ -17,7 +17,7 @@ const PrintQueue = ({ data, edit }) => {
             <tr>
               <th>S. no</th>
               <th>Name</th>
-              <th>Rank</th>
+              <th>Patient No.</th>
               {edit && <th>Edit</th>}
               {edit && <th>Delete</th>}
             </tr>

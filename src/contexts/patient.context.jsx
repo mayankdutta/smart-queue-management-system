@@ -1,7 +1,7 @@
 import { createContext, useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { PATIENTS } from "../backendData";
-import  Data from "../utils/Data.json";
+import  StoredData from "../utils/Data.json";
 import { UserContext } from "./user.context";
 
 export const PatientContext = createContext({
@@ -18,7 +18,7 @@ export const PatientContext = createContext({
 const TRIBONACCI_SERIES = [1, 3, 5, 9, 17, 31, 55, 81, 149, 274, 504, 927];
 
 export const PatientProvider = ({ children }) => {
-  const [appointments, setAppointments] = useState(Data);
+  const [appointments, setAppointments] = useState(StoredData);
   const [usersPatients, setUsersPatients] = useState([]);
   const { userData } = useContext(UserContext);
 
@@ -33,21 +33,25 @@ export const PatientProvider = ({ children }) => {
       const data = await axios.get(`${PATIENTS.ALL_PATIENTS}`);
 
       let newData = [];
-      for (let i = 0; i < Data.length; i++) {
-        newData.push(Data[i]);
+      for (let i = 0; i < StoredData.length; i++) {
+        newData.push({
+          name: StoredData[i]["name"],
+          rank: i + 1, 
+          penalty: 1, 
+          initialOrder: i + 1
+        })
       }
 
       data.data.map((d) => {
         newData.push({
           name: d.name,
-          rank: Data.length + newData.length + 1,
+          rank: StoredData.length + newData.length + 1,
           penalty: 1,
-          initialOrder: Data.length + newData.length + 1,
+          initialOrder: StoredData.length + newData.length + 1,
         });
       });
 
       setAppointments(newData);
-      console.log(newData);
     } catch (err) {
       console.log(err);
       // handleAbsent();
