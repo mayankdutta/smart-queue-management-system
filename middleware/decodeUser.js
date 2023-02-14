@@ -1,4 +1,5 @@
 const getUserObject = (token) => {
+    if(!token) return;
     let base64Url = token.split('.')[1];
     let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
     const str = Buffer.from(base64, 'base64').toString('utf8');

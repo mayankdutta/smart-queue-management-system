@@ -24,7 +24,7 @@ router.post("/register_patient/", checkAuth, registerPatient);
 router.delete("/delete_patient/:id", checkAuth, deletePatient);
 router.get("/get_patient", checkAuth, getPatient);
 
-router.put("/update_patient/:id", checkAuth, putUpdatePatient)
+router.put("/update_patientlocalhost:5000/signup//:id", checkAuth, putUpdatePatient)
     .get("/update_patient/:id", checkAuth, getUpdatePatient);
 
 router.get("/patients", getAllPatient);

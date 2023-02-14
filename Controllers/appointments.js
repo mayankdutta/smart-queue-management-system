@@ -1,6 +1,6 @@
 const Patient = require("../Models/Appointments");
 const Users = require("../Models/Users");
-const getUserObject = require('../middleware/docdeUser')
+const getUserObject = require('../middleware/decodeUser')
 
 require("dotenv").config()
 
