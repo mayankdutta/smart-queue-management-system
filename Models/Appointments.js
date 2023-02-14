@@ -6,28 +6,29 @@
  * 4. Expected_time
  * */
 
-
-
-const mongoose = require('mongoose')
+const mongoose = require("mongoose");
 const AppointmentsSchema = new mongoose.Schema({
-    name: String,
-    contactNumber: String,
-    contactNumberFamilyMember: String,
-    address: String,
-    doctor: String,
-    registeredBy: String, // logged in register who registered him.
-    tokenNumber: String,
-    currentPenalty: String,
-    bodyTemperature: String,
-    age: String,
-    weight: String,  // can be measured @clinic, if known then filled.
-    bloodType: String,
-    bloodPressure: String,  // can be measured @clinic as well as self.
-    // motive: String,
-    oxygenLevel: String, // can be measured @clinic as well as self.
-    description: String, // to be filled by compounder, adhoc Case, sucide, chakku, banduuk, ladai, accident., ilaaj se phele FIR., NIL Allowed
-    // typeOfCase: String,
-    /*
+  name: String,
+  contactNumber: String,
+  contactNumberFamilyMember: String,
+  address: String,
+  doctor: String,
+  registeredBy: String, // logged in register who registered him.
+  tokenNumber: String,
+  currentPenalty: String,
+  bodyTemperature: String,
+  age: String,
+  weight: String, // can be measured @clinic, if known then filled.
+  bloodType: String,
+  bloodPressure: String, // can be measured @clinic as well as self.
+  // motive: String,
+  oxygenLevel: String, // can be measured @clinic as well as self.
+  description: String, // to be filled by compounder, adhoc Case, sucide, chakku, banduuk, ladai, accident., ilaaj se phele FIR., NIL Allowed
+  date: String,
+  gender: String, 
+
+  // typeOfCase: String,
+  /*
     1. Consult
     2. adhocCase,
     3. Test
@@ -38,18 +39,7 @@ const AppointmentsSchema = new mongoose.Schema({
 
     assign priority in the following order.
      */
-})
+});
 
-const Appointments = mongoose.model('Appointments', AppointmentsSchema)
+const Appointments = mongoose.model("Appointments", AppointmentsSchema);
 module.exports = Appointments;
-
-
-
-
-
-
-
-
-
-
-
