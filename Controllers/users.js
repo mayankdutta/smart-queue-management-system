@@ -1,4 +1,6 @@
 const Users = require("../Models/Users");
+const { HTTP_STATUS_CODES } = require("../domain/statusCodes");
+
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
@@ -74,13 +76,15 @@ const userLogin = async (req, res) => {
     if (userDoesExist) {
       const accessToken = await generateAccessToken(req.body.email);
       return res
-        .status(200)
+        .status(HTTP_STATUS_CODES.OK)
         .send({ message: "user found", accessToken: accessToken, name: user.name });
     } else {
-      return res.status(400).send({ message: "user NOT found" });
+      return res.status(HTTP_STATUS_CODES.BAD_REQUEST).send({ message: "user NOT found" });
     }
   } catch (err) {
-    return res.status(500).send({ message: "something went wrong while logging in", error: err });
+    return res
+      .status(HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR)
+      .send({ message: "something went wrong while logging in", error: err });
   }
 };
 

@@ -1,4 +1,5 @@
 const Patient = require("../Models/Appointments");
+
 require("dotenv").config();
 
 const registerPatient = async (req, res, _) => {
