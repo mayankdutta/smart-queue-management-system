@@ -7,7 +7,6 @@ import LogIn from "./routes/Login/login.component";
 import Details from "./components/detailsPage";
 import SignUp from "./routes/Signup/Signup.component";
 import UpdatePatient from "./routes/UpdatePatient/UpdatePatient.component";
-import React, { useContext, useState } from "react";
 import "./App.css";
 
 function App() {
@@ -18,11 +17,8 @@ function App() {
           <Navbar />
           <Routes>
             <Route path={"/"} element={<Status />} />
-            <Route path="/login" element={<LogIn  />} />
-            <Route
-              path="/signup"
-              element={<SignUp  />}
-            />
+            <Route path="/login" element={<LogIn />} />
+            <Route path="/signup" element={<SignUp />} />
             <Route path="/register_patient" element={<RegisterPatient />} />
             <Route path="/update_patient/:id" element={<UpdatePatient />} />
             <Route path="/details" element={<Details />} />

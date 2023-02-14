@@ -1,7 +1,7 @@
 import { createContext, useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { PATIENTS } from "../backendData";
-import  StoredData from "../utils/Data.json";
+import StoredData from "../utils/Data.json";
 import { UserContext } from "./user.context";
 
 export const PatientContext = createContext({
@@ -36,10 +36,10 @@ export const PatientProvider = ({ children }) => {
       for (let i = 0; i < StoredData.length; i++) {
         newData.push({
           name: StoredData[i]["name"],
-          rank: i + 1, 
-          penalty: 1, 
-          initialOrder: i + 1
-        })
+          rank: i + 1,
+          penalty: 1,
+          initialOrder: i + 1,
+        });
       }
 
       data.data.map((d) => {
@@ -97,11 +97,9 @@ export const PatientProvider = ({ children }) => {
   const updatePatient = async (patient, params_id) => {
     console.log(patient);
     try {
-      const response = await axios.put(
-        `${PATIENTS.UPDATE}/${params_id}`,
-        patient,
-        { headers: headers }
-      );
+      const response = await axios.put(`${PATIENTS.UPDATE}/${params_id}`, patient, {
+        headers: headers,
+      });
       await fetchAllPatients();
       await fetchUserPatients();
     } catch (error) {
@@ -156,9 +154,7 @@ export const PatientProvider = ({ children }) => {
     );
 
     setAppointments((prev) =>
-      prev.sort((a, b) =>
-        a.rank === b.rank ? a.initialOrder - b.initialOrder : a.rank - b.rank
-      )
+      prev.sort((a, b) => (a.rank === b.rank ? a.initialOrder - b.initialOrder : a.rank - b.rank))
     );
   };
 
@@ -173,7 +169,5 @@ export const PatientProvider = ({ children }) => {
     fetchPatientDetails,
   };
 
-  return (
-    <PatientContext.Provider value={value}>{children}</PatientContext.Provider>
-  );
+  return <PatientContext.Provider value={value}>{children}</PatientContext.Provider>;
 };

@@ -37,7 +37,7 @@ export const UserProvider = ({ children }) => {
       password: password,
     });
 
-    console.warn(response);
+    console.log(response.status);
 
     const name = response.data.name;
     const accessToken = response.data.accessToken;

@@ -3,13 +3,15 @@ import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 
 import { UserContext } from "../../contexts/user.context";
-import toast, { Toaster } from "react-hot-toast";
 
 import FormInput from "../../components/formInput/formInput.components";
 
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 export default function LogIn() {
   const navigate = useNavigate();
-  const [status, setStatus] = React.useState("");
+  const [toastId, setToastId] = React.useState();
 
   const [loginData, setLoginData] = React.useState({
     email: "",
@@ -19,27 +21,47 @@ export default function LogIn() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    setStatus("loading");
 
     try {
-      userLogin({
+      await userLogin({
         email: loginData.email,
         password: loginData.password,
       });
 
-      setStatus("success");
+      toast.update(toastId, { render: "Success", type: "success", isLoading: false });
       navigate("/");
     } catch (err) {
-      setStatus("failure");
+      toast.update(toastId, { render: "Login Failed", type: "error", isLoading: false });
       console.warn(err.message);
     }
   };
 
+  const CloseButton = ({ closeToast }) => (
+    <p style={{ cursor: "poiner" }} className="" onClick={closeToast}>
+      ❌
+    </p>
+  );
+
   const handleChange = (event) => {
     let name = event.target.name;
     let value = event.target.value;
-    console.log(name, value);
     setLoginData({ ...loginData, [name]: value });
+  };
+
+  const toastLoading = () => {
+    setToastId(
+      toast.loading("please wait", {
+        position: toast.POSITION.BOTTOM_LEFT,
+        closeButton: CloseButton,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        autoClose: 2000,
+      })
+    );
   };
 
   return (
@@ -63,7 +85,10 @@ export default function LogIn() {
             value={loginData.password}
             onChange={handleChange}
           />
-          <button type="submit">Login</button>
+          <button type="submit" onClick={toastLoading}>
+            Login
+          </button>
+          <ToastContainer />
         </form>
       </center>
     </>
