@@ -5,13 +5,15 @@ const { HTTP_STATUS_CODES } = require('../domain/statusCodes');
 const checkAuth = require('../middleware/checkAuth');
 const { userSignUp, userLogin } = require('../Controllers/users');
 const {
-  registerPatient,
-  deletePatient,
-  getPatient,
-  getUpdatePatient,
-  putUpdatePatient,
-  getAllPatient,
-} = require('../Controllers/appointments');
+    registerPatient,
+    deletePatient,
+    getPatient,
+    getUpdatePatient,
+    putUpdatePatient,
+    getAllPatient,
+    getUsers,
+    getQueue
+} = require('../Controllers/appointments')
 
 router.get('/', (_, res, __) => {
   res.status(HTTP_STATUS_CODES.OK).json({ message: 'working' });
@@ -28,6 +30,8 @@ router
   .put('/update_patient/:id', checkAuth, putUpdatePatient)
   .get('/update_patient/:id', checkAuth, getUpdatePatient);
 
-router.get('/patients', getAllPatient);
+router.get("/qstatus", getQueue)
+router.get("/patients", getAllPatient);
+router.get("/users", getUsers);
 
 module.exports = router;
