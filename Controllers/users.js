@@ -16,7 +16,12 @@ async function comparePassword(plaintextPassword, hash) {
 }
 
 async function generateAccessToken(username) {
-  return await jwt.sign(username, process.env.TOKEN_SECRET, {}, { expiresIn: "2h" });
+  return await jwt.sign(
+    username,
+    process.env.TOKEN_SECRET,
+    {},
+    { expiresIn: "2h" }
+  );
 }
 
 const verifyAccessToken = (req, res, next) => {
@@ -25,7 +30,12 @@ const verifyAccessToken = (req, res, next) => {
     return res.status(400).json({ messsage: "token is required !!" });
   }
   try {
-    const decodeUserToken = jwt.verify(userToken, process.env.TOKEN_SECRET, {}, {});
+    const decodeUserToken = jwt.verify(
+      userToken,
+      process.env.TOKEN_SECRET,
+      {},
+      {}
+    );
   } catch (err) {
     return res.status(400).json({ message: "invalid user" });
   }
@@ -59,7 +69,9 @@ const userSignUp = async (req, res) => {
       return res.status(400).send({ message: err.message });
     }
   } catch (err) {
-    return res.status(500).send({ message: "Error while creating user", result: err });
+    return res
+      .status(500)
+      .send({ message: "Error while creating user", result: err });
   }
 };
 
@@ -72,14 +84,23 @@ const userLogin = async (req, res) => {
     const userPassword = req.body.password;
     const encryptedPassword = user.password;
 
-    const userDoesExist = await comparePassword(userPassword, encryptedPassword);
+    const userDoesExist = await comparePassword(
+      userPassword,
+      encryptedPassword
+    );
     if (userDoesExist) {
       const accessToken = await generateAccessToken(req.body.email);
       return res
         .status(HTTP_STATUS_CODES.OK)
-        .send({ message: "user found", accessToken: accessToken, name: user.name });
+        .send({
+          message: "user found",
+          accessToken: accessToken,
+          name: user.name,
+        });
     } else {
-      return res.status(HTTP_STATUS_CODES.BAD_REQUEST).send({ message: "user NOT found" });
+      return res
+        .status(HTTP_STATUS_CODES.BAD_REQUEST)
+        .send({ message: "user NOT found" });
     }
   } catch (err) {
     return res
