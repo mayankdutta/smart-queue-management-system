@@ -1,9 +1,9 @@
-const Users = require("../Models/Users");
-const { HTTP_STATUS_CODES } = require("../domain/statusCodes");
+const Users = require('../Models/Users');
+const { HTTP_STATUS_CODES } = require('../domain/statusCodes');
 
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
-require("dotenv").config();
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+require('dotenv').config();
 
 const SALT = 10;
 
@@ -20,14 +20,14 @@ async function generateAccessToken(username) {
     username,
     process.env.TOKEN_SECRET,
     {},
-    { expiresIn: "2h" }
+    { expiresIn: '2h' }
   );
 }
 
 const verifyAccessToken = (req, res, next) => {
-  const userToken = req.headers["access-token"];
+  const userToken = req.headers['access-token'];
   if (!userToken) {
-    return res.status(400).json({ messsage: "token is required !!" });
+    return res.status(400).json({ messsage: 'token is required !!' });
   }
   try {
     const decodeUserToken = jwt.verify(
@@ -37,7 +37,7 @@ const verifyAccessToken = (req, res, next) => {
       {}
     );
   } catch (err) {
-    return res.status(400).json({ message: "invalid user" });
+    return res.status(400).json({ message: 'invalid user' });
   }
   next();
 };
@@ -47,7 +47,7 @@ const userSignUp = async (req, res) => {
     let userDoesExist = await Users.findOne({ email: req.body.email });
 
     if (userDoesExist) {
-      return res.status(400).send({ message: "already exist" });
+      return res.status(400).send({ message: 'already exist' });
     }
 
     try {
@@ -62,7 +62,7 @@ const userSignUp = async (req, res) => {
       const result = await user.save();
 
       return res.status(200).send({
-        message: "user created successfully",
+        message: 'user created successfully',
         accessToken: accessToken,
       });
     } catch (err) {
@@ -71,7 +71,7 @@ const userSignUp = async (req, res) => {
   } catch (err) {
     return res
       .status(500)
-      .send({ message: "Error while creating user", result: err });
+      .send({ message: 'Error while creating user', result: err });
   }
 };
 
@@ -90,22 +90,21 @@ const userLogin = async (req, res) => {
     );
     if (userDoesExist) {
       const accessToken = await generateAccessToken(req.body.email);
-      return res
-        .status(HTTP_STATUS_CODES.OK)
-        .send({
-          message: "user found",
-          accessToken: accessToken,
-          name: user.name,
-        });
+      return res.status(HTTP_STATUS_CODES.OK).send({
+        message: 'user found',
+        accessToken: accessToken,
+        name: user.name,
+      });
     } else {
       return res
         .status(HTTP_STATUS_CODES.BAD_REQUEST)
-        .send({ message: "user NOT found" });
+        .send({ message: 'user NOT found' });
     }
   } catch (err) {
-    return res
-      .status(HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR)
-      .send({ message: "something went wrong while logging in", error: err });
+    return res.status(HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR).send({
+      message: 'something went wrong while logging in',
+      error: err,
+    });
   }
 };
 

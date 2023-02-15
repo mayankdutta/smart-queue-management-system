@@ -1,6 +1,6 @@
-const Patient = require("../Models/Appointments");
+const Patient = require('../Models/Appointments');
 
-require("dotenv").config();
+require('dotenv').config();
 
 const registerPatient = async (req, res, _) => {
   console.warn(req.body);
@@ -11,7 +11,7 @@ const registerPatient = async (req, res, _) => {
     });
     const result = await patient.save();
     return res.status(200).send({
-      message: "patient registered successfully",
+      message: 'patient registered successfully',
       tempResult: { result },
     });
   } catch (err) {
@@ -36,26 +36,26 @@ const getAllPatient = async (_, res) => {
     res.status(200).send(data);
   } catch (err) {
     res.status(404).send({
-      result: "data not found",
+      result: 'data not found',
       message: err,
     });
   }
 };
 
 const getPatient = async (req, res, _) => {
-  const registeredBy = req.headers["access-token"];
+  const registeredBy = req.headers['access-token'];
   try {
     const patient = await Patient.find({ registeredBy: registeredBy });
     res.status(200).send(patient);
   } catch (err) {
     res.status(401).send({
-      result: "No such record",
+      result: 'No such record',
     });
   }
 };
 
 const getUpdatePatient = async (req, res) => {
-  const registeredBy = req.headers["access-token"];
+  const registeredBy = req.headers['access-token'];
   try {
     let patient = await Patient.find({
       registeredBy: registeredBy,
@@ -65,7 +65,7 @@ const getUpdatePatient = async (req, res) => {
   } catch (err) {
     res.status(404).send({
       message: err,
-      result: "No record found",
+      result: 'No record found',
     });
   }
 };

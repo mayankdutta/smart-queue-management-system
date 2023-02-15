@@ -6,7 +6,7 @@
  * 4. Expected_time
  * */
 
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 const AppointmentsSchema = new mongoose.Schema({
   name: String,
   contactNumber: String,
@@ -41,5 +41,5 @@ const AppointmentsSchema = new mongoose.Schema({
      */
 });
 
-const Appointments = mongoose.model("Appointments", AppointmentsSchema);
+const Appointments = mongoose.model('Appointments', AppointmentsSchema);
 module.exports = Appointments;
