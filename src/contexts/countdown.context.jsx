@@ -15,7 +15,7 @@ export const CountDownProvider = ({ children }) => {
 
   useEffect(() => {
     const countTime = setInterval(
-      () => setTime((prev) => (halt ? 1 : (prev % DEFAULT_COUNTER + 1))),
+      () => setTime((prev) => (halt ? 1 : (prev % DEFAULT_COUNTER) + 1)),
       1000
     );
 

@@ -8,7 +8,6 @@ import FormInput from "../../components/formInput/formInput.components";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-
 export default function SignUp() {
   const [toastId, setToastId] = useState();
   const navigate = useNavigate();
@@ -33,10 +32,18 @@ export default function SignUp() {
         password: password,
       });
 
-      toast.update(toastId, { render: "Success", type: "success", isLoading: false });
+      toast.update(toastId, {
+        render: "Success",
+        type: "success",
+        isLoading: false,
+      });
       navigate("/");
     } catch (err) {
-      toast.update(toastId, { render: "Signup Failed", type: "error", isLoading: false });
+      toast.update(toastId, {
+        render: "Signup Failed",
+        type: "error",
+        isLoading: false,
+      });
       console.warn(err.message);
     }
   };

@@ -1,72 +1,77 @@
 .authenticate {
-    display: flex;
-    flex-direction: row;
-    flex-grow: 1;
-    justify-content: flex-end;
+  display: flex;
+  flex-direction: row;
+  flex-grow: 1;
+  justify-content: flex-end;
 }
 
 .nav {
-    display: flex;
-    gap: 2rem;
-    margin: 8px 0;
-    padding: 0 8px;
+  display: flex;
+  gap: 2rem;
+  margin: 8px 0;
+  padding: 0 8px;
 }
 
 .username {
-    border: 0;
-    border-radius: 4px;
-    font-weight: 600;
-    margin: 0 4px;
-    width: auto;
-    padding: 10px 8px;
-    box-shadow: 0 0 20px rgba(104, 85, 224, 0.2);
-    transition: 0.4s;
+  border: 0;
+  border-radius: 4px;
+  font-weight: 600;
+  margin: 0 4px;
+  width: auto;
+  padding: 10px 8px;
+  box-shadow: 0 0 20px rgba(104, 85, 224, 0.2);
+  transition: 0.4s;
 }
 
 .home {
-    cursor: pointer;
-    border: 0;
-    border-radius: 4px;
-    width: auto;
-    font-weight: bold;
-    margin: 0 4px;
-    padding: 10px 8px;
-    font-size: large;
-    letter-spacing: 2px;
+  cursor: pointer;
+  border: 0;
+  border-radius: 4px;
+  width: auto;
+  font-weight: bold;
+  margin: 0 4px;
+  padding: 10px 8px;
+  font-size: large;
+  letter-spacing: 2px;
 }
 
-.signup, .login, .logout{
-    cursor: pointer;
-    border: 0;
-    border-radius: 4px;
-    font-weight: 600;
-    margin: 0 4px;
-    width: auto;
-    padding: 10px 8px;
-    box-shadow: 0 0 20px rgba(104, 85, 224, 0.2);
-    transition: 0.4s;
+.signup,
+.login,
+.logout {
+  cursor: pointer;
+  border: 0;
+  border-radius: 4px;
+  font-weight: 600;
+  margin: 0 4px;
+  width: auto;
+  padding: 10px 8px;
+  box-shadow: 0 0 20px rgba(104, 85, 224, 0.2);
+  transition: 0.4s;
 }
 
-.signup, .username {
-    color: rgb(104, 85, 224);
-    background-color: rgba(255, 255, 255, 1);
-    border: 1px solid rgba(104, 85, 224, 1);
-
+.signup,
+.username {
+  color: rgb(104, 85, 224);
+  background-color: rgba(255, 255, 255, 1);
+  border: 1px solid rgba(104, 85, 224, 1);
 }
 
-.login, .logout {
-    color: white;
-    background-color: rgba(104, 85, 224, 1);
+.login,
+.logout {
+  color: white;
+  background-color: rgba(104, 85, 224, 1);
 }
 
-.signup:hover, .login:hover, .username:hover, .logout:hover {
-    color: white;
-    box-shadow: 0 0 20px rgba(104, 85, 224, 0.6);
-    background-color: rgba(104, 85, 224, 1);
+.signup:hover,
+.login:hover,
+.username:hover,
+.logout:hover {
+  color: white;
+  box-shadow: 0 0 20px rgba(104, 85, 224, 0.6);
+  background-color: rgba(104, 85, 224, 1);
 }
-
 
 .home:hover {
-    color: rgba(104, 85, 224, 1);
-    border-bottom: 4px solid #6855e0;
+  color: rgba(104, 85, 224, 1);
+  border-bottom: 4px solid #6855e0;
 }

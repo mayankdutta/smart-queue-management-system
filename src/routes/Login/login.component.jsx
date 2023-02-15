@@ -28,10 +28,18 @@ export default function LogIn() {
         password: loginData.password,
       });
 
-      toast.update(toastId, { render: "Success", type: "success", isLoading: false });
+      toast.update(toastId, {
+        render: "Success",
+        type: "success",
+        isLoading: false,
+      });
       navigate("/");
     } catch (err) {
-      toast.update(toastId, { render: "Login Failed", type: "error", isLoading: false });
+      toast.update(toastId, {
+        render: "Login Failed",
+        type: "error",
+        isLoading: false,
+      });
       console.warn(err.message);
     }
   };

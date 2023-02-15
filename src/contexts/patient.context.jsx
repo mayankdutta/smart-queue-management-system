@@ -97,9 +97,13 @@ export const PatientProvider = ({ children }) => {
   const updatePatient = async (patient, params_id) => {
     console.log(patient);
     try {
-      const response = await axios.put(`${PATIENTS.UPDATE}/${params_id}`, patient, {
-        headers: headers,
-      });
+      const response = await axios.put(
+        `${PATIENTS.UPDATE}/${params_id}`,
+        patient,
+        {
+          headers: headers,
+        }
+      );
       await fetchAllPatients();
       await fetchUserPatients();
     } catch (error) {

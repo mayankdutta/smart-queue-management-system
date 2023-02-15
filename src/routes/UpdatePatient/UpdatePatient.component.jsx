@@ -11,7 +11,8 @@ export default function Update() {
   const [formFields, setFormFields] = useState(DEFAULT_FORM_FIELDS);
   const navigate = useNavigate();
   const params = useParams();
-  const { appointments, updatePatient, fetchPatientDetails } = useContext(PatientContext);
+  const { appointments, updatePatient, fetchPatientDetails } =
+    useContext(PatientContext);
 
   useEffect(() => {
     const fetchPatient = async () => {

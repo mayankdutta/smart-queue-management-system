@@ -3,7 +3,9 @@ import "./date.styles.scss";
 import { getDates, formatDate } from "../../utils/date.utils";
 
 const GetDate = ({ days, handleChange, name, label, value }) => {
-  const [dateArray, setDateArray] = React.useState(getDates(new Date(), new Date().addDays(days)));
+  const [dateArray, setDateArray] = React.useState(
+    getDates(new Date(), new Date().addDays(days))
+  );
   const [selectedDate, setSelectedDate] = useState(value);
 
   const handleClickDate = (date) => {
@@ -17,13 +19,18 @@ const GetDate = ({ days, handleChange, name, label, value }) => {
     <div className="datesContainer">
       <div className="dates">
         {dateArray?.map((date) => {
-          const currentDate =
-            formatDate(date.getDate(), date.getMonth(), date.getFullYear());
+          const currentDate = formatDate(
+            date.getDate(),
+            date.getMonth(),
+            date.getFullYear()
+          );
 
           return (
             <div
               onClick={() => handleClickDate(currentDate)}
-              className={currentDate === selectedDate ? "date + selectedDate" : "date"}
+              className={
+                currentDate === selectedDate ? "date + selectedDate" : "date"
+              }
               name={name}
               label={label}
               key={date.getTime() + date.getMilliseconds()}

@@ -44,10 +44,9 @@ export function getDates(startDate, stopDate) {
   return dateArray;
 }
 
-export function formatDate (d, m, y) {
-  let day = (d.length == 1) ? "0" + d : d;
-  let month = MONTH[ m ];
+export function formatDate(d, m, y) {
+  let day = d.length == 1 ? "0" + d : d;
+  let month = MONTH[m];
   let year = y;
-  return day + "-" +month + "-" + year;
+  return day + "-" + month + "-" + year;
 }
-
