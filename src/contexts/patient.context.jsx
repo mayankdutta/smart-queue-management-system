@@ -1,8 +1,8 @@
-import { createContext, useState, useEffect, useContext } from "react";
-import axios from "axios";
-import { PATIENTS } from "../backendData";
-import StoredData from "../utils/Data.json";
-import { UserContext } from "./user.context";
+import { createContext, useState, useEffect, useContext } from 'react';
+import axios from 'axios';
+import { PATIENTS } from '../backendData';
+import StoredData from '../utils/Data.json';
+import { UserContext } from './user.context';
 
 export const PatientContext = createContext({
   appointments: [],
@@ -23,19 +23,19 @@ export const PatientProvider = ({ children }) => {
   const { userData } = useContext(UserContext);
 
   const headers = {
-    "Content-type": "application/json",
-    "access-token": userData.accessToken,
+    'Content-type': 'application/json',
+    'access-token': userData.accessToken,
   };
 
   const fetchAllPatients = async () => {
-    console.log("fetching all the patients");
+    console.log('fetching all the patients');
     try {
       const data = await axios.get(`${PATIENTS.ALL_PATIENTS}`);
 
       let newData = [];
       for (let i = 0; i < StoredData.length; i++) {
         newData.push({
-          name: StoredData[i]["name"],
+          name: StoredData[i]['name'],
           rank: i + 1,
           penalty: 1,
           initialOrder: i + 1,
@@ -59,13 +59,13 @@ export const PatientProvider = ({ children }) => {
   };
 
   const fetchUserPatients = async () => {
-    console.log("fetching user patient");
+    console.log('fetching user patient');
     try {
       const data = await axios.get(`${PATIENTS.PATIENT}`, {
         headers: headers,
       });
       setUsersPatients(data.data);
-      console.log("user patient: ", data.data);
+      console.log('user patient: ', data.data);
     } catch (err) {
       console.log(err);
     }
@@ -158,7 +158,9 @@ export const PatientProvider = ({ children }) => {
     );
 
     setAppointments((prev) =>
-      prev.sort((a, b) => (a.rank === b.rank ? a.initialOrder - b.initialOrder : a.rank - b.rank))
+      prev.sort((a, b) =>
+        a.rank === b.rank ? a.initialOrder - b.initialOrder : a.rank - b.rank
+      )
     );
   };
 
@@ -173,5 +175,7 @@ export const PatientProvider = ({ children }) => {
     fetchPatientDetails,
   };
 
-  return <PatientContext.Provider value={value}>{children}</PatientContext.Provider>;
+  return (
+    <PatientContext.Provider value={value}>{children}</PatientContext.Provider>
+  );
 };

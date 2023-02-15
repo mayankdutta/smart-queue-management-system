@@ -1,13 +1,13 @@
-import Navbar from "./components/Navbar/Navbar";
-import Status from "./components/Status/Status";
-import RegisterPatient from "./routes/RegisterPatient/registerPatient.component";
+import Navbar from './components/Navbar/Navbar';
+import Status from './components/Status/Status';
+import RegisterPatient from './routes/RegisterPatient/registerPatient.component';
 
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import LogIn from "./routes/Login/login.component";
-import Details from "./components/detailsPage";
-import SignUp from "./routes/Signup/Signup.component";
-import UpdatePatient from "./routes/UpdatePatient/UpdatePatient.component";
-import "./App.css";
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import LogIn from './routes/Login/login.component';
+import Details from './components/detailsPage';
+import SignUp from './routes/Signup/Signup.component';
+import UpdatePatient from './routes/UpdatePatient/UpdatePatient.component';
+import './App.css';
 
 function App() {
   return (
@@ -16,7 +16,7 @@ function App() {
         <main>
           <Navbar />
           <Routes>
-            <Route path={"/"} element={<Status />} />
+            <Route path={'/'} element={<Status />} />
             <Route path="/login" element={<LogIn />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/register_patient" element={<RegisterPatient />} />

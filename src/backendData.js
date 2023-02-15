@@ -1,5 +1,5 @@
 export const DEFAULT_COUNTER = 15;
-const SERVER_URI = "https://repulsive-cod-miniskirt.cyclic.app";
+const SERVER_URI = 'https://repulsive-cod-miniskirt.cyclic.app';
 // const SERVER_URI = "http://localhost:5000";
 
 export const PATIENTS = {
@@ -16,21 +16,21 @@ export const USER = {
 };
 
 export const DEFAULT_FORM_FIELDS = {
-  name: "",
-  age: "",
-  weight: "",
-  contactNumber: "",
-  contactNumberFamilyMember: "",
-  address: "",
-  doctor: "",
-  tokenNumber: "",
-  bodyTemperature: "",
-  bloodPressure: "",
-  bloodType: "",
-  oxygenLevel: "",
-  description: "",
-  typeOfCase: "",
-  currentPenalty: "",
-  date: "",
-  gender: "",
+  name: '',
+  age: '',
+  weight: '',
+  contactNumber: '',
+  contactNumberFamilyMember: '',
+  address: '',
+  doctor: '',
+  tokenNumber: '',
+  bodyTemperature: '',
+  bloodPressure: '',
+  bloodType: '',
+  oxygenLevel: '',
+  description: '',
+  typeOfCase: '',
+  currentPenalty: '',
+  date: '',
+  gender: '',
 };

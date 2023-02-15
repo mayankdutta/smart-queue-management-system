@@ -1,15 +1,15 @@
-import PriorityQueue from "../Algorithm/Heap";
-import { useEffect, useState } from "react";
-import { clear } from "@testing-library/user-event/dist/clear";
+import PriorityQueue from '../Algorithm/Heap';
+import { useEffect, useState } from 'react';
+import { clear } from '@testing-library/user-event/dist/clear';
 
 const Heap = (arr) => {
-  console.log("in the custom hook");
+  console.log('in the custom hook');
   console.log(arr);
 
   const data = [];
 
   const fun = () => {
-    console.log("fun inside the custom Hook");
+    console.log('fun inside the custom Hook');
     // const pairwiseQueue = new PriorityQueue((a, b) => a[1] > b[1]);
     const pairwiseQueue = new PriorityQueue(function (a, b) {
       if (a[1] === b[1]) {

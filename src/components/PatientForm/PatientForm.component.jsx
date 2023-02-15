@@ -1,7 +1,7 @@
-import GetDate from "../Date/date.components.jsx";
-import { useState } from "react";
-import "./PatientForm.styles.scss";
-import FormInput from "../formInput/formInput.components";
+import GetDate from '../Date/date.components.jsx';
+import { useState } from 'react';
+import './PatientForm.styles.scss';
+import FormInput from '../formInput/formInput.components';
 
 function titleCase(str) {
   return str
@@ -9,7 +9,7 @@ function titleCase(str) {
     .map(function (word) {
       return word.replace(word[0], word[0].toUpperCase());
     })
-    .join(" ");
+    .join(' ');
 }
 
 const PatientForm = ({
@@ -28,15 +28,15 @@ const PatientForm = ({
     <center>
       <form onSubmit={handleSubmit}>
         <h1>
-          {ButtonValue === "Update" ? "Update Patient" : "Register New Patient"}
+          {ButtonValue === 'Update' ? 'Update Patient' : 'Register New Patient'}
         </h1>
 
         {Object.keys(formFields).map((defaultFormField, i) => {
           if (
-            defaultFormField[0] === "_" ||
-            defaultFormField === "registeredBy"
+            defaultFormField[0] === '_' ||
+            defaultFormField === 'registeredBy'
           ) {
-          } else if (defaultFormField === "date") {
+          } else if (defaultFormField === 'date') {
             return (
               <div onClick={handleDisplayDate} className="date-selector">
                 Click here to select Date

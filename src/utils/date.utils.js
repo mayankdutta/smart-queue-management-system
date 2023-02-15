@@ -1,29 +1,29 @@
 export const MONTH = [
-  "Jan",
-  "Feb",
-  "Mar",
-  "Apr",
-  "May",
-  "Jun",
-  "Jul",
-  "Aug",
-  "Sep",
-  "Oct",
-  "Nov",
-  "Dec",
+  'Jan',
+  'Feb',
+  'Mar',
+  'Apr',
+  'May',
+  'Jun',
+  'Jul',
+  'Aug',
+  'Sep',
+  'Oct',
+  'Nov',
+  'Dec',
 ];
 
 export const NTH = function (d) {
-  if (d > 3 && d < 21) return "th";
+  if (d > 3 && d < 21) return 'th';
   switch (d % 10) {
     case 1:
-      return "st";
+      return 'st';
     case 2:
-      return "nd";
+      return 'nd';
     case 3:
-      return "rd";
+      return 'rd';
     default:
-      return "th";
+      return 'th';
   }
 };
 
@@ -45,8 +45,8 @@ export function getDates(startDate, stopDate) {
 }
 
 export function formatDate(d, m, y) {
-  let day = d.length == 1 ? "0" + d : d;
+  let day = d.length == 1 ? '0' + d : d;
   let month = MONTH[m];
   let year = y;
-  return day + "-" + month + "-" + year;
+  return day + '-' + month + '-' + year;
 }

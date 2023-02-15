@@ -1,34 +1,34 @@
-import * as React from "react";
-import axios from "axios";
-import Box from "@mui/material/Box";
-import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
-import Typography from "@mui/material/Typography";
+import * as React from 'react';
+import axios from 'axios';
+import Box from '@mui/material/Box';
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import Typography from '@mui/material/Typography';
 
 const bull = (
   <Box
     component="span"
-    sx={{ display: "inline-block", mx: "2px", transform: "scale(0.8)" }}
+    sx={{ display: 'inline-block', mx: '2px', transform: 'scale(0.8)' }}
   >
     •
   </Box>
 );
 
 const Details = () => {
-  const [firstName, setFirstName] = React.useState("");
-  const [lastName, setLastName] = React.useState("");
-  const [contact, setContact] = React.useState("");
-  const [email, setEmail] = React.useState("");
-  const [gender, setGender] = React.useState("");
+  const [firstName, setFirstName] = React.useState('');
+  const [lastName, setLastName] = React.useState('');
+  const [contact, setContact] = React.useState('');
+  const [email, setEmail] = React.useState('');
+  const [gender, setGender] = React.useState('');
 
   const [age, setAge] = React.useState(0);
-  const [dp, setDp] = React.useState("");
+  const [dp, setDp] = React.useState('');
 
   React.useEffect(() => {
     const getDetails = async () => {
       await axios
-        .get("https://randomuser.me/api")
+        .get('https://randomuser.me/api')
         .then((res) => {
           setFirstName(res.data.results[0].name.first);
           setLastName(res.data.results[0].name.last);

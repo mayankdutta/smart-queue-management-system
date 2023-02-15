@@ -1,11 +1,11 @@
-import { useState, useContext } from "react";
+import { useState, useContext } from 'react';
 
-import { useNavigate, useParams } from "react-router-dom";
-import { useEffect } from "react";
-import PatientForm from "../../components/PatientForm/PatientForm.component";
+import { useNavigate, useParams } from 'react-router-dom';
+import { useEffect } from 'react';
+import PatientForm from '../../components/PatientForm/PatientForm.component';
 
-import { DEFAULT_FORM_FIELDS } from "../../backendData";
-import { PatientContext } from "../../contexts/patient.context";
+import { DEFAULT_FORM_FIELDS } from '../../backendData';
+import { PatientContext } from '../../contexts/patient.context';
 
 export default function Update() {
   const [formFields, setFormFields] = useState(DEFAULT_FORM_FIELDS);
@@ -25,16 +25,16 @@ export default function Update() {
         console.warn(err);
       }
     };
-    console.log("FETCHING PATIENT DATA");
+    console.log('FETCHING PATIENT DATA');
     fetchPatient();
   }, []);
 
   const handleChange = (event) => {
-    let name = "nil",
-      value = "nil";
+    let name = 'nil',
+      value = 'nil';
 
-    if (typeof event === "string") {
-      name = "date";
+    if (typeof event === 'string') {
+      name = 'date';
       value = event;
     } else {
       name = event.target.name;
@@ -54,7 +54,7 @@ export default function Update() {
       },
       params.id
     );
-    navigate("/");
+    navigate('/');
   };
 
   return (
@@ -62,7 +62,7 @@ export default function Update() {
       handleChange={handleChange}
       handleSubmit={handleSubmit}
       formFields={formFields}
-      ButtonValue={"Update"}
+      ButtonValue={'Update'}
     />
   );
 }

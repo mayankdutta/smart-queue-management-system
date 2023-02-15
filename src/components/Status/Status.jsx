@@ -1,12 +1,12 @@
-import React, { useContext } from "react";
-import { useEffect, useState } from "react";
-import PrintQueue from "../PrintQueue/printQueue";
-import "./Status.css";
-import { DEFAULT_COUNTER } from "../../backendData";
-import Button from "../Button/button.component";
-import Counter from "../Counter/counter.component";
-import { PatientContext } from "../../contexts/patient.context";
-import { UserContext } from "../../contexts/user.context";
+import React, { useContext } from 'react';
+import { useEffect, useState } from 'react';
+import PrintQueue from '../PrintQueue/printQueue';
+import './Status.css';
+import { DEFAULT_COUNTER } from '../../backendData';
+import Button from '../Button/button.component';
+import Counter from '../Counter/counter.component';
+import { PatientContext } from '../../contexts/patient.context';
+import { UserContext } from '../../contexts/user.context';
 
 const currentPatient = 0;
 
@@ -37,13 +37,13 @@ function Status() {
   }, [occupied]);
 
   return (
-    <div className={"App"}>
-      <div className={"container"}>
-        <div className={"container-left"}>
+    <div className={'App'}>
+      <div className={'container'}>
+        <div className={'container-left'}>
           {appointments.length ? (
             <div className="App-body">
               Turn of patient :<span>{appointments[currentPatient].name}</span>
-              <h2 style={{ color: occupied ? "green" : "red" }}>
+              <h2 style={{ color: occupied ? 'green' : 'red' }}>
                 {occupied ? <> Clinic occupied </> : <> Empty </>}
               </h2>
               <Button
@@ -62,7 +62,7 @@ function Status() {
           )}
         </div>
 
-        <div className={"container-right"}>
+        <div className={'container-right'}>
           <PrintQueue data={appointments} />
         </div>
       </div>

@@ -1,8 +1,8 @@
-import React from "react";
-import "./printQueue.css";
-import { Link } from "react-router-dom";
-import { PatientContext } from "../../contexts/patient.context";
-import { useContext } from "react";
+import React from 'react';
+import './printQueue.css';
+import { Link } from 'react-router-dom';
+import { PatientContext } from '../../contexts/patient.context';
+import { useContext } from 'react';
 
 const PrintQueue = ({ data, edit }) => {
   const { deleteUserPatient } = useContext(PatientContext);
@@ -11,7 +11,7 @@ const PrintQueue = ({ data, edit }) => {
     <main>
       <h2>{edit ? <> Your Patients </> : <> All Patients </>}</h2>
 
-      <div className={"table-container"}>
+      <div className={'table-container'}>
         <table>
           <thead>
             <tr>
@@ -28,14 +28,14 @@ const PrintQueue = ({ data, edit }) => {
               return (
                 <tr key={index}>
                   <td>{index + 1}</td>
-                  <td className={"name"}>
-                    <Link to={"/details"}>{value.name}</Link>
+                  <td className={'name'}>
+                    <Link to={'/details'}>{value.name}</Link>
                   </td>
                   <td>{value.rank}</td>
                   {edit && (
                     <>
                       <td>
-                        <Link to={"/update_patient/" + value._id}>✏️</Link>
+                        <Link to={'/update_patient/' + value._id}>✏️</Link>
                       </td>
                       <td onClick={() => deleteUserPatient(value._id)}> ⌫ </td>
                     </>

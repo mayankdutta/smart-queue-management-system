@@ -1,12 +1,12 @@
-import { useNavigate } from "react-router-dom";
-import Link from "@mui/material/Link";
-import { useEffect, useContext, useState } from "react";
-import { UserContext } from "../../contexts/user.context";
+import { useNavigate } from 'react-router-dom';
+import Link from '@mui/material/Link';
+import { useEffect, useContext, useState } from 'react';
+import { UserContext } from '../../contexts/user.context';
 
-import FormInput from "../../components/formInput/formInput.components";
+import FormInput from '../../components/formInput/formInput.components';
 
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function SignUp() {
   const [toastId, setToastId] = useState();
@@ -14,10 +14,10 @@ export default function SignUp() {
   const { userLogin, userSignup } = useContext(UserContext);
 
   const [registerData, setRegisterData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    password: "",
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
   });
 
   const handleSubmit = async (event) => {
@@ -27,21 +27,21 @@ export default function SignUp() {
 
     try {
       await userSignup({
-        name: firstName + " " + lastName,
+        name: firstName + ' ' + lastName,
         email: email,
         password: password,
       });
 
       toast.update(toastId, {
-        render: "Success",
-        type: "success",
+        render: 'Success',
+        type: 'success',
         isLoading: false,
       });
-      navigate("/");
+      navigate('/');
     } catch (err) {
       toast.update(toastId, {
-        render: "Signup Failed",
-        type: "error",
+        render: 'Signup Failed',
+        type: 'error',
         isLoading: false,
       });
       console.warn(err.message);
@@ -51,14 +51,14 @@ export default function SignUp() {
   const handleChange = (event) => {
     let name = event.target.name;
     let value = event.target.value;
-    console.log(name + " , " + value);
+    console.log(name + ' , ' + value);
 
     setRegisterData({ ...registerData, [name]: value });
   };
 
   const toastLoading = () => {
     setToastId(
-      toast.loading("please wait", {
+      toast.loading('please wait', {
         position: toast.POSITION.BOTTOM_LEFT,
       })
     );

@@ -1,21 +1,21 @@
-import * as React from "react";
-import { useNavigate } from "react-router-dom";
-import { useContext } from "react";
+import * as React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useContext } from 'react';
 
-import { UserContext } from "../../contexts/user.context";
+import { UserContext } from '../../contexts/user.context';
 
-import FormInput from "../../components/formInput/formInput.components";
+import FormInput from '../../components/formInput/formInput.components';
 
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function LogIn() {
   const navigate = useNavigate();
   const [toastId, setToastId] = React.useState();
 
   const [loginData, setLoginData] = React.useState({
-    email: "",
-    password: "",
+    email: '',
+    password: '',
   });
   const { userLogin } = useContext(UserContext);
 
@@ -29,15 +29,15 @@ export default function LogIn() {
       });
 
       toast.update(toastId, {
-        render: "Success",
-        type: "success",
+        render: 'Success',
+        type: 'success',
         isLoading: false,
       });
-      navigate("/");
+      navigate('/');
     } catch (err) {
       toast.update(toastId, {
-        render: "Login Failed",
-        type: "error",
+        render: 'Login Failed',
+        type: 'error',
         isLoading: false,
       });
       console.warn(err.message);
@@ -45,7 +45,7 @@ export default function LogIn() {
   };
 
   const CloseButton = ({ closeToast }) => (
-    <p style={{ cursor: "poiner" }} className="" onClick={closeToast}>
+    <p style={{ cursor: 'poiner' }} className="" onClick={closeToast}>
       ❌
     </p>
   );
@@ -58,7 +58,7 @@ export default function LogIn() {
 
   const toastLoading = () => {
     setToastId(
-      toast.loading("please wait", {
+      toast.loading('please wait', {
         position: toast.POSITION.BOTTOM_LEFT,
         closeButton: CloseButton,
         hideProgressBar: false,
@@ -66,7 +66,7 @@ export default function LogIn() {
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        theme: "light",
+        theme: 'light',
         autoClose: 2000,
       })
     );

@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
-import { createContext } from "react";
-import { DEFAULT_COUNTER } from "../backendData";
+import { useState, useEffect } from 'react';
+import { createContext } from 'react';
+import { DEFAULT_COUNTER } from '../backendData';
 
 export const CountDownContext = createContext({
   time: 1,
@@ -11,7 +11,7 @@ export const CountDownProvider = ({ children }) => {
   const [time, setTime] = useState(1);
   const [halt, setHalt] = useState(false);
   const value = { time, setTime, halt, setHalt };
-  console.log("in timer");
+  console.log('in timer');
 
   useEffect(() => {
     const countTime = setInterval(

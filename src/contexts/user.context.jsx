@@ -1,22 +1,22 @@
-import { useState } from "react";
-import { createContext } from "react";
-import { USER } from "../backendData";
-import axios from "axios";
+import { useState } from 'react';
+import { createContext } from 'react';
+import { USER } from '../backendData';
+import axios from 'axios';
 
 export const UserContext = createContext({
-  name: localStorage.getItem("name"),
-  accessToken: localStorage.getItem("accessToken"),
+  name: localStorage.getItem('name'),
+  accessToken: localStorage.getItem('accessToken'),
 });
 
 export const UserProvider = ({ children }) => {
   const [userData, setUserData] = useState({
-    name: localStorage.getItem("name"),
-    accessToken: localStorage.getItem("accessToken"),
+    name: localStorage.getItem('name'),
+    accessToken: localStorage.getItem('accessToken'),
   });
 
   const setLocalStorage = ({ name, accessToken }) => {
-    localStorage.setItem("accessToken", accessToken);
-    localStorage.setItem("name", name);
+    localStorage.setItem('accessToken', accessToken);
+    localStorage.setItem('name', name);
   };
 
   const userSignup = async ({ name, email, password }) => {
@@ -49,8 +49,8 @@ export const UserProvider = ({ children }) => {
   const userLogout = () => {
     localStorage.clear();
     setUserData({
-      name: "",
-      accessToken: "",
+      name: '',
+      accessToken: '',
     });
   };
 
