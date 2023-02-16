@@ -15,13 +15,8 @@ async function comparePassword(plaintextPassword, hash) {
   return await bcrypt.compare(plaintextPassword, hash);
 }
 
-async function generateAccessToken(username, role) {
-  return await jwt.sign(
-    { username: username, role: role },
-    process.env.TOKEN_SECRET,
-    {},
-    { expiresIn: '2h' }
-  );
+async function generateAccessToken(email, role) {
+  return jwt.sign({ email: email, role: role }, process.env.TOKEN_SECRET, {}, { expiresIn: '2h' });
 }
 
 const verifyAccessToken = (req, res, next) => {
@@ -78,16 +73,22 @@ const userLogin = async (req, res) => {
       email: req.body.email,
     });
 
+    console.log(user);
+
     const userPassword = req.body.password;
     const encryptedPassword = user.password;
 
     const userDoesExist = await comparePassword(userPassword, encryptedPassword);
+
     if (userDoesExist) {
       const accessToken = await generateAccessToken(user.email, user.role);
-      const role = user.role ? user.role : 'user';
-      return res
-        .status(HTTP_STATUS_CODES.OK)
-        .send({ message: 'user found', accessToken: accessToken, name: user.name, role: role });
+
+      return res.status(HTTP_STATUS_CODES.OK).send({
+        message: 'user found',
+        accessToken: accessToken,
+        name: user.name,
+        role: user.role,
+      });
     } else {
       return res.status(HTTP_STATUS_CODES.BAD_REQUEST).send({ message: 'user NOT found' });
     }

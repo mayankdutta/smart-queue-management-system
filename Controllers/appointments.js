@@ -6,11 +6,12 @@ const { HTTP_STATUS_CODES } = require('../domain/statusCodes');
 require('dotenv').config();
 
 const registerPatient = async (req, res, _) => {
-  console.warn(req.body);
+  const user = getUserObject(req.headers['access-token']);
 
   try {
     const patient = new Patient({
       ...req.body,
+      registeredBy: user.email,
     });
     const result = await patient.save();
     return res.status(HTTP_STATUS_CODES.OK).send({
@@ -35,7 +36,8 @@ const deletePatient = async (req, res, next) => {
 
 const getAllPatient = async (req, res) => {
   const token = getUserObject(req.headers['access-token']);
-  if (!token || token.role != 'admin') return res.status(401).send('Not an Admin !');
+  if (!token || token.role != 'admin')
+    return res.status(HTTP_STATUS_CODES.BAD_REQUEST).send('Not an Admin !');
   try {
     const data = await Patient.find();
     res.status(HTTP_STATUS_CODES.OK).send(data);
@@ -48,7 +50,8 @@ const getAllPatient = async (req, res) => {
 };
 
 const getPatient = async (req, res) => {
-  const registeredBy = req.headers['access-token'];
+  const registeredBy = getUserObject(req.headers['access-token']).email;
+
   try {
     const patient = await Patient.find({ registeredBy: registeredBy });
     res.status(HTTP_STATUS_CODES.OK).send(patient);
@@ -60,7 +63,8 @@ const getPatient = async (req, res) => {
 };
 
 const getUpdatePatient = async (req, res) => {
-  const registeredBy = req.headers['access-token'];
+  const registeredBy = getUserObject(req.headers['access-token']).email;
+
   try {
     let patient = await Patient.find({
       registeredBy: registeredBy,
@@ -106,12 +110,13 @@ const getUsers = async (req, res) => {
 };
 
 const getQueue = async (req, res) => {
-  let date = req.body.date;
+  const date = currentDate();
+
   try {
     const queueStatus = await Patient.find({ date: date });
     res.status(HTTP_STATUS_CODES.OK).send(queueStatus);
   } catch (error) {
-    res.status(HTTP_STATUS_CODE.INTERNAL_SERVER_ERROR).send(error);
+    res.status(HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR).send(error);
   }
 };
 
@@ -125,3 +130,16 @@ module.exports = {
   getUsers,
   getQueue,
 };
+
+const MONTH = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+function formatDate(d, m, y) {
+  let day = d.length == 1 ? '0' + d : d;
+  let month = MONTH[m];
+  let year = y;
+  return day + '-' + month + '-' + year;
+}
+
+function currentDate() {
+  return formatDate(new Date().getDate(), new Date().getMonth(), new Date().getFullYear());
+}
