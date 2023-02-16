@@ -9,7 +9,7 @@ const PrintQueue = ({ data, edit }) => {
 
   return (
     <main>
-      <h2>{edit ? <> Your Patients </> : <> All Patients </>}</h2>
+      <h2>{edit ? <> Your Patients </> : <> Patients for today </>}</h2>
 
       <div className={'table-container'}>
         <table>

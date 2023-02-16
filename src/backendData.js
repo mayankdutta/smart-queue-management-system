@@ -3,7 +3,7 @@ const SERVER_URI = 'https://repulsive-cod-miniskirt.cyclic.app';
 // const SERVER_URI = "http://localhost:5000";
 
 export const PATIENTS = {
-  ALL_PATIENTS: `${SERVER_URI}/patients`,
+  ALL_PATIENTS: `${SERVER_URI}/qstatus`,
   PATIENT: `${SERVER_URI}/get_patient`,
   REGISTER: `${SERVER_URI}/register_patient`,
   UPDATE: `${SERVER_URI}/update_patient`,

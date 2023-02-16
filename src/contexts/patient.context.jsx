@@ -3,6 +3,7 @@ import axios from 'axios';
 import { PATIENTS } from '../backendData';
 import StoredData from '../utils/Data.json';
 import { UserContext } from './user.context';
+import { currentDate } from '../utils/date.utils';
 
 export const PatientContext = createContext({
   appointments: [],
@@ -18,6 +19,7 @@ export const PatientContext = createContext({
 const TRIBONACCI_SERIES = [1, 3, 5, 9, 17, 31, 55, 81, 149, 274, 504, 927];
 
 export const PatientProvider = ({ children }) => {
+const todayDate = currentDate();
   const [appointments, setAppointments] = useState(StoredData);
   const [usersPatients, setUsersPatients] = useState([]);
   const { userData } = useContext(UserContext);
@@ -30,27 +32,31 @@ export const PatientProvider = ({ children }) => {
   const fetchAllPatients = async () => {
     console.log('fetching all the patients');
     try {
-      const data = await axios.get(`${PATIENTS.ALL_PATIENTS}`);
+      const data = await axios.get(`${PATIENTS.ALL_PATIENTS}`, { date: currentDate });
 
       let newData = [];
       for (let i = 0; i < StoredData.length; i++) {
-        newData.push({
-          name: StoredData[i]['name'],
-          rank: i + 1,
-          penalty: 1,
-          initialOrder: i + 1,
-        });
+        console.log(StoredData[i]['date'], todayDate);
+        if (StoredData[i]['date'] === todayDate) {
+          newData.push({
+            name: StoredData[i]['name'],
+            rank: newData.length + 1,
+            penalty: 1,
+            initialOrder: i + 1,
+          });
+        }
       }
 
       data.data.map((d) => {
         newData.push({
           name: d.name,
-          rank: StoredData.length + newData.length + 1,
+          rank: newData.length + 1,
           penalty: 1,
-          initialOrder: StoredData.length + newData.length + 1,
+          initialOrder: newData.length + 1,
         });
       });
 
+      console.log(newData);
       setAppointments(newData);
     } catch (err) {
       console.log(err);
@@ -69,6 +75,7 @@ export const PatientProvider = ({ children }) => {
     } catch (err) {
       console.log(err);
     }
+
   };
 
   useEffect(() => {
@@ -97,13 +104,9 @@ export const PatientProvider = ({ children }) => {
   const updatePatient = async (patient, params_id) => {
     console.log(patient);
     try {
-      const response = await axios.put(
-        `${PATIENTS.UPDATE}/${params_id}`,
-        patient,
-        {
-          headers: headers,
-        }
-      );
+      const response = await axios.put(`${PATIENTS.UPDATE}/${params_id}`, patient, {
+        headers: headers,
+      });
       await fetchAllPatients();
       await fetchUserPatients();
     } catch (error) {
@@ -158,9 +161,7 @@ export const PatientProvider = ({ children }) => {
     );
 
     setAppointments((prev) =>
-      prev.sort((a, b) =>
-        a.rank === b.rank ? a.initialOrder - b.initialOrder : a.rank - b.rank
-      )
+      prev.sort((a, b) => (a.rank === b.rank ? a.initialOrder - b.initialOrder : a.rank - b.rank))
     );
   };
 
@@ -175,7 +176,5 @@ export const PatientProvider = ({ children }) => {
     fetchPatientDetails,
   };
 
-  return (
-    <PatientContext.Provider value={value}>{children}</PatientContext.Provider>
-  );
+  return <PatientContext.Provider value={value}>{children}</PatientContext.Provider>;
 };

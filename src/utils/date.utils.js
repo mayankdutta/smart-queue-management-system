@@ -14,7 +14,7 @@ export const MONTH = [
 ];
 
 export const NTH = function (d) {
-  if (d > 3 && d < 21) return 'th';
+  if (3 < d && d < 21) return 'th';
   switch (d % 10) {
     case 1:
       return 'st';
@@ -49,4 +49,8 @@ export function formatDate(d, m, y) {
   let month = MONTH[m];
   let year = y;
   return day + '-' + month + '-' + year;
+}
+
+export function currentDate() {
+  return formatDate(new Date().getDate(), new Date().getMonth(), new Date().getFullYear());
 }
