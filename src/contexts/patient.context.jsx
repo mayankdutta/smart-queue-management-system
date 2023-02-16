@@ -19,7 +19,7 @@ export const PatientContext = createContext({
 const TRIBONACCI_SERIES = [1, 3, 5, 9, 17, 31, 55, 81, 149, 274, 504, 927];
 
 export const PatientProvider = ({ children }) => {
-const todayDate = currentDate();
+  const todayDate = currentDate().toString();
   const [appointments, setAppointments] = useState(StoredData);
   const [usersPatients, setUsersPatients] = useState([]);
   const { userData } = useContext(UserContext);
@@ -32,11 +32,12 @@ const todayDate = currentDate();
   const fetchAllPatients = async () => {
     console.log('fetching all the patients');
     try {
-      const data = await axios.get(`${PATIENTS.ALL_PATIENTS}`, { date: currentDate });
+      console.log('today date: ', todayDate);
+
+      const data = await axios.get(`${PATIENTS.ALL_PATIENTS}`);
 
       let newData = [];
       for (let i = 0; i < StoredData.length; i++) {
-        console.log(StoredData[i]['date'], todayDate);
         if (StoredData[i]['date'] === todayDate) {
           newData.push({
             name: StoredData[i]['name'],
@@ -66,6 +67,8 @@ const todayDate = currentDate();
 
   const fetchUserPatients = async () => {
     console.log('fetching user patient');
+    console.log('headers: ', headers);
+
     try {
       const data = await axios.get(`${PATIENTS.PATIENT}`, {
         headers: headers,
@@ -75,7 +78,6 @@ const todayDate = currentDate();
     } catch (err) {
       console.log(err);
     }
-
   };
 
   useEffect(() => {
@@ -178,3 +180,7 @@ const todayDate = currentDate();
 
   return <PatientContext.Provider value={value}>{children}</PatientContext.Provider>;
 };
+/*
+
+
+ */
