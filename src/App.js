@@ -7,7 +7,8 @@ import LogIn from './routes/Login/login.component';
 import Details from './components/detailsPage';
 import SignUp from './routes/Signup/Signup.component';
 import UpdatePatient from './routes/UpdatePatient/UpdatePatient.component';
-import './App.css';
+import RegisteredPatients from './routes/RegisteredPatients/registeredPatients.component';
+// import './App.css';
 
 function App() {
   return (
@@ -22,6 +23,8 @@ function App() {
             <Route path="/register_patient" element={<RegisterPatient />} />
             <Route path="/update_patient/:id" element={<UpdatePatient />} />
             <Route path="/details" element={<Details />} />
+            <Route path="/registered_patients" element={<RegisteredPatients />} />
+
             {/*
                         <Route path='/patients' element={<SIGNUP setRefresh={setRefresh}/>}/>
                         <Route path='/delete_patient' element={<SIGNUP setRefresh={setRefresh}/>}/>

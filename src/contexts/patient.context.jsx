@@ -16,7 +16,7 @@ export const PatientContext = createContext({
   updatePatient: () => null,
 });
 
-const TRIBONACCI_SERIES = [1, 3, 5, 9, 17, 31, 55, 81, 149, 274, 504, 927];
+const TRIBONACCI_SERIES = [2, 3, 5, 9, 17, 31, 55, 81, 149, 274, 504, 927];
 
 export const PatientProvider = ({ children }) => {
   const todayDate = currentDate().toString();
@@ -38,7 +38,7 @@ export const PatientProvider = ({ children }) => {
 
       let newData = [];
       for (let i = 0; i < StoredData.length; i++) {
-        if (StoredData[i]['date'] === todayDate) {
+        if (/*StoredData[i]['date'] === todayDate*/ true) {
           newData.push({
             name: StoredData[i]['name'],
             rank: newData.length + 1,
@@ -106,9 +106,13 @@ export const PatientProvider = ({ children }) => {
   const updatePatient = async (patient, params_id) => {
     console.log(patient);
     try {
-      const response = await axios.put(`${PATIENTS.UPDATE}/${params_id}`, patient, {
-        headers: headers,
-      });
+      const response = await axios.put(
+        `${PATIENTS.UPDATE}/${params_id}`,
+        patient,
+        {
+          headers: headers,
+        }
+      );
       await fetchAllPatients();
       await fetchUserPatients();
     } catch (error) {
@@ -163,7 +167,9 @@ export const PatientProvider = ({ children }) => {
     );
 
     setAppointments((prev) =>
-      prev.sort((a, b) => (a.rank === b.rank ? a.initialOrder - b.initialOrder : a.rank - b.rank))
+      prev.sort((a, b) =>
+        a.rank === b.rank ? a.initialOrder - b.initialOrder : a.rank - b.rank
+      )
     );
   };
 
@@ -178,7 +184,9 @@ export const PatientProvider = ({ children }) => {
     fetchPatientDetails,
   };
 
-  return <PatientContext.Provider value={value}>{children}</PatientContext.Provider>;
+  return (
+    <PatientContext.Provider value={value}>{children}</PatientContext.Provider>
+  );
 };
 /*
 

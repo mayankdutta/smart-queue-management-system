@@ -1,36 +1,45 @@
-import './button.styles.css';
+// import './button.styles.css';
+import Button from '@mui/material/Button';
+import SendIcon from '@mui/icons-material/Send';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+
 import { PatientContext } from '../../contexts/patient.context.jsx';
 import { useContext } from 'react';
 
-const Button = ({ occupied, setOccupied, setTime }) => {
+const ActionButton = ({ occupied, setOccupied, setTime }) => {
   const { handlePresent } = useContext(PatientContext);
 
   return (
     <div className={'buttons'}>
       {!occupied && (
-        <button
-          className="button-red"
+        <Button
+          variant="contained"
+          endIcon={<SendIcon />}
+        color="error"
           onClick={() => {
             handlePresent();
             setOccupied(!occupied);
           }}
         >
-          send patient inside
-        </button>
+          Send Patient Inside
+        </Button>
+
       )}
       {occupied && (
-        <button
-          className="button-green"
+        <Button
+          variant="contained"
+          endIcon={<CheckCircleIcon />}
+        color="success"
           onClick={() => {
             setTime(1);
             setOccupied(!occupied);
           }}
         >
           patient done.
-        </button>
+        </Button>
       )}
     </div>
   );
 };
 
-export default Button;
+export default ActionButton;

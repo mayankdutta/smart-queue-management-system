@@ -1,3 +1,6 @@
+import Typography from '@mui/material/Typography';
+import LinearProgress from '@mui/material/LinearProgress';
+
 const Counter = ({ time }) => {
   return (
     <div
@@ -7,8 +10,13 @@ const Counter = ({ time }) => {
         alignItems: 'center',
       }}
     >
-      <h3>Counter: </h3>
-      <h1>{time}</h1>
+      <Typography variant="h5" gutterBottom>
+        Waiting for next patient
+        <LinearProgress />
+      </Typography>
+      <Typography variant="h4" gutterBottom>
+        <h1>{time}</h1>
+      </Typography>
     </div>
   );
 };
