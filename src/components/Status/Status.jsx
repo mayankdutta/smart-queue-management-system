@@ -38,20 +38,28 @@ function Status() {
 
   return (
     <div className={'App'}>
-      <div className={'container'}>
-        <div className={'container-left'}>
+      <div className={''}>
+        <div className={''}>
           {appointments.length ? (
-            <div className="App-body">
-              Turn of patient :<span>{appointments[currentPatient].name}</span>
-              <h2 style={{ color: occupied ? 'green' : 'red' }}>
-                {occupied ? <> Clinic occupied </> : <> Empty </>}
-              </h2>
-              <Button
-                occupied={occupied}
-                setOccupied={setOccupied}
-                setTime={setTime}
-              />
-            </div>
+            <>
+              <div className="text-lg  tracking-widest ">Turn of patient</div>
+
+              <div className="text-4xl">
+                {appointments[currentPatient].name}
+              </div>
+
+              <div className="flex  my-4 space-x-2">
+                <h2 style={{ color: occupied ? 'green' : 'red' }}>
+                  {occupied ? <> Clinic occupied </> : <> Empty </>}
+                </h2>
+
+                <Button
+                  occupied={occupied}
+                  setOccupied={setOccupied}
+                  setTime={setTime}
+                />
+              </div>
+            </>
           ) : (
             <h5> No appointments for today.</h5>
           )}

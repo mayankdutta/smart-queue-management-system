@@ -14,40 +14,45 @@ function Navbar() {
   };
 
   return (
-    <div className={'nav'}>
-      <Link to={'/'}>
-        <div className={'home'}> home</div>
-      </Link>
-      {!userData.name ? (
-        <Link className={'home'} to={'/login'}>
-          Register Patient
+    <div className={'py-2 px-4 flex  justify-between bg-slate-200'}>
+      <div className="flex">
+        <Link to={'/'}>
+          <div className={'btn-page'}> home</div>
         </Link>
-      ) : (
-        <Link className={'home'} to={'/register_patient'}>
-          Register Patient
-        </Link>
-      )}
-      {!userData.name ? (
-        <div className={'authenticate'}>
-          <Link to={'/signup'}>
-            <h3 className={'signup'}> Register</h3>
+        {!userData.name ? (
+          <Link className={'btn-page'} to={'/login'}>
+            Register Patient
           </Link>
-          <Link to={'/login'}>
-            <h3 className={'login'}>Login</h3>
+        ) : (
+          <Link className={'btn-page'} to={'/register_patient'}>
+            Register Patient
           </Link>
-        </div>
-      ) : (
-        <div className={'authenticate'}>
-          <h3 className={'username'}> {userData.name}</h3>
-          <h3
-            className={'logout'}
-            style={{ cursor: 'pointer' }}
-            onClick={logout}
-          >
-            Logout
-          </h3>
-        </div>
-      )}
+        )}
+      </div>
+
+      <div className={'flex space-x-2 '}>
+        {!userData.name ? (
+          <>
+            <Link to={'/signup'}>
+              <h3 className={'btn-signup'}> Register</h3>
+            </Link>
+            <Link to={'/login'}>
+              <h3 className={'btn-login'}>Login</h3>
+            </Link>
+          </>
+        ) : (
+          <>
+            <h3 className={'btn-signup'}> {userData.name}</h3>
+            <h3
+              className={'btn-login'}
+              style={{ cursor: 'pointer' }}
+              onClick={logout}
+            >
+              Logout
+            </h3>
+          </>
+        )}
+      </div>
     </div>
   );
 }

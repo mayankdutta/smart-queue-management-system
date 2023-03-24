@@ -1,3 +1,5 @@
+import { DEFAULT_COUNTER } from '../../backendData';
+
 const Counter = ({ time }) => {
   return (
     <div
@@ -7,8 +9,10 @@ const Counter = ({ time }) => {
         alignItems: 'center',
       }}
     >
-      <h3>Counter: </h3>
-      <h1>{time}</h1>
+      <div className="text-3xl">counter: </div>
+      <div className="text-7xl">
+        {time}
+      </div>
     </div>
   );
 };
