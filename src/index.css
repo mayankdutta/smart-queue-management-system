@@ -4,18 +4,26 @@
 
 @layer components {
   .btn-page {
-    @apply rounded-lg px-3 py-2 text-slate-700  font-sans tracking-wide font-medium hover:bg-slate-100 hover:text-slate-900;
+    @apply rounded-lg px-3 py-2 text-slate-700  font-mono tracking-wide font-medium hover:bg-slate-100 hover:text-slate-900;
   }
   .btn-login {
-    @apply rounded-xl px-3 py-2 font-medium border-2 border-slate-600 bg-slate-600 hover:bg-slate-700 text-white;
+    @apply rounded-xl px-3 py-2 font-medium  bg-slate-600 hover:bg-slate-700 text-white;
   }
 
   .btn-signup {
-    @apply rounded-xl px-3 py-2 font-medium hover:text-white hover:bg-slate-600 text-slate-600 border-2 border-slate-600;
+    @apply rounded-xl px-3 py-2 font-medium hover:text-white hover:bg-slate-600 text-slate-600;
   }
 
   .btn-submit {
     @apply bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none max-w-lg;
+  }
+
+  .form {
+    @apply w-screen px-8 flex items-center justify-center flex-col flex-nowrap space-y-2;
+  }
+
+  .auth-style {
+    @apply flex flex-wrap flex-col space-y-4;
   }
 }
 

@@ -16,7 +16,7 @@ const GetDate = ({ days, handleChange, name, label, value }) => {
 
   console.log('selected date: ', selectedDate);
   return (
-    <div className="max-w-6xl border-2 border-black">
+    <div className="max-w-7xl border-2 border-black">
       <div className="dates">
         {dateArray?.map((date) => {
           const currentDate = formatDate(

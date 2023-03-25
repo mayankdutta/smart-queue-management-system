@@ -64,11 +64,8 @@ export default function SignUp() {
     );
   };
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="max-w-4xl w-screen px-8 flex align-middle justify-center flex-col flex-nowrap space-y-2"
-    >
-      <div className="flex flex-wrap flex-col space-y-4">
+    <form onSubmit={handleSubmit} className="form">
+      <div className="auth-style">
         <FormInput
           onChange={handleChange}
           label="First Name"

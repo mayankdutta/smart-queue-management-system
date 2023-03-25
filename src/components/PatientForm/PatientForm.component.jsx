@@ -27,13 +27,13 @@ const PatientForm = ({
   return (
     <form
       onSubmit={handleSubmit}
-      className="w-screen px-8 flex align-middle justify-center flex-col flex-nowrap space-y-2"
+      className="form"
     >
       <h1 className="text-2xl font-sans font-medium">
         {ButtonValue === 'Update' ? 'Update Patient' : 'Register New Patient'}
       </h1>
 
-      <div className="flex flex-wrap space-y-4">
+      <div className="flex flex-wrap justify-center space-y-4 space-x-4 items-center">
         {Object.keys(formFields).map((defaultFormField, i) => {
           if (
             defaultFormField[0] === '_' ||

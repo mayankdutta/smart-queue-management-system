@@ -14,7 +14,11 @@ function Navbar() {
   };
 
   return (
-    <div className={'py-2 px-4 my-2 mx-2 rounded-lg flex  justify-between bg-slate-200'}>
+    <div
+      className={
+        'py-2 px-4 my-2 mx-2 rounded-lg flex  justify-between bg-slate-200'
+      }
+    >
       <div className="flex">
         <Link to={'/'}>
           <div className={'btn-page'}> home</div>
@@ -24,12 +28,12 @@ function Navbar() {
           className={'btn-page'}
           to={userData.name ? '/register_patient' : '/login'}
         >
-          Register Patient
+          register_patient
         </Link>
 
         {userData.name && (
           <Link className="btn-page" to={'user_patient'}>
-            User Patients{' '}
+            user_patients{' '}
           </Link>
         )}
       </div>

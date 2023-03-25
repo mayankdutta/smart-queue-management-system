@@ -13,8 +13,7 @@ function Status() {
   const [occupied, setOccupied] = useState(false);
   const [time, setTime] = useState(1);
 
-  const { appointments, handleAbsent} =
-    useContext(PatientContext);
+  const { appointments, handleAbsent } = useContext(PatientContext);
 
   useEffect(() => {
     const countTime = setInterval(() => {
@@ -37,37 +36,29 @@ function Status() {
   return (
     <div className={'App'}>
       <div className={''}>
-        <div className={''}>
-          {appointments.length ? (
-            <>
-              <div className="text-lg  tracking-widest ">Turn of patient</div>
+        {appointments.length ? (
+          <div className="flex flex-col items-center ">
+            <div className=" text-lg  tracking-widest ">Turn of patient</div>
+            <div className=" text-4xl">{appointments[currentPatient].name}</div>
+            <div className="flex  my-4 space-x-2">
+              <h2 style={{ color: occupied ? 'green' : 'red' }}>
+                {occupied ? <> Clinic occupied </> : <> Empty </>}
+              </h2>
 
-              <div className="text-4xl">
-                {appointments[currentPatient].name}
-              </div>
-
-              <div className="flex  my-4 space-x-2">
-                <h2 style={{ color: occupied ? 'green' : 'red' }}>
-                  {occupied ? <> Clinic occupied </> : <> Empty </>}
-                </h2>
-
-                <Button
-                  occupied={occupied}
-                  setOccupied={setOccupied}
-                  setTime={setTime}
-                />
-              </div>
-            </>
-          ) : (
-            <h5> No appointments for today.</h5>
-          )}
-          {!occupied && <Counter time={time} />}
-        </div>
-
-        <div className={'container-right'}>
-          <PrintQueue data={appointments} />
-        </div>
+              <Button
+                occupied={occupied}
+                setOccupied={setOccupied}
+                setTime={setTime}
+              />
+            </div>
+          </div>
+        ) : (
+          <h5> No appointments for today.</h5>
+        )}
+        {!occupied && <Counter time={time} />}
       </div>
+
+      <PrintQueue data={appointments} />
     </div>
   );
 }

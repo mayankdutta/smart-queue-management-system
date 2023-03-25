@@ -75,9 +75,9 @@ export default function LogIn() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="max-w-4xl w-screen px-8 flex align-middle justify-center flex-col flex-nowrap space-y-2"
+      className="form"
     >
-      <div className="flex flex-wrap flex-col space-y-4">
+      <div className="auth-style">
         <FormInput
           label="Email Address"
           name="email"

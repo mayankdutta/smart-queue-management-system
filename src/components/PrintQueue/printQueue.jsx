@@ -3,13 +3,15 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { PatientContext } from '../../contexts/patient.context';
 import { useContext } from 'react';
+import IconDelete from '../icons/delete.component';
+import IconEdit from '../icons/edit.component';
 
 const PrintQueue = ({ data, edit }) => {
   const { deleteUserPatient } = useContext(PatientContext);
 
   const cell = 'px-6 py-3';
   return (
-    <main className='px-8'>
+    <main className="px-8">
       <h2 className="text-4xl">
         {edit ? <> Your Patients </> : <> Patients for today </>}
       </h2>
@@ -38,14 +40,18 @@ const PrintQueue = ({ data, edit }) => {
                   {edit && (
                     <>
                       <td className={cell}>
-                        <Link to={'/update_patient/' + value._id}>✏️</Link>
+                        <Link
+                          to={'/update_patient/' + value._id}
+                          className="cursor-default"
+                        >
+                          <IconDelete />
+                        </Link>
                       </td>
                       <td
                         className={cell}
                         onClick={() => deleteUserPatient(value._id)}
                       >
-                        {' '}
-                        ⌫{' '}
+                        <IconEdit />
                       </td>
                     </>
                   )}
