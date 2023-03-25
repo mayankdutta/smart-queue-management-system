@@ -64,53 +64,57 @@ export default function SignUp() {
     );
   };
   return (
-    <>
-      <center>
-        <form onSubmit={handleSubmit}>
-          <FormInput
-            onChange={handleChange}
-            label="First Name"
-            name="firstName"
-            type="text"
-            value={registerData.firstName}
-            id=""
-          />
-          <FormInput
-            onChange={handleChange}
-            label="Last Name"
-            name="lastName"
-            type="text"
-            value={registerData.lastName}
-            id=""
-          />
-          <FormInput
-            onChange={handleChange}
-            label="Email"
-            name="email"
-            type="email"
-            value={registerData.email}
-            id=""
-          />
-          <FormInput
-            onChange={handleChange}
-            label="Password"
-            name="password"
-            type="password"
-            value={registerData.password}
-            id=""
-          />
+    <form
+      onSubmit={handleSubmit}
+      className="max-w-4xl w-screen px-8 flex align-middle justify-center flex-col flex-nowrap space-y-2"
+    >
+      <div className="flex flex-wrap flex-col space-y-4">
+        <FormInput
+          onChange={handleChange}
+          label="First Name"
+          name="firstName"
+          type="text"
+          value={registerData.firstName}
+          id=""
+        />
+        <FormInput
+          onChange={handleChange}
+          label="Last Name"
+          name="lastName"
+          type="text"
+          value={registerData.lastName}
+          id=""
+        />
+        <FormInput
+          onChange={handleChange}
+          label="Email"
+          name="email"
+          type="email"
+          value={registerData.email}
+          id=""
+        />
+        <FormInput
+          onChange={handleChange}
+          label="Password"
+          name="password"
+          type="password"
+          value={registerData.password}
+          id=""
+        />
 
-          <button type="submit" onClick={toastLoading}>
-            Register
-          </button>
+        <button type="submit" onClick={toastLoading} className="btn-submit">
+          Register
+        </button>
 
-          <Link href="/login" variant="body2">
-            Already have an account? Sign in
-          </Link>
+        <Link
+          href="/login"
+          className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
+        >
+          Already have an account? Sign in
+        </Link>
 
-          <ToastContainer />
-        </form>
-      </center>
-    </>
+        <ToastContainer />
+      </div>
+    </form>
   );
 }

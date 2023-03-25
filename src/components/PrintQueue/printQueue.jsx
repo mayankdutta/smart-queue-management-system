@@ -1,5 +1,5 @@
 import React from 'react';
-import './printQueue.css';
+// import './printQueue.css';
 import { Link } from 'react-router-dom';
 import { PatientContext } from '../../contexts/patient.context';
 import { useContext } from 'react';
@@ -7,37 +7,46 @@ import { useContext } from 'react';
 const PrintQueue = ({ data, edit }) => {
   const { deleteUserPatient } = useContext(PatientContext);
 
+  const cell = 'px-6 py-3';
   return (
-    <main>
-      <h2>{edit ? <> Your Patients </> : <> Patients for today </>}</h2>
+    <main className='px-8'>
+      <h2 className="text-4xl">
+        {edit ? <> Your Patients </> : <> Patients for today </>}
+      </h2>
 
-      <div className={'table-container'}>
-        <table>
-          <thead>
+      <div className={'relative overflow-x-auto shadow-md sm:rounded-lg'}>
+        <table className="w-full text-lg text-left text-gray-500 dark:text-gray-400">
+          <thead className="text-lg text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
-              <th>S. no</th>
-              <th>Name</th>
-              <th>Patient No.</th>
-              {edit && <th>Edit</th>}
-              {edit && <th>Delete</th>}
+              <th className={cell}>S. no</th>
+              <th className={cell}>Name</th>
+              <th className={cell}>Patient No.</th>
+              {edit && <th className={cell}>Edit</th>}
+              {edit && <th className={cell}>Delete</th>}
             </tr>
           </thead>
 
           <tbody>
             {data.map((value, index) => {
               return (
-                <tr key={index}>
-                  <td>{index + 1}</td>
-                  <td className={'name'}>
+                <tr key={index} className="bg-white border-b ">
+                  <td className={cell}>{index + 1}</td>
+                  <td className={cell}>
                     <Link to={'/details'}>{value.name}</Link>
                   </td>
-                  <td>{value.rank}</td>
+                  <td className={cell}> {value.rank}</td>
                   {edit && (
                     <>
-                      <td>
+                      <td className={cell}>
                         <Link to={'/update_patient/' + value._id}>✏️</Link>
                       </td>
-                      <td onClick={() => deleteUserPatient(value._id)}> ⌫ </td>
+                      <td
+                        className={cell}
+                        onClick={() => deleteUserPatient(value._id)}
+                      >
+                        {' '}
+                        ⌫{' '}
+                      </td>
                     </>
                   )}
                 </tr>

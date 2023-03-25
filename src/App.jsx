@@ -1,6 +1,7 @@
 import Navbar from './components/Navbar/Navbar';
 import Status from './components/Status/Status';
 import RegisterPatient from './routes/RegisterPatient/registerPatient.component';
+import UserPatients from './routes/userPatients/userPatients.component';
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import LogIn from './routes/Login/login.component';
@@ -20,6 +21,7 @@ function App() {
             <Route path="/login" element={<LogIn />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/register_patient" element={<RegisterPatient />} />
+            <Route path="/user_patient" element={<UserPatients />} />
             <Route path="/update_patient/:id" element={<UpdatePatient />} />
             <Route path="/details" element={<Details />} />
             {/*

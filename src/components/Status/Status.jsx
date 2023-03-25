@@ -6,7 +6,6 @@ import { DEFAULT_COUNTER } from '../../backendData';
 import Button from '../Button/button.component';
 import Counter from '../Counter/counter.component';
 import { PatientContext } from '../../contexts/patient.context';
-import { UserContext } from '../../contexts/user.context';
 
 const currentPatient = 0;
 
@@ -14,8 +13,7 @@ function Status() {
   const [occupied, setOccupied] = useState(false);
   const [time, setTime] = useState(1);
 
-  const { userData } = useContext(UserContext);
-  const { appointments, handleAbsent, usersPatients } =
+  const { appointments, handleAbsent} =
     useContext(PatientContext);
 
   useEffect(() => {
@@ -64,10 +62,6 @@ function Status() {
             <h5> No appointments for today.</h5>
           )}
           {!occupied && <Counter time={time} />}
-
-          {userData.name && userData.name.length > 0 && (
-            <PrintQueue data={usersPatients} edit={true} />
-          )}
         </div>
 
         <div className={'container-right'}>

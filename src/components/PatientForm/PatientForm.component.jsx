@@ -1,6 +1,6 @@
 import GetDate from '../Date/date.components.jsx';
 import { useState } from 'react';
-import './PatientForm.styles.scss';
+// import './PatientForm.styles.scss';
 import FormInput from '../formInput/formInput.components';
 
 function titleCase(str) {
@@ -25,12 +25,15 @@ const PatientForm = ({
   };
 
   return (
-    <center>
-      <form onSubmit={handleSubmit}>
-        <h1>
-          {ButtonValue === 'Update' ? 'Update Patient' : 'Register New Patient'}
-        </h1>
+    <form
+      onSubmit={handleSubmit}
+      className="w-screen px-8 flex align-middle justify-center flex-col flex-nowrap space-y-2"
+    >
+      <h1 className="text-2xl font-sans font-medium">
+        {ButtonValue === 'Update' ? 'Update Patient' : 'Register New Patient'}
+      </h1>
 
+      <div className="flex flex-wrap space-y-4">
         {Object.keys(formFields).map((defaultFormField, i) => {
           if (
             defaultFormField[0] === '_' ||
@@ -38,8 +41,8 @@ const PatientForm = ({
           ) {
           } else if (defaultFormField === 'date') {
             return (
-              <div onClick={handleDisplayDate} className="date-selector">
-                Click here to select Date
+              <div onClick={handleDisplayDate}>
+                Select Dates
                 <GetDate
                   key={i}
                   label={titleCase(defaultFormField)}
@@ -63,10 +66,11 @@ const PatientForm = ({
               />
             );
         })}
-
-        <button type="submit">{ButtonValue}</button>
-      </form>
-    </center>
+      </div>
+      <button type="submit" className="btn-submit">
+        {ButtonValue}
+      </button>
+    </form>
   );
 };
 

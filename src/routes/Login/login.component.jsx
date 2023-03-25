@@ -73,32 +73,33 @@ export default function LogIn() {
   };
 
   return (
-    <>
-      <center>
-        <form onSubmit={handleSubmit}>
-          <FormInput
-            label="Email Address"
-            name="email"
-            id="email"
-            type="email"
-            value={loginData.email}
-            onChange={handleChange}
-            autoFocus
-          />
-          <FormInput
-            label="Password"
-            name="password"
-            id="password"
-            type="password"
-            value={loginData.password}
-            onChange={handleChange}
-          />
-          <button type="submit" onClick={toastLoading}>
-            Login
-          </button>
-          <ToastContainer />
-        </form>
-      </center>
-    </>
+    <form
+      onSubmit={handleSubmit}
+      className="max-w-4xl w-screen px-8 flex align-middle justify-center flex-col flex-nowrap space-y-2"
+    >
+      <div className="flex flex-wrap flex-col space-y-4">
+        <FormInput
+          label="Email Address"
+          name="email"
+          id="email"
+          type="email"
+          value={loginData.email}
+          onChange={handleChange}
+          autoFocus
+        />
+        <FormInput
+          label="Password"
+          name="password"
+          id="password"
+          type="password"
+          value={loginData.password}
+          onChange={handleChange}
+        />
+        <button className="btn-submit " type="submit" onClick={toastLoading}>
+          Login
+        </button>
+        <ToastContainer />
+      </div>
+    </form>
   );
 }

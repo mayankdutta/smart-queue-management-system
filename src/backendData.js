@@ -31,8 +31,8 @@ export const DEFAULT_FORM_FIELDS = {
   description: '',
   typeOfCase: '',
   currentPenalty: '',
-  date: '',
   gender: '',
+  date: '',
 };
 
 /*
