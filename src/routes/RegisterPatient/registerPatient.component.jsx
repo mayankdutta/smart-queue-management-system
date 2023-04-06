@@ -31,7 +31,7 @@ export default function Register() {
     addNewPatient({
       ...formFields,
       registeredBy: authenticationTokenNumber,
-      currentPenalty: appointments[appointments.length - 1].rank,
+      currentPenalty: 1 || appointments[appointments.length - 1].rank,
     });
 
     navigate('/');
