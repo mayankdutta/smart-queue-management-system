@@ -4,7 +4,7 @@ const getUserObject = require('../middleware/decodeUser');
 
 require("dotenv").config();
 
-const registerPatient = async (req, res, _) => {
+const registerPatient = async (req, res) => {
   console.warn(req.body);
 
   try {
@@ -21,7 +21,7 @@ const registerPatient = async (req, res, _) => {
   }
 };
 
-const deletePatient = async (req, res, next) => {
+const deletePatient = async (req, res) => {
     try {
         let patient = await Patient.deleteOne({ _id: req.params.id })
         res.status(200).send(patient);
@@ -46,7 +46,7 @@ const getAllPatient = async (req, res) => {
     }
 }
 
-const getPatient = async (req, res, next) => {
+const getPatient = async (req, res) => {
     const registeredBy = req.headers['access-token'];
     try {
         const patient = await Patient.find({ registeredBy: registeredBy });
@@ -74,11 +74,11 @@ const getUpdatePatient = async (req, res) => {
   }
 };
 
-const putUpdatePatient = async (req, res) => {
+const putUpdatePatient = async ({body, params: {id: _id = null}}, res) => {
 
     try {
-        let patient = await Patient.updateOne({ _id: req.params.id }, {
-            $set: req.body
+        let patient = await Patient.updateOne({ _id }, {
+            $set: body
         })
         res.status(200).send(patient);
     } catch (err) {
@@ -88,7 +88,7 @@ const putUpdatePatient = async (req, res) => {
     }
 }
 
-const getUsers = async (req, res) => {
+const getUsers = async (req = {}, res) => {
     let token = getUserObject(req.headers['access-token']);
     if (!token || token.role != "admin") return res.status(401).send('Not an Admin !')
     try {
@@ -102,10 +102,16 @@ const getUsers = async (req, res) => {
     }
 }
 
-const getQueue = async(req, res) => {
-    let date = req.body.date;
+const getQueue = async({body}, res) => {
+    let {date} = body;
     try{
-        const queueStatus = await Patient.find({date : date});
+        if(!date) return res.status(400).send({
+            message : "Bad request"
+        })
+        const queueStatus = await Patient.find({date});
+        if(!queueStatus.length) return res.status(404).send({
+            "message" : "No appointments"
+        })
         res.status(200).send(queueStatus);
     }
     catch(error){
