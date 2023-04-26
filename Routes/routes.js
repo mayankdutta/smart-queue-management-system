@@ -4,6 +4,7 @@ const { HTTP_STATUS_CODES } = require("../domain/statusCodes");
 
 const checkAuth = require("../middleware/checkAuth");
 const { userSignUp, userLogin } = require("../Controllers/users");
+const { AdminAction } = require("../Controllers/Admin");
 const {
     registerPatient,
     deletePatient,
@@ -33,5 +34,7 @@ router
 router.get("/qstatus", getQueue)
 router.get("/patients", getAllPatient);
 router.get("/users", getUsers);
+
+router.post("/admin-action", AdminAction)
 
 module.exports = router;
