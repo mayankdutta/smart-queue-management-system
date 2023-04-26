@@ -14,7 +14,7 @@ async function comparePassword(plaintextPassword, hash) {
 }
 
 async function generateAccessToken(username, role) {
-    return await jwt.sign({username : username, role : role}, process.env.TOKEN_SECRET, {}, {expiresIn: '2h'});
+    return await jwt.sign({username, role}, process.env.TOKEN_SECRET, {}, {expiresIn: '2h'});
 }
 
 const verifyAccessToken = (req, res, next) => {
@@ -30,34 +30,30 @@ const verifyAccessToken = (req, res, next) => {
     next();
 }
 
-const userSignUp = async (req, res) => {
+const userSignUp = async ({body}, res) => {
+    let {email, password, role = "user", name} = body;
     try {
-        let userDoesExist = await Users.findOne({email: req.body.email});
+        let userDoesExist = await Users.findOne({email});
 
         if (userDoesExist) {
             return res.status(400).send({message: "already exist"});
         }
 
         try {
-            const encryptedPassword = await hashPassword(req.body.password);
-            const user = new Users({
-                role: req.body.role ? req.body.role : "user",
-                name: req.body.name,
-                email: req.body.email,
-                password: encryptedPassword
-            });
-
-            const accessToken = await generateAccessToken(user.email, user.role);
-            const result = await user.save();
+            password = await hashPassword(password);
+            const user = new Users({ role, name, email,password });
+            const {email: userEmail, role: userRole = "user"} = user;
+            const accessToken = await generateAccessToken(userEmail, userRole);
+            await user.save();
 
             return res.status(200).send({
                 message: "user created successfully",
-                accessToken: accessToken,
-                role: user.role ? user.role : "user"
+                accessToken,
+                role: userRole,
             });
 
-        } catch (err) {
-            return res.status(400).send({message: err.message});
+        } catch ({message}) {
+            return res.status(400).send({message});
         }
 
     } catch (err) {
@@ -65,20 +61,20 @@ const userSignUp = async (req, res) => {
     }
 }
 
-const userLogin = async (req, res) => {
+const userLogin = async ({body = {}}, res) => {
+    let {email: userEnteredEmail = "", password: userEnteredPass = "", name} = body;
     try {
-        const user = await Users.findOne({
-            email: req.body.email
+        const {password: encryptedPassword, email, role = "user"} = await Users.findOne({
+            email: userEnteredEmail
         });
 
-        const userPassword = req.body.password;
-        const encryptedPassword = user.password;
+        // const userPassword = userEnteredPass;
+        // const encryptedPassword = password;
 
-        const userDoesExist = await comparePassword(userPassword, encryptedPassword);
+        const userDoesExist = await comparePassword(userEnteredPass, encryptedPassword);
         if (userDoesExist) {
-            const accessToken = await generateAccessToken(user.email, user.role);
-            const role = user.role ? user.role : "user";
-            return res.status(200).send({message: "user found", accessToken: accessToken, name: user.name, role: role});
+            const accessToken = await generateAccessToken(email, role);
+            return res.status(200).send({message: "user found", accessToken, name, role,});
         } else {
             return res.status(400).send({message: "user NOT found"});
         }

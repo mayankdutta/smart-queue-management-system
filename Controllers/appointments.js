@@ -5,8 +5,6 @@ const getUserObject = require('../middleware/decodeUser');
 require("dotenv").config();
 
 const registerPatient = async (req, res) => {
-  console.warn(req.body);
-
   try {
     const patient = new Patient({
       ...req.body,
