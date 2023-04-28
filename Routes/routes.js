@@ -31,7 +31,7 @@ router
   .put("/update_patient/:id", checkAuth, putUpdatePatient)
   .get("/update_patient/:id", checkAuth, getUpdatePatient);
 
-router.get("/qstatus", getQueue)
+router.post("/qstatus", getQueue)
 router.get("/patients", getAllPatient);
 router.get("/users", getUsers);
 
