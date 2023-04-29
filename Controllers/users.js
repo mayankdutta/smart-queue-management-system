@@ -67,16 +67,12 @@ const userLogin = async ({body = {}}, res) => {
         const {password: encryptedPassword, email, role = "user"} = await Users.findOne({
             email: userEnteredEmail
         });
-
-        // const userPassword = userEnteredPass;
-        // const encryptedPassword = password;
-
         const userDoesExist = await comparePassword(userEnteredPass, encryptedPassword);
         if (userDoesExist) {
             const accessToken = await generateAccessToken(email, role);
             return res.status(200).send({message: "user found", accessToken, name, role,});
         } else {
-            return res.status(400).send({message: "user NOT found"});
+            return res.status(400).send({message: "user Not found"});
         }
 
     } catch (err) {

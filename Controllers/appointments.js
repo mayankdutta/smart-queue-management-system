@@ -103,12 +103,10 @@ const getUsers = async (req = {}, res) => {
 const getQueue = async({body}, res) => {
     let {date} = body;
     try{
-        if(!date) return res.status(400).send({
-            message : "Bad request"
-        })
+        if(!date) return res.status(400).send({"message" : "Please Select a date"});
         const queueStatus = await Patient.find({date});
         if(!queueStatus.length) return res.status(404).send({
-            "message" : "No appointments"
+            "message" : `No appointments on ${date}`
         })
         res.status(200).send(queueStatus);
     }

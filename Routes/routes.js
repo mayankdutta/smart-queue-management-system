@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const { HTTP_STATUS_CODES } = require("../domain/statusCodes");
-
 const checkAuth = require("../middleware/checkAuth");
 const { userSignUp, userLogin } = require("../Controllers/users");
 const { AdminAction } = require("../Controllers/Admin");
