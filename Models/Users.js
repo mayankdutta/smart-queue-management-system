@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
     role: String, // Admin or user 
@@ -7,4 +7,4 @@ const userSchema = new mongoose.Schema({
     password: String
 })
 
-module.exports = mongoose.model('users', userSchema)
+module.exports = mongoose.model('users', userSchema);

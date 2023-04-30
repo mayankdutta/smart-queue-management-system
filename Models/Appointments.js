@@ -6,7 +6,7 @@
  * 4. Expected_time
  * */
 
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 const AppointmentsSchema = new mongoose.Schema({
   name: String,
   contactNumber: String,
@@ -25,7 +25,7 @@ const AppointmentsSchema = new mongoose.Schema({
   oxygenLevel: String, // can be measured @clinic as well as self.
   description: String, // to be filled by compounder, adhoc Case, sucide, chakku, banduuk, ladai, accident., ilaaj se phele FIR., NIL Allowed
   date: String,
-  gender: String, 
+  gender: String,
 
   // typeOfCase: String,
   /*
@@ -41,5 +41,5 @@ const AppointmentsSchema = new mongoose.Schema({
      */
 });
 
-const Appointments = mongoose.model("Appointments", AppointmentsSchema);
+const Appointments = mongoose.model('Appointments', AppointmentsSchema);
 module.exports = Appointments;

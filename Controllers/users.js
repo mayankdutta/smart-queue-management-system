@@ -1,16 +1,18 @@
-const Users = require("../Models/Users");
-const bcrypt = require("bcrypt");
-const jwt = require('jsonwebtoken')
-require("dotenv").config()
+const { HTTP_STATUS_CODES } = require('../domain/statusCodes');
+
+const Users = require('../Models/Users');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+require('dotenv').config();
 
 const SALT = 10;
 
 async function hashPassword(plaintextPassword) {
-    return await bcrypt.hash(plaintextPassword, SALT);
+  return await bcrypt.hash(plaintextPassword, SALT);
 }
 
 async function comparePassword(plaintextPassword, hash) {
-    return await bcrypt.compare(plaintextPassword, hash);
+  return await bcrypt.compare(plaintextPassword, hash);
 }
 
 async function generateAccessToken(username, role) {
@@ -18,67 +20,81 @@ async function generateAccessToken(username, role) {
 }
 
 const verifyAccessToken = (req, res, next) => {
-    const userToken = req.headers["access-token"];
-    if (!userToken) {
-        return res.status(400).json({messsage: "token is required !!"});
+  const userToken = req.headers['access-token'];
+  if (!userToken) {
+    return res.status(HTTP_STATUS_CODES.OK).json({ messsage: 'token is required !!' });
+  }
+  try {
+    const decodeUserToken = jwt.verify(userToken, process.env.TOKEN_SECRET, {}, {});
+  } catch (err) {
+    return res.status(HTTP_STATUS_CODES.BAD_REQUEST).json({ message: 'invalid user' });
+  }
+  next();
+};
+
+const userSignUp = async (req, res) => {
+  try {
+    let userDoesExist = await Users.findOne({ email: req.body.email });
+
+    if (userDoesExist) {
+      return res.status(HTTP_STATUS_CODES.BAD_REQUEST).send({ message: 'already exist' });
     }
+
     try {
-        const decodeUserToken = jwt.verify(userToken, process.env.TOKEN_SECRET, {}, {});
+      const encryptedPassword = await hashPassword(req.body.password);
+      const user = new Users({
+        role: req.body.role ? req.body.role : 'user',
+        name: req.body.name,
+        email: req.body.email,
+        password: encryptedPassword,
+      });
+
+      const accessToken = await generateAccessToken(user.email, user.role);
+      const result = await user.save();
+
+      return res.status(HTTP_STATUS_CODES.OK).send({
+        message: 'user created successfully',
+        accessToken: accessToken,
+        role: user.role ? user.role : 'user',
+      });
     } catch (err) {
-        return res.status(400).json({message: "invalid user"});
+      return res.status(HTTP_STATUS_CODES.BAD_REQUEST).send({ message: err.message });
     }
-    next();
-}
+  } catch (err) {
+    return res
+      .status(HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR)
+      .send({ message: 'Error while creating user', result: err });
+  }
+};
 
-const userSignUp = async ({body}, res) => {
-    let {email, password, role = "user", name} = body;
-    try {
-        let userDoesExist = await Users.findOne({email});
+const userLogin = async (req, res) => {
+  try {
+    const user = await Users.findOne({
+      email: req.body.email,
+    });
 
-        if (userDoesExist) {
-            return res.status(400).send({message: "already exist"});
-        }
+    const userPassword = req.body.password;
+    const encryptedPassword = user.password;
 
-        try {
-            password = await hashPassword(password);
-            const user = new Users({ role, name, email,password });
-            const {email: userEmail, role: userRole = "user"} = user;
-            const accessToken = await generateAccessToken(userEmail, userRole);
-            await user.save();
+    const userDoesExist = await comparePassword(userPassword, encryptedPassword);
 
-            return res.status(200).send({
-                message: "user created successfully",
-                accessToken,
-                role: userRole,
-            });
+    if (userDoesExist) {
+      const accessToken = await generateAccessToken(user.email, user.role);
 
-        } catch ({message}) {
-            return res.status(400).send({message});
-        }
-
-    } catch (err) {
-        return res.status(500).send({message: "Error while creating user", result: err});
+      return res.status(HTTP_STATUS_CODES.OK).send({
+        message: 'user found',
+        accessToken: accessToken,
+        name: user.name,
+        role: user.role,
+      });
+    } else {
+      return res.status(HTTP_STATUS_CODES.BAD_REQUEST).send({ message: 'user NOT found' });
     }
-}
+  } catch (err) {
+    return res
+      .status(HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR)
+      .send({ message: 'something went wrong while logging in', error: err });
+  }
+};
 
-const userLogin = async ({body = {}}, res) => {
-    let {email: userEnteredEmail = "", password: userEnteredPass = "", name} = body;
-    try {
-        const {password: encryptedPassword, email, role = "user"} = await Users.findOne({
-            email: userEnteredEmail
-        });
-        const userDoesExist = await comparePassword(userEnteredPass, encryptedPassword);
-        if (userDoesExist) {
-            const accessToken = await generateAccessToken(email, role);
-            return res.status(200).send({message: "user found", accessToken, name, role,});
-        } else {
-            return res.status(400).send({message: "user Not found"});
-        }
-
-    } catch (err) {
-        return res.status(500).send({message: "something went wrong while logging in", error: err});
-    }
-}
-
-
-module.exports = {userSignUp, userLogin};
+module.exports = { userSignUp, userLogin };
