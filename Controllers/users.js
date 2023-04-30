@@ -15,8 +15,8 @@ async function comparePassword(plaintextPassword, hash) {
   return await bcrypt.compare(plaintextPassword, hash);
 }
 
-async function generateAccessToken(email, role) {
-  return jwt.sign({ email: email, role: role }, process.env.TOKEN_SECRET, {}, { expiresIn: '2h' });
+async function generateAccessToken(username, role) {
+    return await jwt.sign({username, role}, process.env.TOKEN_SECRET, {}, {expiresIn: '2h'});
 }
 
 const verifyAccessToken = (req, res, next) => {
@@ -72,8 +72,6 @@ const userLogin = async (req, res) => {
     const user = await Users.findOne({
       email: req.body.email,
     });
-
-    console.log(user);
 
     const userPassword = req.body.password;
     const encryptedPassword = user.password;

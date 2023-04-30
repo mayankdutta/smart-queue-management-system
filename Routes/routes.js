@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const { HTTP_STATUS_CODES } = require('../domain/statusCodes');
-
-const checkAuth = require('../middleware/checkAuth');
-const { userSignUp, userLogin } = require('../Controllers/users');
+const { HTTP_STATUS_CODES } = require("../domain/statusCodes");
+const checkAuth = require("../middleware/checkAuth");
+const { userSignUp, userLogin } = require("../Controllers/users");
+const { AdminAction } = require("../Controllers/Admin");
 const {
     registerPatient,
     deletePatient,
@@ -22,7 +22,7 @@ router.get('/', (_, res, __) => {
 router.post('/login', userLogin);
 router.post('/signup', userSignUp);
 
-router.post('/register_patient/', checkAuth, registerPatient);
+router.post('/register_patient', checkAuth, registerPatient);
 router.delete('/delete_patient/:id', checkAuth, deletePatient);
 router.get('/get_patient', checkAuth, getPatient);
 
@@ -30,8 +30,10 @@ router
   .put('/update_patient/:id', checkAuth, putUpdatePatient)
   .get('/update_patient/:id', checkAuth, getUpdatePatient);
 
-router.get("/qstatus", getQueue)
+router.post("/qstatus", getQueue)
 router.get("/patients", getAllPatient);
 router.get("/users", getUsers);
+
+router.post("/admin-action", AdminAction)
 
 module.exports = router;

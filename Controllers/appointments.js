@@ -5,9 +5,7 @@ const { HTTP_STATUS_CODES } = require('../domain/statusCodes');
 
 require('dotenv').config();
 
-const registerPatient = async (req, res, _) => {
-  const user = getUserObject(req.headers['access-token']);
-
+const registerPatient = async (req, res) => {
   try {
     const patient = new Patient({
       ...req.body,
@@ -23,16 +21,16 @@ const registerPatient = async (req, res, _) => {
   }
 };
 
-const deletePatient = async (req, res, next) => {
+const deletePatient = async (req, res) => {
   try {
-    let patient = await Patient.deleteOne({ _id: req.params.id });
-    res.status(HTTP_STATUS_CODES.OK).send(patient);
+    let patient = await Patient.deleteOne({ _id: req.params.id })
+    res.status(200).send(patient);
   } catch (err) {
-    res.status(HTTP_STATUS_CODES.NOT_FOUND).send({
-      message: err,
+    res.status(404).send({
+      message: err
     });
   }
-};
+}
 
 const getAllPatient = async (req, res) => {
   const token = getUserObject(req.headers['access-token']);
@@ -50,17 +48,16 @@ const getAllPatient = async (req, res) => {
 };
 
 const getPatient = async (req, res) => {
-  const registeredBy = getUserObject(req.headers['access-token']).email;
-
+  const registeredBy = req.headers['access-token'];
   try {
     const patient = await Patient.find({ registeredBy: registeredBy });
-    res.status(HTTP_STATUS_CODES.OK).send(patient);
+    res.status(200).send(patient);
   } catch (err) {
     res.status(401).send({
-      result: 'No such record',
-    });
+      result: "No such record"
+    })
   }
-};
+}
 
 const getUpdatePatient = async (req, res) => {
   const registeredBy = getUserObject(req.headers['access-token']).email;
@@ -79,67 +76,57 @@ const getUpdatePatient = async (req, res) => {
   }
 };
 
-const putUpdatePatient = async (req, res) => {
+const putUpdatePatient = async ({ body, params: { id: _id = null } }, res) => {
+
   try {
-    let patient = await Patient.updateOne(
-      { _id: req.params.id },
-      {
-        $set: req.body,
-      }
-    );
-    res.status(HTTP_STATUS_CODES.OK).send(patient);
+    let patient = await Patient.updateOne({ _id }, {
+      $set: body
+    })
+    res.status(200).send(patient);
   } catch (err) {
-    res.status(HTTP_STATUS_CODES.NOT_FOUND).send({
-      message: err,
+    res.status(404).send({
+      message: err
     });
   }
-};
+}
 
-const getUsers = async (req, res) => {
+const getUsers = async (req = {}, res) => {
   let token = getUserObject(req.headers['access-token']);
-  if (!token || token.role != 'admin') return res.status(401).send('Not an Admin !');
+  if (!token || token.role != "admin") return res.status(401).send('Not an Admin !')
   try {
     const data = await Users.find();
-    res.status(HTTP_STATUS_CODES.OK).send(data);
+    res.status(200).send(data);
   } catch (err) {
-    res.status(HTTP_STATUS_CODES.NOT_FOUND).send({
-      result: 'User not found',
-      message: err,
-    });
+    res.status(404).send({
+      result: "User not found",
+      message: err
+    })
   }
-};
+}
 
-const getQueue = async (req, res) => {
-  const date = currentDate();
-
+const getQueue = async ({ body }, res) => {
+  let { date } = body;
   try {
-    const queueStatus = await Patient.find({ date: date });
-    res.status(HTTP_STATUS_CODES.OK).send(queueStatus);
-  } catch (error) {
-    res.status(HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR).send(error);
+    if (!date) return res.status(400).send({ "message": "Please Select a date" });
+    const queueStatus = await Patient.find({ date });
+    if (!queueStatus.length) return res.status(404).send({
+      "message": `No appointments on ${date}`
+    })
+    res.status(200).send(queueStatus);
   }
-};
+  catch (error) {
+    res.status(500).send(error);
+  }
+}
 
-module.exports = {
+module.exports =
+{
   registerPatient,
   deletePatient,
+  getAllPatient,
   getPatient,
   getUpdatePatient,
   putUpdatePatient,
-  getAllPatient,
   getUsers,
-  getQueue,
-};
-
-const MONTH = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-
-function formatDate(d, m, y) {
-  let day = d.length == 1 ? '0' + d : d;
-  let month = MONTH[m];
-  let year = y;
-  return day + '-' + month + '-' + year;
-}
-
-function currentDate() {
-  return formatDate(new Date().getDate(), new Date().getMonth(), new Date().getFullYear());
+  getQueue
 }
