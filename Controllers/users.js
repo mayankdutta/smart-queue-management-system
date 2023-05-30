@@ -16,7 +16,7 @@ async function comparePassword(plaintextPassword, hash) {
 }
 
 async function generateAccessToken(username, role) {
-    return await jwt.sign({username, role}, process.env.TOKEN_SECRET, {}, {expiresIn: '2h'});
+  return await jwt.sign({ username, role }, process.env.TOKEN_SECRET, {}, { expiresIn: '2h' });
 }
 
 const verifyAccessToken = (req, res, next) => {
@@ -35,6 +35,10 @@ const verifyAccessToken = (req, res, next) => {
 const userSignUp = async (req, res) => {
   try {
     let userDoesExist = await Users.findOne({ email: req.body.email });
+
+    if (req.body.email.length == 0 || req.body.password.length == 0) {
+      return res.status(HTTP_STATUS_CODES.NOT_FOUND).send({ message: "Enter valid email id / password" });
+    }
 
     if (userDoesExist) {
       return res.status(HTTP_STATUS_CODES.BAD_REQUEST).send({ message: 'already exist' });
@@ -69,6 +73,11 @@ const userSignUp = async (req, res) => {
 
 const userLogin = async (req, res) => {
   try {
+
+    if (req.body.email.length == 0 || req.body.password.length == 0) {
+      return res.status(HTTP_STATUS_CODES.NOT_FOUND).send({ message: "Enter valid email id / password" });
+    }
+
     const user = await Users.findOne({
       email: req.body.email,
     });

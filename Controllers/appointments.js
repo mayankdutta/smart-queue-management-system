@@ -6,10 +6,13 @@ const { HTTP_STATUS_CODES } = require('../domain/statusCodes');
 require('dotenv').config();
 
 const registerPatient = async (req, res) => {
+  // console.log("registering pateint");
+  // console.log(req.body);
+
   try {
     const patient = new Patient({
       ...req.body,
-      registeredBy: user.email,
+      registeredBy: req.body.registeredBy
     });
     const result = await patient.save();
     return res.status(HTTP_STATUS_CODES.OK).send({
@@ -106,13 +109,17 @@ const getUsers = async (req = {}, res) => {
 
 const getQueue = async ({ body }, res) => {
   let { date } = body;
+  // console.log("data: ", date);
   try {
     if (!date) return res.status(400).send({ "message": "Please Select a date" });
+
     const queueStatus = await Patient.find({ date });
+
     if (!queueStatus.length) return res.status(404).send({
       "message": `No appointments on ${date}`
     })
     res.status(200).send(queueStatus);
+
   }
   catch (error) {
     res.status(500).send(error);
