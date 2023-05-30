@@ -54,14 +54,15 @@ export const PatientProvider = ({ children }) => {
         }
       }
 
-      data.data.map((d) => {
-        newData.push({
-          name: d.name,
-          rank: newData.length + 1,
-          penalty: 1,
-          initialOrder: newData.length + 1,
+      if (data.data)
+        data.data.map((d) => {
+          newData.push({
+            name: d.name,
+            rank: newData.length + 1,
+            penalty: 1,
+            initialOrder: newData.length + 1,
+          });
         });
-      });
 
       console.log(newData);
       setAppointments(newData);
@@ -93,7 +94,7 @@ export const PatientProvider = ({ children }) => {
   useEffect(() => {
     try {
       fetchAllPatients();
-    } catch (err) {}
+    } catch (err) { }
   }, []);
 
   const addNewPatient = async (patient) => {
