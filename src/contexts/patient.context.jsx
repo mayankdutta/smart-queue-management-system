@@ -33,8 +33,14 @@ export const PatientProvider = ({ children }) => {
     console.log('fetching all the patients');
     try {
       console.log('today date: ', todayDate);
+      console.log('type of data: ', typeof todayDate);
 
-      const data = await axios.get(`${PATIENTS.ALL_PATIENTS}`);
+      console.log(`${PATIENTS.ALL_PATIENTS}`);
+
+      const data = await axios.post(`${PATIENTS.ALL_PATIENTS}`, {
+        // date: todayDate
+        date: "21-Mar-2023"
+      });
 
       let newData = [];
       for (let i = 0; i < StoredData.length; i++) {
