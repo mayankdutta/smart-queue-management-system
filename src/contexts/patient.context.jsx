@@ -39,7 +39,7 @@ export const PatientProvider = ({ children }) => {
 
       const data = await axios.post(`${PATIENTS.ALL_PATIENTS}`, {
         // date: todayDate
-        date: "31-Mar-2023"
+        date: "31-May-2023"
       });
 
       let newData = [];
