@@ -6,17 +6,20 @@ import axios from 'axios';
 export const UserContext = createContext({
   name: localStorage.getItem('name'),
   accessToken: localStorage.getItem('accessToken'),
+  email: localStorage.getItem('email'),
 });
 
 export const UserProvider = ({ children }) => {
   const [userData, setUserData] = useState({
     name: localStorage.getItem('name'),
     accessToken: localStorage.getItem('accessToken'),
+    email: localStorage.getItem('email')
   });
 
-  const setLocalStorage = ({ name, accessToken }) => {
+  const setLocalStorage = ({ email ,name, accessToken }) => {
     localStorage.setItem('accessToken', accessToken);
     localStorage.setItem('name', name);
+    localStorage.setItem('email', email);
   };
 
   const userSignup = async ({ name, email, password }) => {
@@ -42,8 +45,8 @@ export const UserProvider = ({ children }) => {
     const name = response.data.name;
     const accessToken = response.data.accessToken;
 
-    setLocalStorage({ name: name, accessToken: accessToken });
-    setUserData({ name: name, accessToken: accessToken });
+    setLocalStorage({ name: name, accessToken: accessToken, email: email });
+    setUserData({ name: name, accessToken: accessToken, email: email });
   };
 
   const userLogout = () => {

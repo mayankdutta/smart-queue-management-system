@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 
 export default function Register() {
   const [formFields, setFormFields] = useState(DEFAULT_FORM_FIELDS);
-  const authenticationTokenNumber = localStorage.getItem('accessToken');
+  const registeredBy = localStorage.getItem('email');
   const navigate = useNavigate();
   const { appointments, addNewPatient } = useContext(PatientContext);
 
@@ -30,7 +30,7 @@ export default function Register() {
 
     addNewPatient({
       ...formFields,
-      registeredBy: authenticationTokenNumber,
+      registeredBy: registeredBy,
       currentPenalty: 1 || appointments[appointments.length - 1].rank,
     });
 

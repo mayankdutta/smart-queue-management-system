@@ -37,7 +37,9 @@ export default function SignUp() {
         type: 'success',
         isLoading: false,
       });
-      navigate('/');
+
+      navigate('/login');
+
     } catch (err) {
       toast.update(toastId, {
         render: 'Signup Failed',
@@ -51,7 +53,6 @@ export default function SignUp() {
   const handleChange = (event) => {
     let name = event.target.name;
     let value = event.target.value;
-    console.log(name + ' , ' + value);
 
     setRegisterData({ ...registerData, [name]: value });
   };

@@ -22,11 +22,13 @@ export const PatientProvider = ({ children }) => {
   const todayDate = currentDate().toString();
   const [appointments, setAppointments] = useState(StoredData);
   const [usersPatients, setUsersPatients] = useState([]);
+
   const { userData } = useContext(UserContext);
 
   const headers = {
     'Content-type': 'application/json',
     'access-token': userData.accessToken,
+    'email': userData.email
   };
 
   const fetchAllPatients = async () => {
@@ -43,16 +45,16 @@ export const PatientProvider = ({ children }) => {
       });
 
       let newData = [];
-      for (let i = 0; i < StoredData.length; i++) {
-        if (StoredData[i]['date'] === todayDate) {
-          newData.push({
-            name: StoredData[i]['name'],
-            rank: newData.length + 1,
-            penalty: 1,
-            initialOrder: i + 1,
-          });
-        }
-      }
+      // for (let i = 0; i < StoredData.length; i++) {
+      //   if (StoredData[i]['date'] === todayDate) {
+      //     newData.push({
+      //       name: StoredData[i]['name'],
+      //       rank: newData.length + 1,
+      //       penalty: 1,
+      //       initialOrder: i + 1,
+      //     });
+      //   }
+      // }
 
       if (data.data)
         data.data.map((d) => {
@@ -77,6 +79,9 @@ export const PatientProvider = ({ children }) => {
     console.log('headers: ', headers);
 
     try {
+
+      console.log("debugging: ", `${PATIENTS.PATIENT}`);
+
       const data = await axios.get(`${PATIENTS.PATIENT}`, {
         headers: headers,
       });
