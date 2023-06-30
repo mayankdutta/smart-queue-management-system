@@ -6,8 +6,8 @@ const { HTTP_STATUS_CODES } = require('../domain/statusCodes');
 require('dotenv').config();
 
 const registerPatient = async (req, res) => {
-  // console.log("registering pateint");
-  // console.log(req.body);
+  console.log("registering pateint");
+  console.log(req.body.registeredBy);
 
   try {
     const patient = new Patient({
@@ -37,8 +37,10 @@ const deletePatient = async (req, res) => {
 
 const getAllPatient = async (req, res) => {
   const token = getUserObject(req.headers['access-token']);
+
   if (!token || token.role != 'admin')
     return res.status(HTTP_STATUS_CODES.BAD_REQUEST).send('Not an Admin !');
+
   try {
     const data = await Patient.find();
     res.status(HTTP_STATUS_CODES.OK).send(data);
@@ -51,9 +53,12 @@ const getAllPatient = async (req, res) => {
 };
 
 const getPatient = async (req, res) => {
-  const registeredBy = req.headers['access-token'];
+  const registeredBy = req.headers['email'];
+  // console.log("registeredBy: ", registeredBy);
+
   try {
     const patient = await Patient.find({ registeredBy: registeredBy });
+    console.log("patients: ", patient);
     res.status(200).send(patient);
   } catch (err) {
     res.status(401).send({
